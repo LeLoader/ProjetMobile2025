@@ -40,6 +40,7 @@ public class BlurController : MonoBehaviour
     // Called by the camera to apply the image effect
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
+        Debug.Log("OnRenderImage");
         int rtW = source.width / 4;
         int rtH = source.height / 4;
         RenderTexture buffer = RenderTexture.GetTemporary(rtW, rtH, 0);

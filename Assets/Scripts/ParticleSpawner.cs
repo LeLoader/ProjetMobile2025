@@ -7,12 +7,22 @@ public class ParticleSpawner : MonoBehaviour
 {
     [SerializeField] GameObject particlePrefab;
     [SerializeField] Vector3 initialVelocity;
-    [SerializeField, MinValue(0), Tooltip("Objet/s")] float spawnRate;
+    [SerializeField, MinValue(0), Tooltip("Particle/s")] float spawnRate;
+
+    [SerializeField] List<GameObject> particles;
+
+    [Header("Visual")]
+    [SerializeField] Camera effectCamera;
+    [SerializeField] RenderTexture targetTexture;
 
     bool bShouldSpawn = false;
     float timeSinceLastSpawn;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        effectCamera.targetTexture = targetTexture;
+    }
+
     void FixedUpdate()
     {
         if (bShouldSpawn)
@@ -20,9 +30,9 @@ public class ParticleSpawner : MonoBehaviour
             if (Mathf.Abs(timeSinceLastSpawn - Time.time) > 1 / spawnRate)
             {
                 timeSinceLastSpawn = Time.time;
-                Debug.Log("Spawn!");
-                GameObject particle = Instantiate(particlePrefab, transform.position, Quaternion.identity);
+                GameObject particle = Instantiate(particlePrefab, transform.position, Quaternion.identity, transform);
                 particle.GetComponent<Rigidbody2D>().linearVelocity = initialVelocity;
+                particles.Add(particle);
             }
         }
     }
