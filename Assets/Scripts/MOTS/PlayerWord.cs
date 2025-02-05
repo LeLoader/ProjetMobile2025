@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 
-public class PlayerWord : MonoBehaviour
+public class PlayerWord : WordBase
 {
     [Header("General")]
     [SerializeField] float interactionRadius = 5;
@@ -16,49 +16,31 @@ public class PlayerWord : MonoBehaviour
     [SerializeField] float jumpForce = 3f;
     [SerializeField] float speedForce = 5f;
 
-
-
-    const int WORDOBJECT_LAYERMASK = 7;
-    public ContactFilter2D contactFilter = new();
-
     [Header("Word")]
     [SerializeField] GameObject WordWrapper;
     [SerializeField] GameObject WordPrefab;
-    [SerializeField, Label("1e Type de base pour cet objet")] WORDTYPE wordType;
-    [SerializeField, Label("2e Type de base pour cet objet"), Tooltip("A utiliser si jamais il faut 2 fois le même état.")] WORDTYPE wordType1;
-    [SerializeReference, ReadOnly] List<WordModifier> currentModifiers = new();
+
     
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    const int WORDOBJECT_LAYERMASK = 7;
+    ContactFilter2D contactFilter = new();
+
+    override protected void Start()
     {
-        //contactFilter.layerMask = WORDOBJECT_LAYERMASK;
+        base.Start();
+
+        contactFilter.layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         contactFilter.useLayerMask = true;
 
-        AddBaseModifiers(wordType);
-        AddBaseModifiers(wordType1);
+        WordModifier.AddBaseModifiers(wordType, ref currentModifiers);
         UpdateWords(currentModifiers);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        UseWord();
+        Use();
         Move();
         Jump();
-    }
-
-    private void AddBaseModifiers(WORDTYPE type)
-    {
-        if ((int)type == 0) return;
-        if (type.HasFlag(WORDTYPE.SMALL))
-            currentModifiers.Add(new SmallModifier());
-        if (type.HasFlag(WORDTYPE.BIG))
-            currentModifiers.Add(new BigModifier());
-        if (type.HasFlag(WORDTYPE.TALL))
-            currentModifiers.Add(new TallModifier());
-        if (type.HasFlag(WORDTYPE.LONG))
-            currentModifiers.Add(new LongModifier());
     }
 
     private void Move()
@@ -66,10 +48,13 @@ public class PlayerWord : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(Vector2.left * speedForce);
+            Unlink();
+
         }
         if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(Vector2.right * speedForce);
+            Unlink();
         }
     }
 
@@ -80,7 +65,7 @@ public class PlayerWord : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    private void UseWord()
+    private void Use()
     {
         if (!Input.GetKeyDown(KeyCode.E)) return;
         List<Collider2D> results = new(); 
@@ -88,30 +73,24 @@ public class PlayerWord : MonoBehaviour
         if (Physics2D.OverlapCircle(transform.position, interactionRadius, contactFilter, results) > 0)
         {
             if (results[0].TryGetComponent<WordObject>(out WordObject wordObject)){
-                // HOLDING MODIFIER
-                if (currentModifiers.Count > 0) 
-                {
-                    UseAllModifiers(wordObject);
-                    UpdateWords(currentModifiers);
-                }
-                // NO MODIFIER
-                else
-                {
-                    currentModifiers = wordObject.UseAllModifiers();
-                    UpdateWords(currentModifiers);
-                }
+                Link(wordObject);
             };
         }
     }
 
-    private void UseAllModifiers(WordObject wordObject)
+    private void Link(WordObject wordObject)
     {
-        foreach (var modifier in currentModifiers.ToList())
+        wordObject.Link(this);
+        linkedWordBase = wordObject;
+    }
+
+    private void Unlink()
+    {
+        if (linkedWordBase != null)
         {
-            wordObject.AddModifier(modifier);
-            currentModifiers.Remove(modifier);
+            ((WordObject)linkedWordBase).Unlink();
+            linkedWordBase = null;
         }
-        UpdateWords(currentModifiers);
     }
 
     private void UpdateWords(List<WordModifier> newModifiers)
@@ -123,7 +102,7 @@ public class PlayerWord : MonoBehaviour
         foreach(WordModifier wordModifier in newModifiers)
         {
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI)){
-                wordUI.text.text = wordModifier.GetName();
+                wordUI.Text.text = wordModifier.GetName();
             }
         }
     }
