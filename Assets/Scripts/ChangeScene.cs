@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OpenLevel : MonoBehaviour
+public class ChangeScene : MonoBehaviour
 {
 
     public void LoadScene(string sceneName)
