@@ -7,29 +7,15 @@ using UnityEngine.UI;
 public class WordUI : MonoBehaviour, IPointerDownHandler
 {
     [field: SerializeField] public Text Text { get; set; }
-    public WordBase WordBase { get; set; }
+    [field: SerializeReference] public WordModifier WordModifier { get; set; }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("OnPointerDown");
-        if (WordBase != null)
+        if (WordModifier.Owner.LinkedWordBase != null)
         {
-            WordBase.GiveObjectTo(WordBase.linkedWordBase);
-            Debug.Log("Give me to someone else");
-        }
-    }
-
-    public void UpdateUI(List<WordModifier> currentModifiers)
-    {
-        Text.text = "";
-        for (int i = 0; i < currentModifiers.Count; i++)
-        {
-            WordModifier wordModifier = currentModifiers[i];
-            if (i != 0)
-            {
-                Text.text += "\n";
-            }
-            Text.text += wordModifier.GetName();
+            Debug.Log($"Giving {WordModifier.GetName()} to {WordModifier.Owner.LinkedWordBase} from {WordModifier.Owner}");
+            WordModifier.Owner.GiveObjectTo(WordModifier.Owner.LinkedWordBase, WordModifier);
         }
     }
 

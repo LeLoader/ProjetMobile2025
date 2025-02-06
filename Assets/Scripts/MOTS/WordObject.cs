@@ -7,36 +7,33 @@ using UnityEngine.UI;
 
 public class WordObject : WordBase
 {
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-        WordModifier.AddBaseModifiers(wordType, ref currentModifiers);
+        WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
+        UpdateWords(currentModifiers);
         UpdateModifiers();
     }
 
     public void Link(PlayerWord player)
     {
-        Debug.Log("Linked WordObject with: " + player.name);
-        linkedWordBase = player;
-        wordUI.Link();
+        LinkedWordBase = player;
+        foreach(WordModifier modifier in currentModifiers)
+        {
+            modifier.WordUI.Link();
+        }
     }
 
     public void Unlink() // Bind to move action when linked
     {
-        linkedWordBase = null;
+        LinkedWordBase = null;
         UpdateModifiers();
-    }
-
-    public void AddModifier(WordModifier wordModifier)
-    {
-        currentModifiers.Add(wordModifier);
-        wordUI.UpdateUI(currentModifiers);
     }
 
     private void ResetObject()
     {
         transform.localScale = Vector3.one;
     }
+
     private void UpdateModifiers()
     {
         ResetObject();
@@ -44,7 +41,12 @@ public class WordObject : WordBase
         {
             modifier.Apply(transform);
         }
+    }
 
-        wordUI.UpdateUI(currentModifiers);
+    [Button]
+    private void ForceUpdateWord()
+    {
+        UpdateModifiers();
+        UpdateWords(currentModifiers);
     }
 }

@@ -4,21 +4,44 @@ using UnityEngine;
 
 public class WordBase : MonoBehaviour
 {
-    [SerializeField] public WordUI wordUI;
-    [SerializeField, Label("Mot qui l'objet possède au Start")] protected WORDTYPE wordType;
-    [SerializeReference, ReadOnly] protected List<WordModifier> currentModifiers = new();
+    [SerializeField, Label("Mot(s) qui l'objet possède au Start")] protected WORDTYPE wordType;
+    [SerializeReference] protected List<WordModifier> currentModifiers = new();
+    [SerializeField] protected GameObject WordWrapper;
+    [SerializeField] protected GameObject WordPrefab;
 
-    public WordBase linkedWordBase = null;
+    public WordBase LinkedWordBase { get; protected set; }
 
-    protected virtual void Start()
+    public void GiveObjectTo(WordBase target, WordModifier modifier)
     {
-        wordUI.WordBase = this;
+        if (LinkedWordBase != null) {
+            target.AddModifier(modifier); // METHOD
+            currentModifiers.Remove(modifier);
+            UpdateWords(currentModifiers);
+            modifier.Owner = target;
+        }
     }
 
-    public void GiveObjectTo(WordBase target)
+    virtual public void AddModifier(WordModifier wordModifier)
     {
-        if (linkedWordBase != null) {
-           // target.currentModifiers.Add(this);
+        currentModifiers.Add(wordModifier);
+        UpdateWords(currentModifiers);
+    }
+
+    protected void UpdateWords(List<WordModifier> newModifiers)
+    {
+        for (int i = 0; i < WordWrapper.transform.childCount; i++)
+        {
+            Destroy(WordWrapper.transform.GetChild(i).gameObject);
+        }
+
+        foreach (WordModifier modifier in newModifiers)
+        {
+            if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
+            {
+                wordUI.Text.text = modifier.GetName();
+                wordUI.WordModifier = modifier;
+                modifier.WordUI = wordUI;
+            }
         }
     }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2777566943206217353}
   - component: {fileID: 1594527150793471014}
   - component: {fileID: 3351707314633730956}
-  - component: {fileID: 5585924752867691141}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -80,19 +79,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: WORDMODIFIER
---- !u!114 &5585924752867691141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5007959920815902828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709c62d25638976438b96b07bd3af892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Text>k__BackingField: {fileID: 0}
 --- !u!1 &6299438735749934004
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +139,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Text>k__BackingField: {fileID: 3351707314633730956}
+  <WordModifier>k__BackingField:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &8804294688816109891
 MonoBehaviour:
   m_ObjectHideFlags: 0
