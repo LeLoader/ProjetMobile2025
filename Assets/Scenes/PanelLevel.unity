@@ -450,7 +450,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -2029,7 +2029,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -2091,7 +2091,6 @@ GameObject:
   - component: {fileID: 953061142}
   - component: {fileID: 953061141}
   - component: {fileID: 953061140}
-  - component: {fileID: 953061143}
   m_Layer: 5
   m_Name: LevelPanel
   m_TagString: Untagged
@@ -2192,18 +2191,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953061138}
   m_CullTransparentMesh: 1
---- !u!114 &953061143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953061138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b4c5ca9f0f992548bba11bd3017af65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1000723976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,7 +2353,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -2715,7 +2702,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -3060,7 +3047,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -3193,10 +3180,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
-        m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: FindGameManager, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3481,7 +3468,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -3764,7 +3751,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -4035,7 +4022,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -4480,7 +4467,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -4692,7 +4679,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 953061143}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OpenLevel, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -5045,6 +5032,7 @@ GameObject:
   - component: {fileID: 2118771306}
   - component: {fileID: 2118771308}
   - component: {fileID: 2118771307}
+  - component: {fileID: 2118771309}
   m_Layer: 5
   m_Name: --BG--
   m_TagString: Untagged
@@ -5113,6 +5101,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2118771305}
   m_CullTransparentMesh: 1
+--- !u!114 &2118771309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118771305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcef779915508b843b2f866fce92cc5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 0}
 --- !u!1 &2133764238
 GameObject:
   m_ObjectHideFlags: 0
