@@ -107,6 +107,9 @@ MonoBehaviour:
   currentModifiers: []
   WordWrapper: {fileID: 6409945349998697929}
   WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
+  coll: {fileID: 6889978546682966058}
+  groundCheckDistance: 0.1
+  applySpeed: 1
   references:
     version: 2
     RefIds: []

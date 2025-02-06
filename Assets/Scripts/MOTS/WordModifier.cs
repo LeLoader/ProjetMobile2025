@@ -42,7 +42,7 @@ public abstract class WordModifier
         return name;
     }
 
-    abstract public void Apply(Transform transform);
+    abstract public void Apply(WordObject wordObject);
 
     public WordModifier(WordBase owner)
     {
@@ -124,23 +124,11 @@ public abstract class ScaleModifier : WordModifier
     {
     }
 
-    public override void Apply(Transform transform)
+    public override void Apply(WordObject wordObject)
     {
-        transform.localScale = new(transform.localScale.x * scale.x, transform.localScale.y * scale.y);
-        transform.TryGetComponent<Collider2D>(out Collider2D collider);
-        for (int i = 0; i < 10; i++)
-        {
-            transform.localScale = new(transform.localScale.x * scale.x * (i / 10), transform.localScale.y * scale.y * (i / 10));
-            List<Collider2D> res = new();
-            if (collider.Overlap(new ContactFilter2D(), res) > 0)
-            {
-                Debug.Log("Colliding with something");
-            }
-            else
-            {
-                Debug.Log("Not colliding with something");
-            }
-        }
+        // Vector3 baseScale = transform.localScale;
+        // transform.localScale = new(transform.localScale.x * scale.x, transform.localScale.y * scale.y);
+        wordObject.TargetScale = scale;
     }
 }
 
@@ -240,7 +228,7 @@ public class StairsModifier : ShapeModifier
         
     }
 
-    public override void Apply(Transform transform)
+    public override void Apply(WordObject wordObject)
     {
         throw new NotImplementedException();
     }
