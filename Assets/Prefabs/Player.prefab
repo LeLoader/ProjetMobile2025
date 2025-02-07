@@ -137,8 +137,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 0.68
+  m_AngularDamping: 2.94
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -174,7 +174,7 @@ MonoBehaviour:
   orientSign: {fileID: 6226532935863024554}
   distanceCheck: 0.01
   jumpForce: 5
-  speedForce: 10
+  speedForce: 3
   references:
     version: 2
     RefIds: []
