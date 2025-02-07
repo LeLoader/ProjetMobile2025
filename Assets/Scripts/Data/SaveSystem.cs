@@ -47,7 +47,6 @@ public class SaveSystem : MonoBehaviour
         {
             NewData();
         }
-        ChangeScene._instance.LoadScene("Guillaume");
     }
 
     public void NewData()

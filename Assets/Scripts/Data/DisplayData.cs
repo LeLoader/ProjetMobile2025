@@ -10,10 +10,7 @@ public class DisplayData : MonoBehaviour
 
     List<Level> _levelUnlock = new List<Level>();
 
-    private void Start()
-    {
-        ChangeScene._instance.OnActualisaton += ChangeDisplay;
-    }
+
 
     public void ChangeDisplay()
     {
@@ -28,8 +25,4 @@ public class DisplayData : MonoBehaviour
         _actualLevel.text = "Actual Level : " + level;
     }
 
-    private void OnDestroy()
-    {
-        ChangeScene._instance.OnActualisaton -= ChangeDisplay;
-    }
 }
