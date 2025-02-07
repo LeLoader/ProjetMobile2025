@@ -11,12 +11,14 @@ using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 public class PlayerWord : WordBase
 {
     [Header("General")]
-    [SerializeField] float interactionRadius = 5;
+    [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Collider2D coll;
     [SerializeField] float distanceCheck;
     [SerializeField] float jumpForce = 3f;
     [SerializeField] float speedForce = 5f;
+
+    int orientX = 1;
 
     const int WORDOBJECT_LAYERMASK = 7;
     const int MAP_LAYERMASK = 8;
@@ -72,13 +74,19 @@ public class PlayerWord : WordBase
     private void Use()
     {
         if (!Input.GetKeyDown(KeyCode.E) || !IsTouchingGround()) return;
-        List<Collider2D> results = new(); 
- 
-        if (Physics2D.OverlapCircle(transform.position, interactionRadius, contactFilter, results) > 0)
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * orientX, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
+        
+        if (hit.collider != null)
         {
-            if (results[0].TryGetComponent<WordObject>(out WordObject wordObject)){
+            Debug.DrawLine(transform.position, transform.position + Vector3.right * orientX * interactionDistance, Color.green, 10f);
+            if (hit.transform.TryGetComponent<WordObject>(out WordObject wordObject)){
                 Link(wordObject);
             };
+        }
+        else
+        {
+            Debug.DrawLine(transform.position, transform.position + Vector3.right * orientX * interactionDistance, Color.red, 10f);
         }
     }
 
@@ -107,7 +115,7 @@ public class PlayerWord : WordBase
 
     private void OnDrawGizmos()
     {
-        Handles.color = Color.green;
-        Handles.DrawWireArc(transform.position, Vector3.forward, Vector3.up, 360, interactionRadius);
+        Handles.color = Color.blue;
+        Handles.DrawLine(transform.position, transform.position + interactionDistance * orientX * Vector3.right);
     }
 }

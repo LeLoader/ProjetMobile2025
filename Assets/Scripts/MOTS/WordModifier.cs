@@ -128,7 +128,7 @@ public abstract class ScaleModifier : WordModifier
     {
         // Vector3 baseScale = transform.localScale;
         // transform.localScale = new(transform.localScale.x * scale.x, transform.localScale.y * scale.y);
-        wordObject.TargetScale = scale;
+        wordObject.TargetScale = new Vector3(wordObject.TargetScale.x * scale.x, wordObject.TargetScale.y * scale.y);
     }
 }
 
