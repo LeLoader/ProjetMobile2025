@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,10 +8,6 @@ using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
 {
-
-    //dictionnaire à récupérer pour savoir quels niveaux sont finit.
-    //Par exemple Level1, 1 /  Level2, 0
-    //Le level 1 est finit et le level 2 n'est pas finit 
 
     public LevelProgressionData _levelData;
     private string _savePath;

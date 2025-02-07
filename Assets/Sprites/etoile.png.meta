@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a253d22f499d8ce498fcc8c33e4c32d5
+guid: aaa7908573238874589718b0b3b59acd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5440287108327321428
-    second: "Capture d'\xE9cran 2025-02-06 093738_0"
+      213: 3803893667329186482
+    second: etoile_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Capture d'\xE9cran 2025-02-06 093738_0"
+      name: etoile_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 490
-        height: 497
+        y: 10
+        width: 512
+        height: 492
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ca05308e2b73084b0800000000000000
-      internalID: -5440287108327321428
+      spriteID: 2ba9384f2252ac430800000000000000
+      internalID: 3803893667329186482
       vertices: []
       indices: 
       edges: []
@@ -147,8 +147,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      "Capture d'\xE9cran 2025-02-06 093738_0": -5440287108327321428
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

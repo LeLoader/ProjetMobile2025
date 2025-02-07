@@ -13,7 +13,7 @@ public class Level
     }
 
     public SceneAsset _scene;
-    public int _idLevel;
+    public string _idLevel;
     public LevelState _state;
 
 }
