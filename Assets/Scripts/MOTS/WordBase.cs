@@ -14,10 +14,17 @@ public class WordBase : MonoBehaviour
     public void GiveObjectTo(WordBase target, WordModifier modifier)
     {
         if (LinkedWordBase != null) {
-            target.AddModifier(modifier); // METHOD
-            currentModifiers.Remove(modifier);
-            UpdateWords(currentModifiers);
-            modifier.Owner = target;
+            if (target.currentModifiers.Count < 2)
+            {
+                target.AddModifier(modifier); // METHOD
+                currentModifiers.Remove(modifier);
+                UpdateWords(currentModifiers);
+                modifier.Owner = target;
+            }
+            else
+            {
+                Debug.Log("Cannot add more modifier to this object");
+            }
         }
     }
 
@@ -39,6 +46,10 @@ public class WordBase : MonoBehaviour
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
             {
                 wordUI.Text.text = modifier.GetName();
+                if (LinkedWordBase != null)
+                {
+                    wordUI.Link();
+                }
                 wordUI.WordModifier = modifier;
                 modifier.WordUI = wordUI;
             }

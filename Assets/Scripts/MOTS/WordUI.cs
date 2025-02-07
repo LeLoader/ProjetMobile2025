@@ -21,11 +21,11 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
 
     public void Link()
     {
-        transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        Text.color = Color.red;
     }
 
     public void Unlink()
     {
-        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        Text.color = Color.white;
     }
 }
