@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,13 +14,16 @@ public class PlayerWord : WordBase
     [Header("General")]
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] Collider2D coll;
+    [SerializeField] Transform groundCheckers;
+    [SerializeField] Transform interactionCheckers;
+    [SerializeField] Transform orientSign;
     [SerializeField] float distanceCheck;
     [SerializeField] float jumpForce = 3f;
     [SerializeField] float speedForce = 5f;
 
     int orientX = 1;
 
+    const int GROUND_LAYERMASK = 3;
     const int WORDOBJECT_LAYERMASK = 7;
     const int MAP_LAYERMASK = 8;
     ContactFilter2D contactFilter = new();
@@ -38,13 +42,34 @@ public class PlayerWord : WordBase
         Use();
         Move();
         Jump();
+        UpdateOrientation();
+    }
+
+    private void UpdateOrientation()
+    {
+        if (orientX > 0)
+        {
+            orientSign.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        if (orientX < 0)
+        {
+            orientSign.rotation = Quaternion.Euler(0, 0, 90);
+        }
     }
 
     private bool IsTouchingGround()
     {
-        Debug.DrawLine(transform.position, transform.position + Vector3.down * ((coll.bounds.size.y / 2) + distanceCheck), Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
-        return (hit.collider != null);
+        for (int i = 0; i < groundCheckers.childCount; i++)
+        {
+            Transform t = groundCheckers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.down, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+            if (hit.collider != null)
+            {
+                return true;
+            }
+        }
+            
+        return false;
     }
 
 
@@ -53,12 +78,14 @@ public class PlayerWord : WordBase
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(Vector2.left * speedForce);
+            orientX = -1;
             Unlink();
 
         }
         if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(Vector2.right * speedForce);
+            orientX = 1;
             Unlink();
         }
     }
@@ -75,18 +102,18 @@ public class PlayerWord : WordBase
     {
         if (!Input.GetKeyDown(KeyCode.E) || !IsTouchingGround()) return;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * orientX, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
-        
-        if (hit.collider != null)
+        for (int i = 0; i < interactionCheckers.childCount; i++)
         {
-            Debug.DrawLine(transform.position, transform.position + Vector3.right * orientX * interactionDistance, Color.green, 10f);
-            if (hit.transform.TryGetComponent<WordObject>(out WordObject wordObject)){
-                Link(wordObject);
-            };
-        }
-        else
-        {
-            Debug.DrawLine(transform.position, transform.position + Vector3.right * orientX * interactionDistance, Color.red, 10f);
+            Transform t = interactionCheckers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right * orientX, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
+            if (hit.collider != null)
+            {
+                if (hit.transform.TryGetComponent<WordObject>(out WordObject wordObject))
+                {
+                    Link(wordObject);
+                    return;
+                };
+            }
         }
     }
 
