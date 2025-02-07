@@ -14,25 +14,23 @@ public class VerifyCompleted : MonoBehaviour
         Verify();
     }
 
-    public void UpdateImage()
-    {
-        foreach (GameObject go in _goBlocked)
-        {
-            
-        }
-    }
-
     public void Verify()
     {
         for(int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
         {
             if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
             {
-                _goBlocked.Add(_goLevel[i]);
+                if(!_goBlocked[i].activeInHierarchy)
+                {
+                    _goBlocked[i].SetActive(true);
+                }
             }
             else if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Completed)
             {
-                _goCompleted.Add(_goLevel[i]);
+                if (!_goCompleted[i].activeInHierarchy)
+                {
+                    _goCompleted[i].SetActive(true);
+                }
             }
         }
     }

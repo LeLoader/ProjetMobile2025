@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public SceneAsset _actualScene;
+    private SceneAsset _actualScene;
 
     private void Awake()
     {
@@ -23,6 +23,19 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            for (int i = 0; i<0; i++)
+            {
+                if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
+                {
+                    SceneManager.LoadScene(SaveSystem._instance._levelData._level[i - 1]._idLevel);
+                }
+            }
+        }
     }
 }
