@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
+using Unity.Cinemachine;
 
 public class PlayerWord : WordBase
 {
@@ -20,6 +21,8 @@ public class PlayerWord : WordBase
     [SerializeField] float distanceCheck;
     [SerializeField] float jumpForce = 3f;
     [SerializeField] float speedForce = 5f;
+    [SerializeField] bool IsLink = false;
+    [SerializeField] CinemachineCamera _camera;
 
     int orientX = 1;
 
@@ -125,6 +128,7 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
+        IsLink = true;
     }
 
     private void Unlink()
@@ -137,6 +141,7 @@ public class PlayerWord : WordBase
             }
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
+            IsLink = false;
         }
     }
 
