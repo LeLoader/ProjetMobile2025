@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class JumpButton : MonoBehaviour, IPointerDownHandler
+public class JumpButton : MonoBehaviour
 {
     public GameObject Player;
     public Transform groundCheck;
@@ -12,12 +13,15 @@ public class JumpButton : MonoBehaviour, IPointerDownHandler
     public float groundCheckRadius = 0.2f;
     private Rigidbody2D rb;
 
+    public Button jumpButton;
+
     void Start()
     {
         rb = Player.GetComponent<Rigidbody2D>();
+        jumpButton.onClick.AddListener(TaskOnClick);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void TaskOnClick()
     {
         if (IsGrounded())
         {
