@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WordBase : MonoBehaviour
 {
-    [SerializeField, Label("Mot(s) qui l'objet possède au Start")] protected WORDTYPE wordType;
+    [SerializeField, Label("Mot(s) qu'il possède au Start")] protected WORDTYPE wordType;
     [SerializeReference] protected List<WordModifier> currentModifiers = new();
     [SerializeField] protected GameObject WordWrapper;
     [SerializeField] protected GameObject WordPrefab;

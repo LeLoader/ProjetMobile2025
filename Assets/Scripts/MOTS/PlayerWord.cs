@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 using Unity.Cinemachine;
+using System.Collections;
 
 public class PlayerWord : WordBase
 {
@@ -23,6 +24,7 @@ public class PlayerWord : WordBase
     [SerializeField] float speedForce = 5f;
     [SerializeField] bool IsLink = false;
     [SerializeField] CinemachineCamera _camera;
+    [SerializeField] float duration = 2f;
 
     int orientX = 1;
 
@@ -31,8 +33,13 @@ public class PlayerWord : WordBase
     const int MAP_LAYERMASK = 8;
     ContactFilter2D contactFilter = new();
 
+    float _cameraUnlink = 7f;
+    float _currentCamera;
+    float _cameraLink = 3f;
+
     private void Start()
     {
+        
         contactFilter.layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         contactFilter.useLayerMask = true;
 
@@ -103,7 +110,7 @@ public class PlayerWord : WordBase
 
     private void Use()
     {
-        if (!Input.GetKeyDown(KeyCode.E) || !IsTouchingGround()) return;
+        if (!Input.GetKeyDown(KeyCode.E) || !IsTouchingGround() || IsLink) return;
 
         for (int i = 0; i < interactionCheckers.childCount; i++)
         {
@@ -129,6 +136,7 @@ public class PlayerWord : WordBase
             modifier.WordUI.Link();
         }
         IsLink = true;
+        StartCoroutine(DecreaseValueCoroutine(_cameraUnlink, _cameraLink, duration));
     }
 
     private void Unlink()
@@ -142,8 +150,23 @@ public class PlayerWord : WordBase
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
             IsLink = false;
+            StartCoroutine(DecreaseValueCoroutine(_cameraLink, _cameraUnlink, duration));
         }
     }
+
+    IEnumerator DecreaseValueCoroutine(float startValue, float endValue, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            _camera.Lens.OrthographicSize = _currentCamera;
+            _currentCamera = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        _currentCamera = endValue;
+    }
+
 
     private void OnDrawGizmos()
     {

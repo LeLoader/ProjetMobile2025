@@ -32,10 +32,12 @@ public class WordObject : WordBase
     {
         if ((ShouldWaitUntilGroundToApply && IsTouchingGround()) || !ShouldWaitUntilGroundToApply)
         {
-            if (!IsTouchingTop() && !IsStuckOnSide())
+
+            if (!IsStuckOnSide() && !IsTouchingTop())
             {
                 transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, applySpeed * Time.fixedDeltaTime);
             }
+
         }
     }
 
@@ -65,7 +67,7 @@ public class WordObject : WordBase
     public void Link(PlayerWord player)
     {
         LinkedWordBase = player;
-        foreach(WordModifier modifier in currentModifiers)
+        foreach (WordModifier modifier in currentModifiers)
         {
             modifier.WordUI.Link();
         }
