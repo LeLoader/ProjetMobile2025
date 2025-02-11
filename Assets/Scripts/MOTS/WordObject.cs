@@ -2,8 +2,10 @@ using NaughtyAttributes;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class WordObject : WordBase
 {
@@ -12,9 +14,15 @@ public class WordObject : WordBase
     [SerializeField] float distanceCheck;
     [SerializeField] float applySpeed;
 
-    public Vector3 TargetScale { get; set; }
+    public Vector3 TargetScale { get; set; } = Vector3.one;
+    protected Vector3 realTargetScale = Vector3.one;
 
     const int MAP_LAYERMASK = 8;
+
+    bool wasStuckOnSide = false;
+    bool wasStuckOnTop = false;
+
+    Vector3 baseScale;
 
     private void Start()
     {
@@ -25,17 +33,64 @@ public class WordObject : WordBase
 
     private void FixedUpdate()
     {
+        CheckStuck();
         ApplyScale();
+    }
+
+    private void CheckStuck()
+    {
+        if (!wasStuckOnSide && IsStuckOnSide())
+        {
+            wasStuckOnSide = true;
+            CalculateNewTargetXScale();
+        }
+
+        if (!wasStuckOnTop && IsTouchingTop())
+        {
+            wasStuckOnTop = true;
+            CalculateNewTargetYScale();
+        }
+    }
+
+    private void CalculateNewTargetXScale()
+    {
+        float maxWidth = transform.localScale.x;
+    }
+
+    private void CalculateNewTargetYScale()
+    {
+        float maxHeight = transform.localScale.y;
     }
 
     private void ApplyScale()
     {
-        if ((ShouldWaitUntilGroundToApply && IsTouchingGround()) || !ShouldWaitUntilGroundToApply)
+        if (LinkedWordBase) return;
+        if (!ShouldWaitUntilGroundToApply || (ShouldWaitUntilGroundToApply && IsTouchingGround()))
         {
-            if (!IsTouchingTop() && !IsStuckOnSide())
+            realTargetScale = Vector3.one;
+            foreach (ScaleModifier modifier in currentModifiers)
             {
-                transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, applySpeed * Time.fixedDeltaTime);
+                if (IsTouchingTop() && (modifier.IsGreatScaleY() /*|| TargetScale.y > 1*/))
+                {
+                    
+                }
+                else if (IsStuckOnSide() && (modifier.IsGreatScaleX() /*|| TargetScale.x > 1*/))
+                {
+                    
+                }
+                else 
+                {
+                    modifier.appliedTimer += Time.fixedDeltaTime;
+                }
+
+                realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer));
             }
+
+
+            transform.localScale = realTargetScale;
+            //transform.localScale = Vector3.MoveTowards(transform.localScale, realTargetScale, applySpeed * Time.fixedDeltaTime);
+
+            // Vector3 tempScale = Vector3.MoveTowards(transform.localScale, TargetScale, applySpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -65,7 +120,7 @@ public class WordObject : WordBase
     public void Link(PlayerWord player)
     {
         LinkedWordBase = player;
-        foreach(WordModifier modifier in currentModifiers)
+        foreach (WordModifier modifier in currentModifiers)
         {
             modifier.WordUI.Link();
         }
@@ -84,6 +139,7 @@ public class WordObject : WordBase
     private void ResetObject()
     {
         TargetScale = Vector3.one;
+        baseScale = transform.localScale; 
     }
 
     private void UpdateModifiers()
@@ -92,6 +148,7 @@ public class WordObject : WordBase
         foreach (WordModifier modifier in currentModifiers)
         {
             modifier.Apply(this);
+            ((ScaleModifier)modifier).appliedTimer = 0;
         }
     }
 

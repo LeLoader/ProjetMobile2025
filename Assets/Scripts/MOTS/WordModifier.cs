@@ -119,6 +119,7 @@ public abstract class WordModifier
 public abstract class ScaleModifier : WordModifier
 {
     public Vector3 scale;
+    public float appliedTimer = 0;
 
     protected ScaleModifier(WordBase owner) : base(owner)
     {
@@ -126,10 +127,18 @@ public abstract class ScaleModifier : WordModifier
 
     public override void Apply(WordObject wordObject)
     {
-        // Vector3 baseScale = transform.localScale;
-        // transform.localScale = new(transform.localScale.x * scale.x, transform.localScale.y * scale.y);
-        wordObject.TargetScale = new Vector3(wordObject.TargetScale.x * scale.x, wordObject.TargetScale.y * scale.y);
+        wordObject.TargetScale = Vector3.Scale(scale, wordObject.TargetScale);
+        //wordObject.TargetScale.Scale(scale);
+        Debug.Log(wordObject.TargetScale);
     }
+
+    public Vector3 GetScale()
+    {
+        return scale;
+    }
+
+    public bool IsGreatScaleX() { return scale.x > 1; }
+    public bool IsGreatScaleY() { return scale.y > 1; }
 }
 
 [Serializable]
