@@ -19,7 +19,8 @@ public class PlayerWord : WordBase
     [SerializeField] Transform orientSign;
     [SerializeField] float distanceCheck;
     [SerializeField] float jumpForce = 3f;
-    [SerializeField] float speedForce = 5f;
+    [SerializeField] float accelerationForce = 5f;
+    [SerializeField] float maxSpeed = 3f;
 
     int orientX = 1;
 
@@ -77,14 +78,16 @@ public class PlayerWord : WordBase
     {
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(Vector2.left * speedForce);
+            rb.AddForce(Vector2.left * accelerationForce);
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
             orientX = -1;
             Unlink();
 
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(Vector2.right * speedForce);
+            rb.AddForce(Vector2.right * accelerationForce);
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
             orientX = 1;
             Unlink();
         }
