@@ -25,6 +25,7 @@ public class PlayerWord : WordBase
     [SerializeField] bool IsLink = false;
     [SerializeField] CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
+    public event Action<PlayerWord> _effectModifiers;
 
     int orientX = 1;
 
@@ -104,7 +105,20 @@ public class PlayerWord : WordBase
     {
         if (!Input.GetKeyDown(KeyCode.Space) || !IsTouchingGround()) return;
 
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        WordObject stickyBlock = GetStickyBlockUnderPlayer();
+
+        if (stickyBlock != null)
+        {
+            float direction = (transform.position.x < stickyBlock.transform.position.x) ? 1f : -1f;
+
+            Vector2 force = new Vector2(direction * speedForce, jumpForce);
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
         Unlink();
     }
 
@@ -165,6 +179,29 @@ public class PlayerWord : WordBase
             yield return null;
         }
         _currentCamera = endValue;
+    }
+
+
+    private WordObject GetStickyBlockUnderPlayer()
+    {
+        int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK)
+                      + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK)
+                      + (int)Mathf.Pow(2, GROUND_LAYERMASK);
+
+        for (int i = 0; i < groundCheckers.childCount; i++)
+        {
+            Transform checker = groundCheckers.GetChild(i);
+            RaycastHit2D hit = Physics2D.Raycast(checker.position, Vector2.down, distanceCheck, layerMask);
+            if (hit.collider != null)
+            {
+                WordObject block = hit.collider.GetComponent<WordObject>();
+                if (block != null && block.BlockIsSticky)
+                {
+                    return block;
+                }
+            }
+        }
+        return null;
     }
 
 

@@ -12,6 +12,11 @@ public class WordObject : WordBase
     [SerializeField] float distanceCheck;
     [SerializeField] float applySpeed;
 
+
+    public bool BlockIsSticky;
+    public bool BlockIsBouncy;
+
+
     public Vector3 TargetScale { get; set; }
 
     const int MAP_LAYERMASK = 8;
@@ -26,6 +31,46 @@ public class WordObject : WordBase
     private void FixedUpdate()
     {
         ApplyScale();
+        BlockIsBouncy = IsBouncy();
+        BlockIsSticky = IsSticky();
+    }
+
+    private bool IsSticky()
+    {
+        if(currentModifiers.Count == 1)
+        {
+            if (this.currentModifiers[0].WordUI.Text.text == "Sticky")
+            {
+                return true;
+            }
+        }
+        if (currentModifiers.Count > 1)
+        {
+            if (this.currentModifiers[1].WordUI.Text.text == "Sticky")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsBouncy()
+    {
+        if (currentModifiers.Count == 1)
+        {
+            if (this.currentModifiers[0].WordUI.Text.text == "Bouncy")
+            {
+                return true;
+            }
+        }
+        if (currentModifiers.Count > 1)
+        {
+            if (this.currentModifiers[1].WordUI.Text.text == "Bouncy")
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void ApplyScale()
@@ -37,9 +82,10 @@ public class WordObject : WordBase
             {
                 transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, applySpeed * Time.fixedDeltaTime);
             }
-
         }
     }
+
+
 
     private bool IsStuckOnSide()
     {

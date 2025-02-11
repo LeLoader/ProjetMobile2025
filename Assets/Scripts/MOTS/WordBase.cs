@@ -9,6 +9,7 @@ public class WordBase : MonoBehaviour
     [SerializeField] protected GameObject WordWrapper;
     [SerializeField] protected GameObject WordPrefab;
 
+
     public WordBase LinkedWordBase { get; protected set; }
 
     public void GiveObjectTo(WordBase target, WordModifier modifier)

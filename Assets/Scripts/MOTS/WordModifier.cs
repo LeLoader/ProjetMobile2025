@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Flags]
@@ -18,13 +19,12 @@ public enum WORDTYPE
     LONGLONG     = 2 << 7,
 
     BOUNCY       = 2 << 8,
-    BOUNCYBOUNCY = 2 << 9,
 
-    STICKY       = 2 << 10,
-    STICKYSTICKY = 2 << 11,
+    STICKY       = 2 << 9,
 
-    STAIRS       = 2 << 12,
-    BALL         = 2 << 13,
+    STAIRS       = 2 << 10,
+
+    BALL         = 2 << 11,
 }
 
 [Serializable]
@@ -90,20 +90,11 @@ public abstract class WordModifier
         }
 
         if (type.HasFlag(WORDTYPE.BOUNCY))
-            throw new NotImplementedException();
+            list.Add(new BouncyModifier(owner));
 
-        if (type.HasFlag(WORDTYPE.BOUNCYBOUNCY))
-        {
-            throw new NotImplementedException();
-        }
 
         if (type.HasFlag(WORDTYPE.STICKY))
-            throw new NotImplementedException();
-
-        if (type.HasFlag(WORDTYPE.STICKYSTICKY))
-        {
-            throw new NotImplementedException();
-        }
+            list.Add(new StickyModifier(owner));
 
         if (type.HasFlag(WORDTYPE.BALL))
             throw new NotImplementedException();
@@ -199,6 +190,8 @@ public abstract class NonScaleModifier : WordModifier
     protected NonScaleModifier(WordBase owner) : base(owner)
     {
     }
+
+    
 }
 
 #region Effect
@@ -207,6 +200,44 @@ public abstract class EffectModifier : NonScaleModifier
 {
     protected EffectModifier(WordBase owner) : base(owner)
     {
+    }
+}
+
+[Serializable]
+public class StickyModifier : EffectModifier
+{
+    public StickyModifier(WordBase owner) : base(owner)
+    {
+        name = "Sticky";
+    }
+
+    public override void Apply(WordObject wordObject)
+    {
+        
+    }
+
+    public override void DebugName()
+    {
+        Debug.Log("StickyModifier");
+    }
+}
+
+[Serializable]
+public class BouncyModifier : EffectModifier
+{
+    public BouncyModifier(WordBase owner) : base(owner)
+    {
+        name = "Bouncy";
+    }
+
+    public override void Apply(WordObject wordObject)
+    {
+        
+    }
+
+    public override void DebugName()
+    {
+        Debug.Log("StickyModifier");
     }
 }
 
