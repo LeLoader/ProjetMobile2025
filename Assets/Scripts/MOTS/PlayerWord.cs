@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 using Unity.Cinemachine;
 using System.Collections;
+using Unity.Android.Gradle;
 
 public class PlayerWord : WordBase
 {
@@ -17,6 +18,8 @@ public class PlayerWord : WordBase
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Transform groundCheckers;
+    [SerializeField] Transform leftCheckers;
+    [SerializeField] Transform rightCheckers;
     [SerializeField] Transform interactionCheckers;
     [SerializeField] Transform orientSign;
     [SerializeField] float distanceCheck;
@@ -25,7 +28,7 @@ public class PlayerWord : WordBase
     [SerializeField] bool IsLink = false;
     [SerializeField] CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
-    public event Action<PlayerWord> _effectModifiers;
+    [SerializeField] bool IsStick;
 
     int orientX = 1;
 
@@ -40,7 +43,7 @@ public class PlayerWord : WordBase
 
     private void Start()
     {
-        
+
         contactFilter.layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         contactFilter.useLayerMask = true;
 
@@ -79,10 +82,43 @@ public class PlayerWord : WordBase
                 return true;
             }
         }
-            
         return false;
     }
 
+    private bool PlayerIsOnSticky()
+    {
+        for (int i = 0; i < leftCheckers.childCount; i++)
+        {
+            Transform t = leftCheckers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.left, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+            if (hit.collider != null)
+            {
+                WordModifier _block = hit.collider.GetComponent<WordModifier>();
+                if(_block != null)
+                {
+                    //appeler la fonction qui colle le joueur à GAUCHE
+                    this.transform.SetParent(hit.transform, false);
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < rightCheckers.childCount; i++)
+        {
+            Transform t = rightCheckers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+            if (hit.collider != null)
+            {
+                WordModifier _block = hit.collider.GetComponent<WordModifier>();
+                if (_block != null)
+                {
+                    //appeler la fonction qui colle le joueur à DROITE
+                    this.transform.SetParent(hit.transform, false);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private void Move()
     {
@@ -105,7 +141,7 @@ public class PlayerWord : WordBase
     {
         if (!Input.GetKeyDown(KeyCode.Space) || !IsTouchingGround()) return;
 
-        WordObject stickyBlock = GetStickyBlockUnderPlayer();
+        WordObject stickyBlock = GetStickyBlock();
 
         if (stickyBlock != null)
         {
@@ -150,7 +186,7 @@ public class PlayerWord : WordBase
             modifier.WordUI.Link();
         }
         IsLink = true;
-        StartCoroutine(DecreaseValueCoroutine(_cameraUnlink, _cameraLink, duration));
+        StartCoroutine(TransitionCamera(_cameraUnlink, _cameraLink, duration));
     }
 
     private void Unlink()
@@ -164,11 +200,11 @@ public class PlayerWord : WordBase
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
             IsLink = false;
-            StartCoroutine(DecreaseValueCoroutine(_cameraLink, _cameraUnlink, duration));
+            StartCoroutine(TransitionCamera(_cameraLink, _cameraUnlink, duration));
         }
     }
 
-    IEnumerator DecreaseValueCoroutine(float startValue, float endValue, float duration)
+    IEnumerator TransitionCamera(float startValue, float endValue, float duration)
     {
         float elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -182,7 +218,7 @@ public class PlayerWord : WordBase
     }
 
 
-    private WordObject GetStickyBlockUnderPlayer()
+    private WordObject GetStickyBlock()
     {
         int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK)
                       + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK)

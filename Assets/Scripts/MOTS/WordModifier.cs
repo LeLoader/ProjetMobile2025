@@ -213,7 +213,8 @@ public class StickyModifier : EffectModifier
 
     public override void Apply(WordObject wordObject)
     {
-        
+        //ajouter un bool sticky qui fait que 
+        //dès que le joueur touche ça il vérifie si c'est st
     }
 
     public override void DebugName()
