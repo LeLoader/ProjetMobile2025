@@ -9,10 +9,11 @@ using UnityEngine.UIElements;
 
 public class WordObject : WordBase
 {
-    [SerializeField] Collider2D coll;
     [SerializeField] bool ShouldWaitUntilGroundToApply;
     [SerializeField] float distanceCheck;
     [SerializeField] float applySpeed;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Rigidbody2D rb;
 
     public Vector3 TargetScale { get; set; } = Vector3.one;
     protected Vector3 realTargetScale = Vector3.one;
@@ -22,10 +23,23 @@ public class WordObject : WordBase
     bool wasStuckOnSide = false;
     bool wasStuckOnTop = false;
 
+    Collider2D coll;
+
+    [Header("Default")]
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] BoxCollider2D defaultCollider;
+    [Header("Stairs")]
+    [SerializeField] Sprite stairsSprite;
+    [SerializeField] PolygonCollider2D stairsCollider;
+    [Header("Ball")]
+    [SerializeField] Sprite ballSprite;
+    [SerializeField] CapsuleCollider2D ballCollider;
+
     Vector3 baseScale;
 
     private void Start()
     {
+        coll = defaultCollider;
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
         UpdateWords(currentModifiers);
         UpdateModifiers();
@@ -35,6 +49,40 @@ public class WordObject : WordBase
     {
         CheckStuck();
         ApplyScale();
+    }
+
+    public void SetShape(WORDTYPE type)
+    {
+        coll.enabled = false;
+        transform.rotation = Quaternion.identity;
+
+        if (type.HasFlag(WORDTYPE.STAIRS))
+        {
+            coll = stairsCollider;
+            spriteRenderer.sprite = stairsSprite;
+            rb.freezeRotation = true;
+            rb.mass = 10000f;
+        }
+        else if (type.HasFlag(WORDTYPE.BALL))
+        {
+            coll = ballCollider;
+            spriteRenderer.sprite = ballSprite;
+            rb.freezeRotation = false;
+            rb.mass = 1f; // PARAM
+        }
+        else if (type == WORDTYPE.NONE)
+        {
+            coll = defaultCollider;
+            spriteRenderer.sprite = defaultSprite;
+            rb.freezeRotation = true;
+            rb.mass = 10000f;
+        }
+        else
+        {
+            Debug.LogWarning("Wrong shape type passed");
+        }
+
+        coll.enabled = true;
     }
 
     private void CheckStuck()
@@ -68,22 +116,25 @@ public class WordObject : WordBase
         if (!ShouldWaitUntilGroundToApply || (ShouldWaitUntilGroundToApply && IsTouchingGround()))
         {
             realTargetScale = Vector3.one;
-            foreach (ScaleModifier modifier in currentModifiers)
+            foreach (WordModifier wordModifier in currentModifiers)
             {
-                if (IsTouchingTop() && (modifier.IsGreatScaleY() /*|| TargetScale.y > 1*/))
+                if (wordModifier is ScaleModifier modifier)
                 {
-                    
-                }
-                else if (IsStuckOnSide() && (modifier.IsGreatScaleX() /*|| TargetScale.x > 1*/))
-                {
-                    
-                }
-                else 
-                {
-                    modifier.appliedTimer += Time.fixedDeltaTime;
-                }
+                    if (IsTouchingTop() && (modifier.IsGreatScaleY() /*|| TargetScale.y > 1*/))
+                    {
 
-                realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer));
+                    }
+                    else if (IsStuckOnSide() && (modifier.IsGreatScaleX() /*|| TargetScale.x > 1*/))
+                    {
+
+                    }
+                    else
+                    {
+                        modifier.appliedTimer += Time.fixedDeltaTime;
+                    }
+
+                    realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer));
+                } 
             }
 
 
@@ -148,7 +199,14 @@ public class WordObject : WordBase
         foreach (WordModifier modifier in currentModifiers)
         {
             modifier.Apply(this);
-            ((ScaleModifier)modifier).appliedTimer = 0;
+            if (modifier is ScaleModifier scaleModifier) // Maybe use a reset method in WordModifier
+            {
+                scaleModifier.appliedTimer = 0;
+            }
+        }
+        if (!currentModifiers.Exists(mod => mod is ShapeModifier)) // If no shape modifier is found, then set shape to default using NONE
+        {
+            SetShape(WORDTYPE.NONE);
         }
     }
 

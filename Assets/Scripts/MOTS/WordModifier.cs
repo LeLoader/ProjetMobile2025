@@ -106,10 +106,10 @@ public abstract class WordModifier
         }
 
         if (type.HasFlag(WORDTYPE.BALL))
-            throw new NotImplementedException();
+            list.Add(new BallModifier(owner));
 
         if (type.HasFlag(WORDTYPE.STAIRS))
-            throw new NotImplementedException();
+            list.Add(new StairsModifier(owner));
     }
 }
 
@@ -203,6 +203,7 @@ public class LongModifier : ScaleModifier
 
 #endregion
 
+#region NonScale
 public abstract class NonScaleModifier : WordModifier
 {
     protected NonScaleModifier(WordBase owner) : base(owner)
@@ -239,7 +240,7 @@ public class StairsModifier : ShapeModifier
 
     public override void Apply(WordObject wordObject)
     {
-        throw new NotImplementedException();
+        wordObject.SetShape(WORDTYPE.STAIRS);
     }
 
     public override void DebugName()
@@ -248,4 +249,25 @@ public class StairsModifier : ShapeModifier
     }
 }
 
+public class BallModifier : ShapeModifier
+{
+    public BallModifier(WordBase owner) : base(owner)
+    {
+        name = "Ball";
+
+    }
+
+    public override void Apply(WordObject wordObject)
+    {
+        wordObject.SetShape(WORDTYPE.BALL);
+    }
+
+    public override void DebugName()
+    {
+        Debug.Log("BallModifier");
+    }
+}
+
 #endregion
+
+#endregion NonScale
