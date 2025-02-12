@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 96176860}
+  Force: 5
 --- !u!1 &96176860
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb5fb6f5f7203d41a5dedb15a2e011f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  move: 5
 --- !u!70 &96176862
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -349,7 +350,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &96176864
 SpriteRenderer:
@@ -980,6 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 96176860}
+  Force: -5
 --- !u!1 &1793132171
 GameObject:
   m_ObjectHideFlags: 0
