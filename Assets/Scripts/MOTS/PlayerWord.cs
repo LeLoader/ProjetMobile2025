@@ -29,6 +29,7 @@ public class PlayerWord : WordBase
     [SerializeField] CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
     [SerializeField] bool IsStick;
+    [SerializeField] bool CanMove;
 
     int orientX = 1;
 
@@ -46,6 +47,7 @@ public class PlayerWord : WordBase
 
         contactFilter.layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         contactFilter.useLayerMask = true;
+        CanMove = true;
 
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
         UpdateWords(currentModifiers);
@@ -57,6 +59,8 @@ public class PlayerWord : WordBase
         Move();
         Jump();
         UpdateOrientation();
+        IsStick = PlayerIsOnSticky();
+        UpdateGravity();
     }
 
     private void UpdateOrientation()
@@ -79,9 +83,17 @@ public class PlayerWord : WordBase
             RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.down, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
             if (hit.collider != null)
             {
+                WordObject _block = hit.collider?.GetComponent<WordObject>();
+                if (_block != null && _block.BlockIsSticky)
+                {
+                    speedForce = 3;
+                    jumpForce  = 2;
+                }
                 return true;
             }
         }
+        speedForce = 7;
+        jumpForce = 5;
         return false;
     }
 
@@ -93,11 +105,11 @@ public class PlayerWord : WordBase
             RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.left, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
             if (hit.collider != null)
             {
-                WordModifier _block = hit.collider.GetComponent<WordModifier>();
-                if(_block != null)
+                WordObject _block = hit.collider?.GetComponent<WordObject>();
+                if(_block != null && _block.BlockIsSticky)
                 {
                     //appeler la fonction qui colle le joueur à GAUCHE
-                    this.transform.SetParent(hit.transform, false);
+                    this.transform.SetParent(hit.transform, true);
                     return true;
                 }
             }
@@ -108,28 +120,41 @@ public class PlayerWord : WordBase
             RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
             if (hit.collider != null)
             {
-                WordModifier _block = hit.collider.GetComponent<WordModifier>();
-                if (_block != null)
+                WordObject _block = hit.collider?.GetComponent<WordObject>();
+                if (_block != null && _block.BlockIsSticky)
                 {
                     //appeler la fonction qui colle le joueur à DROITE
-                    this.transform.SetParent(hit.transform, false);
+                    this.transform.SetParent(hit.transform, true);
                     return true;
                 }
             }
         }
+        this.transform.SetParent(null, true);
         return false;
+    }
+
+    private void UpdateGravity()
+    {
+        if(!IsTouchingGround() && PlayerIsOnSticky())
+        {
+            rb.gravityScale = 0;
+        }
+        else
+        {
+            rb.gravityScale = 1;
+        }
     }
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && CanMove)
         {
             rb.AddForce(Vector2.left * speedForce);
             orientX = -1;
             Unlink();
 
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && CanMove)
         {
             rb.AddForce(Vector2.right * speedForce);
             orientX = 1;
@@ -139,23 +164,44 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
-        if (!Input.GetKeyDown(KeyCode.Space) || !IsTouchingGround()) return;
+        if (!Input.GetKeyDown(KeyCode.Space) || (!IsTouchingGround() && !IsStick)) return;
 
-        WordObject stickyBlock = GetStickyBlock();
-
-        if (stickyBlock != null)
+        if (IsStick && !IsTouchingGround())
         {
-            float direction = (transform.position.x < stickyBlock.transform.position.x) ? 1f : -1f;
-
-            Vector2 force = new Vector2(direction * speedForce, jumpForce);
-            rb.AddForce(force, ForceMode2D.Impulse);
+            JumpOnSticky();
         }
         else
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
-
+        
         Unlink();
+    }
+
+    private void JumpOnSticky()
+    {
+        if(orientX > 0)
+        {
+            rightCheckers.gameObject.SetActive(false);
+            IsStick = false;
+            CanMove = false;
+            UpdateGravity();
+            this.transform.SetParent(null, true);
+            Invoke("ReactivateRightCheckers", 0.5f);
+            rb.AddForce(new Vector2(-10, 20) * speedForce * 4);
+            orientX = -1;
+        }
+        else
+        {
+            leftCheckers.gameObject.SetActive(false);
+            CanMove = false;
+            IsStick = false;
+            UpdateGravity();
+            this.transform.SetParent(null, true);
+            Invoke("ReactivateLeftCheckers", 0.5f);
+            rb.AddForce(new Vector2(10, 20) * speedForce * 4);
+            orientX = 1;
+        }
     }
 
     private void Use()
@@ -217,27 +263,16 @@ public class PlayerWord : WordBase
         _currentCamera = endValue;
     }
 
-
-    private WordObject GetStickyBlock()
+    private void ReactivateLeftCheckers()
     {
-        int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK)
-                      + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK)
-                      + (int)Mathf.Pow(2, GROUND_LAYERMASK);
+        leftCheckers.gameObject.SetActive(true);
+        CanMove = true;
+    }
 
-        for (int i = 0; i < groundCheckers.childCount; i++)
-        {
-            Transform checker = groundCheckers.GetChild(i);
-            RaycastHit2D hit = Physics2D.Raycast(checker.position, Vector2.down, distanceCheck, layerMask);
-            if (hit.collider != null)
-            {
-                WordObject block = hit.collider.GetComponent<WordObject>();
-                if (block != null && block.BlockIsSticky)
-                {
-                    return block;
-                }
-            }
-        }
-        return null;
+    private void ReactivateRightCheckers()
+    {
+        rightCheckers.gameObject.SetActive(true);
+        CanMove = true;
     }
 
 
