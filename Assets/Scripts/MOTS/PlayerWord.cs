@@ -32,8 +32,9 @@ public class PlayerWord : WordBase
 
     [Header("Movement")]
     [SerializeField] float accelerationForce = 5f;
-    [SerializeField] float maxSpeed = 3f;
+    [SerializeField] float maxSpeed = 7f;
     [SerializeField] bool IsStick;
+    [SerializeField] bool HeadIsStick;
     [SerializeField] bool CanMove;
     [SerializeField] float jumpForce = 3f;
 
@@ -66,6 +67,7 @@ public class PlayerWord : WordBase
         Jump();
         UpdateOrientation();
         IsStick = PlayerIsOnSticky();
+        HeadIsStick = HeadIsSticky();
         UpdateGravity();
     }
 
@@ -99,7 +101,7 @@ public class PlayerWord : WordBase
             }
         }
         maxSpeed = 7;
-        jumpForce = 5;
+        jumpForce = 7;
         return false;
     }
 
@@ -114,8 +116,10 @@ public class PlayerWord : WordBase
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
                 if(_block != null && _block.BlockIsSticky)
                 {
-                    //appeler la fonction qui colle le joueur ï¿½ GAUCHE
+                    //appeler la fonction qui colle le joueur à GAUCHE
                     this.transform.SetParent(hit.transform, true);
+                    rb.linearVelocity.Set(0,0);
+                    Debug.Log("toucher");
                     return true;
                 }
             }
@@ -129,8 +133,10 @@ public class PlayerWord : WordBase
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
                 if (_block != null && _block.BlockIsSticky)
                 {
-                    //appeler la fonction qui colle le joueur ï¿½ DROITE
+                    //appeler la fonction qui colle le joueur à DROITE
                     this.transform.SetParent(hit.transform, true);
+                    rb.linearVelocity.Set(0, 0);
+                    Debug.Log("toucher");
                     return true;
                 }
             }
@@ -141,10 +147,10 @@ public class PlayerWord : WordBase
 
     private bool HeadIsSticky()
     {
-        for (int i = 0; i < leftCheckers.childCount; i++)
+        for (int i = 0; i < topCheckers.childCount; i++)
         {
-            Transform t = leftCheckers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.left, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+            Transform t = topCheckers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.up, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
             if (hit.collider != null)
             {
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
@@ -161,7 +167,7 @@ public class PlayerWord : WordBase
 
     private void UpdateGravity()
     {
-        if(!IsTouchingGround() && PlayerIsOnSticky())
+        if(!IsTouchingGround() && (PlayerIsOnSticky() || HeadIsSticky()))
         {
             rb.gravityScale = 0;
         }
@@ -192,11 +198,16 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
-        if (!Input.GetKeyDown(KeyCode.Space) || (!IsTouchingGround() && !IsStick)) return;
+        if (!Input.GetKeyDown(KeyCode.Space) || (!IsTouchingGround() && !IsStick && !HeadIsStick)) return;
 
         if (IsStick && !IsTouchingGround())
         {
             JumpOnSticky();
+        }
+        else if(HeadIsStick && !IsTouchingGround())
+        {
+            Debug.Log("espace");
+            FallAfterSticky();
         }
         else
         {
@@ -230,6 +241,17 @@ public class PlayerWord : WordBase
             rb.AddForce(new Vector2(10, 20) * maxSpeed * 4);
             orientX = 1;
         }
+    }
+
+    private void FallAfterSticky()
+    {
+        Debug.Log("fonction");
+        topCheckers.gameObject.SetActive(false);
+        HeadIsStick = false;
+        UpdateGravity();
+        this.transform.SetParent(null, true);
+        Invoke("ReactivateTopCheckers", 1f);
+        rb.AddForce(new Vector2(0, -20) * maxSpeed * 4);
     }
 
     private void Use()
@@ -300,6 +322,12 @@ public class PlayerWord : WordBase
     private void ReactivateRightCheckers()
     {
         rightCheckers.gameObject.SetActive(true);
+        CanMove = true;
+    }
+    
+    private void ReactivateTopCheckers()
+    {
+        topCheckers.gameObject.SetActive(true);
         CanMove = true;
     }
 
