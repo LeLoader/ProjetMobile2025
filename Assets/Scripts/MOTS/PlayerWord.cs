@@ -24,6 +24,7 @@ public class PlayerWord : WordBase
     [SerializeField] Transform interactionCheckers;
     [SerializeField] Transform orientSign;
     [SerializeField] float distanceCheck;
+    [SerializeField] float scale = 1f;
 
 
     [SerializeField] bool IsLink = false;
@@ -36,6 +37,7 @@ public class PlayerWord : WordBase
     [SerializeField] bool IsStick;
     [SerializeField] bool HeadIsStick;
     [SerializeField] bool CanMove;
+    [SerializeField] bool CanJump;
     [SerializeField] float jumpForce = 3f;
 
     int orientX = 1;
@@ -94,7 +96,7 @@ public class PlayerWord : WordBase
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
                 if (_block != null && _block.BlockIsSticky)
                 {
-                    maxSpeed = 3;
+                    maxSpeed = 2;
                     jumpForce  = 2;
                 }
                 return true;
@@ -118,9 +120,10 @@ public class PlayerWord : WordBase
                 {
                     //appeler la fonction qui colle le joueur à GAUCHE
                     this.transform.SetParent(hit.transform, true);
-                    rb.linearVelocity.Set(0,0);
-                    rb.inertia = 0;
-                    Debug.Log("toucher");
+                    if(!IsTouchingGround())
+                    {
+                        rb.linearVelocity = new Vector2(0, 0);
+                    }
                     return true;
                 }
             }
@@ -136,13 +139,17 @@ public class PlayerWord : WordBase
                 {
                     //appeler la fonction qui colle le joueur à DROITE
                     this.transform.SetParent(hit.transform, true);
-                    rb.linearVelocity.Set(0, 0);
-                    Debug.Log("toucher");
+                    this.transform.localScale = new Vector2(0.5f, 0.5f);
+                    if (!IsTouchingGround())
+                    {
+                        rb.linearVelocity = new Vector2(0, 0);
+                    }
                     return true;
                 }
             }
         }
         this.transform.SetParent(null, true);
+        this.transform.localScale = Vector3.one;
         return false;
     }
 
@@ -159,10 +166,13 @@ public class PlayerWord : WordBase
                 {
                     //appeler la fonction qui colle le joueur à GAUCHE
                     this.transform.SetParent(hit.transform, true);
+                    CanMove = false;
+                    rb.linearVelocity = new Vector2(0, 0);
                     return true;
                 }
             }
         }
+        CanMove = true;
         return false;
     }
 
@@ -207,14 +217,28 @@ public class PlayerWord : WordBase
         }
         else if(HeadIsStick && !IsTouchingGround())
         {
-            Debug.Log("espace");
             FallAfterSticky();
+        }
+        else if (IsStick && IsTouchingGround())
+        {
+            rightCheckers.gameObject.SetActive(false);
+            leftCheckers.gameObject.SetActive(false);
+            Invoke("ReactivateRightCheckers", 1);
+            Invoke("ReactivateLeftCheckers" , 1);
+            if (orientX < 0)
+            {
+                rb.AddForce(Vector2.right, ForceMode2D.Impulse);   
+            }
+            else
+            {
+                rb.AddForce(Vector2.left, ForceMode2D.Impulse);
+            }
         }
         else
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
-        
+
         Unlink();
     }
 
@@ -227,8 +251,8 @@ public class PlayerWord : WordBase
             CanMove = false;
             UpdateGravity();
             this.transform.SetParent(null, true);
-            Invoke("ReactivateRightCheckers", 0.5f);
-            rb.AddForce(new Vector2(-10, 20) * maxSpeed * 4);
+            Invoke("ReactivateRightCheckers", 1f);
+            rb.AddForce(new Vector2(-10, 20) * jumpForce);
             orientX = -1;
         }
         else
@@ -238,21 +262,19 @@ public class PlayerWord : WordBase
             IsStick = false;
             UpdateGravity();
             this.transform.SetParent(null, true);
-            Invoke("ReactivateLeftCheckers", 0.5f);
-            rb.AddForce(new Vector2(10, 20) * maxSpeed * 4);
+            Invoke("ReactivateLeftCheckers", 1f);
+            rb.AddForce(new Vector2(10, 20) * jumpForce);
             orientX = 1;
         }
     }
 
     private void FallAfterSticky()
     {
-        Debug.Log("fonction");
         topCheckers.gameObject.SetActive(false);
         HeadIsStick = false;
         UpdateGravity();
-        this.transform.SetParent(null, true);
-        Invoke("ReactivateTopCheckers", 1f);
-        rb.AddForce(new Vector2(0, -5) * maxSpeed * 4);
+        Invoke("ReactivateTopCheckers", 2f);
+        rb.AddForce(new Vector2(0, -5) * 12);
     }
 
     private void Use()

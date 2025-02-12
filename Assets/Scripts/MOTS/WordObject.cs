@@ -235,6 +235,8 @@ public class WordObject : WordBase
     {
         TargetScale = Vector3.one;
         baseScale = transform.localScale; 
+        BlockIsBouncy = false;
+        BlockIsSticky = false;
     }
 
     private void UpdateModifiers()
