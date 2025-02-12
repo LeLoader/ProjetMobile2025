@@ -119,6 +119,7 @@ public class PlayerWord : WordBase
                     //appeler la fonction qui colle le joueur à GAUCHE
                     this.transform.SetParent(hit.transform, true);
                     rb.linearVelocity.Set(0,0);
+                    rb.inertia = 0;
                     Debug.Log("toucher");
                     return true;
                 }
@@ -251,7 +252,7 @@ public class PlayerWord : WordBase
         UpdateGravity();
         this.transform.SetParent(null, true);
         Invoke("ReactivateTopCheckers", 1f);
-        rb.AddForce(new Vector2(0, -20) * maxSpeed * 4);
+        rb.AddForce(new Vector2(0, -5) * maxSpeed * 4);
     }
 
     private void Use()
