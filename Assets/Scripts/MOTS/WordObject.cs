@@ -37,8 +37,6 @@ public class WordObject : WordBase
     [SerializeField] Sprite ballSprite;
     [SerializeField] CapsuleCollider2D ballCollider;
 
-    Vector3 baseScale;
-
     private void Start()
     {
         coll = defaultCollider;
@@ -104,6 +102,7 @@ public class WordObject : WordBase
             spriteRenderer.sprite = stairsSprite;
             rb.freezeRotation = true;
             rb.mass = 10000f;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else if (type.HasFlag(WORDTYPE.BALL))
         {
@@ -111,6 +110,7 @@ public class WordObject : WordBase
             spriteRenderer.sprite = ballSprite;
             rb.freezeRotation = false;
             rb.mass = 1f; // PARAM
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else if (type == WORDTYPE.NONE)
         {
@@ -118,6 +118,7 @@ public class WordObject : WordBase
             spriteRenderer.sprite = defaultSprite;
             rb.freezeRotation = true;
             rb.mass = 10000f;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
@@ -179,11 +180,15 @@ public class WordObject : WordBase
                 } 
             }
 
-
-            transform.localScale = realTargetScale;
-            //transform.localScale = Vector3.MoveTowards(transform.localScale, realTargetScale, applySpeed * Time.fixedDeltaTime);
-
-            // Vector3 tempScale = Vector3.MoveTowards(transform.localScale, TargetScale, applySpeed * Time.fixedDeltaTime);
+            if (TargetScale.x <= 1 && TargetScale.y <= 1)
+            {
+                transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, Time.fixedDeltaTime);
+            }
+            else
+            {
+                transform.localScale = realTargetScale;
+            }
+            
         }
     }
 
@@ -234,7 +239,6 @@ public class WordObject : WordBase
     private void ResetObject()
     {
         TargetScale = Vector3.one;
-        baseScale = transform.localScale; 
     }
 
     private void UpdateModifiers()

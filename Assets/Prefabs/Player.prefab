@@ -140,8 +140,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6505440375804945609}
   - component: {fileID: 8761680721583719231}
-  - component: {fileID: 71137860090918779}
   - component: {fileID: 319403068261597164}
+  - component: {fileID: 71137860090918779}
   - component: {fileID: 1343042605137737762}
   m_Layer: 0
   m_Name: Player
@@ -225,6 +225,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &319403068261597164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257462095712101159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2faf19550e6df194e9daad46ad1ab5bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wordType: 0
+  currentModifiers: []
+  WordWrapper: {fileID: 0}
+  WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
+  interactionDistance: 2
+  rb: {fileID: 71137860090918779}
+  groundCheckers: {fileID: 1960959652548125466}
+  leftCheckers: {fileID: 8152439958006678037}
+  rightCheckers: {fileID: 5909059791282546703}
+  interactionCheckers: {fileID: 2482512269644855385}
+  orientSign: {fileID: 6226532935863024554}
+  distanceCheck: 0.01
+  IsLink: 0
+  _camera: {fileID: 0}
+  duration: 0.5
+  IsStick: 0
+  CanMove: 0
+  defaultAccelerationForce: 75
+  defaultMaxSpeed: 5
+  defaultJumpForce: 3
+  defaultJumpHeight: 0
+  stickedAccelerationForce: 50
+  stickedMaxSpeed: 3
+  stickedJumpForce: 1
+  _cameraUnlink: 7
+  _cameraLink: 3
+  references:
+    version: 2
+    RefIds: []
 --- !u!50 &71137860090918779
 Rigidbody2D:
   serializedVersion: 5
@@ -252,40 +293,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &319403068261597164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257462095712101159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2faf19550e6df194e9daad46ad1ab5bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wordType: 0
-  currentModifiers: []
-  WordWrapper: {fileID: 0}
-  WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
-  interactionDistance: 2
-  rb: {fileID: 71137860090918779}
-  groundCheckers: {fileID: 1960959652548125466}
-  leftCheckers: {fileID: 8152439958006678037}
-  rightCheckers: {fileID: 5909059791282546703}
-  interactionCheckers: {fileID: 2482512269644855385}
-  orientSign: {fileID: 6226532935863024554}
-  distanceCheck: 0.01
-  jumpForce: 5
-  speedForce: 7
-  IsLink: 0
-  _camera: {fileID: 0}
-  duration: 0.5
-  IsStick: 0
-  CanMove: 0
-  references:
-    version: 2
-    RefIds: []
 --- !u!70 &1343042605137737762
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

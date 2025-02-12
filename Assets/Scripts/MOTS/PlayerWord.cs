@@ -55,24 +55,26 @@ public class PlayerWord : WordBase
         }
     }
     [SerializeField]
-    public float JumpForce
+    public float JumpHeight
     {
         get
         {
-            return GetJumpForce();
+            return GetJumpHeight();
         }
     }
 
     [Header("Movement | Default")]
     [SerializeField] float defaultAccelerationForce = 75f;
     [SerializeField] float defaultMaxSpeed = 5f;
-    [SerializeField] float defaultJumpForce = 3f;
     [SerializeField] float defaultJumpHeight = 1.25f;
 
     [Header("Movement | Sticked")]
     [SerializeField] float stickedAccelerationForce = 50f;
     [SerializeField] float stickedMaxSpeed = 3f;
-    [SerializeField] float stickedJumpForce = 1f;
+    [SerializeField] float stickedJumpHeight = 1f;
+
+    [Header("Movement | Bouncy")]
+    [SerializeField] float bouncyJumpHeight = 2f;
 
     int orientX = 1;
 
@@ -133,15 +135,19 @@ public class PlayerWord : WordBase
         }
     }
 
-    private float GetJumpForce()
+    private float GetJumpHeight()
     {
-        if (IsStick)
+        if (false) // if on bouncy
         {
-            return stickedJumpForce;
+            return bouncyJumpHeight;
+        }
+        else if (IsStick)
+        {
+            return stickedJumpHeight;
         }
         else
         {
-            return defaultJumpForce;
+            return defaultJumpHeight;
         }
     }
 
@@ -239,8 +245,6 @@ public class PlayerWord : WordBase
 
     private void Jump(InputAction.CallbackContext context)
     {
-        //if (!Input.GetKeyDown(KeyCode.Space)) return;
-        Debug.Log("jump");
         if (IsStick && !IsTouchingGround())
         {
             JumpOnSticky();
@@ -264,7 +268,7 @@ public class PlayerWord : WordBase
             UpdateGravity();
             this.transform.SetParent(null, true);
             Invoke("ReactivateRightCheckers", 0.5f);
-            rb.AddForce(new Vector2(-10, 20) * JumpForce * 4);
+            rb.AddForce(new Vector2(-10, 20) * JumpHeight * 4);
             orientX = -1;
         }
         else
@@ -275,7 +279,7 @@ public class PlayerWord : WordBase
             UpdateGravity();
             this.transform.SetParent(null, true);
             Invoke("ReactivateLeftCheckers", 0.5f);
-            rb.AddForce(new Vector2(10, 20) * JumpForce * 4);
+            rb.AddForce(new Vector2(10, 20) * JumpHeight * 4);
             orientX = 1;
         }
     }
@@ -351,6 +355,10 @@ public class PlayerWord : WordBase
         CanMove = true;
     }
 
+    private void OnDestroy()
+    {
+        jumpAction.action.started -= Jump;
+    }
 
     private void OnDrawGizmos()
     {
