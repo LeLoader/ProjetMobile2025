@@ -11,6 +11,9 @@ using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 using Unity.Cinemachine;
 using System.Collections;
 using Unity.Android.Gradle;
+using Unity.Collections;
+using Unity.Android.Gradle.Manifest;
+using UnityEngine.InputSystem;
 
 public class PlayerWord : WordBase
 {
@@ -21,7 +24,7 @@ public class PlayerWord : WordBase
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
     [SerializeField] Transform interactionCheckers;
-    [SerializeField] Transform orientSign;
+    [SerializeField] SpriteRenderer orientSign;
     [SerializeField] float distanceCheck;
 
 
@@ -29,12 +32,47 @@ public class PlayerWord : WordBase
     [SerializeField] CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
 
+    [Header("Action")]
+    [SerializeField] InputActionReference jumpAction;
+
     [Header("Movement")]
-    [SerializeField] float accelerationForce = 5f;
-    [SerializeField] float maxSpeed = 3f;
-    [SerializeField] bool IsStick;
-    [SerializeField] bool CanMove;
-    [SerializeField] float jumpForce = 3f;
+    [SerializeField, ReadOnly] bool IsStick;
+    [SerializeField, ReadOnly] bool CanMove;
+    [SerializeField]
+    public float AccelerationForce
+    {
+        get
+        {
+            return GetAccelerationForce();
+        }
+    }
+    [SerializeField]
+    public float MaxSpeed
+    {
+        get
+        {
+            return GetMaxSpeed();
+        }
+    }
+    [SerializeField]
+    public float JumpForce
+    {
+        get
+        {
+            return GetJumpForce();
+        }
+    }
+
+    [Header("Movement | Default")]
+    [SerializeField] float defaultAccelerationForce = 75f;
+    [SerializeField] float defaultMaxSpeed = 5f;
+    [SerializeField] float defaultJumpForce = 3f;
+    [SerializeField] float defaultJumpHeight = 1.25f;
+
+    [Header("Movement | Sticked")]
+    [SerializeField] float stickedAccelerationForce = 50f;
+    [SerializeField] float stickedMaxSpeed = 3f;
+    [SerializeField] float stickedJumpForce = 1f;
 
     int orientX = 1;
 
@@ -43,9 +81,10 @@ public class PlayerWord : WordBase
     const int MAP_LAYERMASK = 8;
     ContactFilter2D contactFilter = new();
 
-    float _cameraUnlink = 7f;
+    [Header("Camera")]
+    [SerializeField] float _cameraUnlink = 7f;
     float _currentCamera;
-    float _cameraLink = 3f;
+    [SerializeField] float _cameraLink = 3f;
 
     private void Start()
     {
@@ -56,27 +95,65 @@ public class PlayerWord : WordBase
 
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
         UpdateWords(currentModifiers);
+
+        jumpAction.action.started += Jump;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Use();
         Move();
-        Jump();
         UpdateOrientation();
         IsStick = PlayerIsOnSticky();
         UpdateGravity();
+        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
+    }
+
+    private float GetAccelerationForce()
+    {
+        if (IsStick)
+        {
+            return stickedAccelerationForce;
+        }
+        else
+        {
+            return defaultAccelerationForce;
+        }
+    }
+
+    private float GetMaxSpeed()
+    {
+        if (IsStick)
+        {
+            return stickedMaxSpeed;
+        }
+        else
+        {
+            return defaultMaxSpeed;
+        }
+    }
+
+    private float GetJumpForce()
+    {
+        if (IsStick)
+        {
+            return stickedJumpForce;
+        }
+        else
+        {
+            return defaultJumpForce;
+        }
     }
 
     private void UpdateOrientation()
     {
         if (orientX > 0)
         {
-            orientSign.rotation = Quaternion.Euler(0, 0, -90);
+            orientSign.flipY = false;
         }
         if (orientX < 0)
         {
-            orientSign.rotation = Quaternion.Euler(0, 0, 90);
+            orientSign.flipY = true;
         }
     }
 
@@ -89,16 +166,9 @@ public class PlayerWord : WordBase
             if (hit.collider != null)
             {
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
-                if (_block != null && _block.BlockIsSticky)
-                {
-                    maxSpeed = 3;
-                    jumpForce  = 2;
-                }
                 return true;
             }
         }
-        maxSpeed = 7;
-        jumpForce = 5;
         return false;
     }
 
@@ -111,7 +181,7 @@ public class PlayerWord : WordBase
             if (hit.collider != null)
             {
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
-                if(_block != null && _block.BlockIsSticky)
+                if (_block != null && _block.BlockIsSticky)
                 {
                     //appeler la fonction qui colle le joueur � GAUCHE
                     this.transform.SetParent(hit.transform, true);
@@ -140,7 +210,7 @@ public class PlayerWord : WordBase
 
     private void UpdateGravity()
     {
-        if(!IsTouchingGround() && PlayerIsOnSticky())
+        if (!IsTouchingGround() && PlayerIsOnSticky())
         {
             rb.gravityScale = 0;
         }
@@ -154,40 +224,39 @@ public class PlayerWord : WordBase
     {
         if (Input.GetKey(KeyCode.A) && CanMove)
         {
-            rb.AddForce(Vector2.left * accelerationForce);
-            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
+            rb.AddForce(Vector2.left * AccelerationForce);
             orientX = -1;
             Unlink();
 
         }
         if (Input.GetKey(KeyCode.D) && CanMove)
         {
-            rb.AddForce(Vector2.right * accelerationForce);
-            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
+            rb.AddForce(Vector2.right * AccelerationForce);
             orientX = 1;
             Unlink();
         }
     }
 
-    private void Jump()
+    private void Jump(InputAction.CallbackContext context)
     {
-        if (!Input.GetKeyDown(KeyCode.Space) || (!IsTouchingGround() && !IsStick)) return;
-
+        //if (!Input.GetKeyDown(KeyCode.Space)) return;
+        Debug.Log("jump");
         if (IsStick && !IsTouchingGround())
         {
             JumpOnSticky();
         }
-        else
+        else if (IsTouchingGround())
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            float yForce = Mathf.Sqrt(defaultJumpHeight * 2 * Physics2D.gravity.magnitude * rb.gravityScale);
+            rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
         }
-        
+
         Unlink();
     }
 
     private void JumpOnSticky()
     {
-        if(orientX > 0)
+        if (orientX > 0)
         {
             rightCheckers.gameObject.SetActive(false);
             IsStick = false;
@@ -195,7 +264,7 @@ public class PlayerWord : WordBase
             UpdateGravity();
             this.transform.SetParent(null, true);
             Invoke("ReactivateRightCheckers", 0.5f);
-            rb.AddForce(new Vector2(-10, 20) * maxSpeed * 4);
+            rb.AddForce(new Vector2(-10, 20) * JumpForce * 4);
             orientX = -1;
         }
         else
@@ -206,7 +275,7 @@ public class PlayerWord : WordBase
             UpdateGravity();
             this.transform.SetParent(null, true);
             Invoke("ReactivateLeftCheckers", 0.5f);
-            rb.AddForce(new Vector2(10, 20) * maxSpeed * 4);
+            rb.AddForce(new Vector2(10, 20) * JumpForce * 4);
             orientX = 1;
         }
     }
