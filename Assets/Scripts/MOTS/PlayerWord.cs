@@ -20,6 +20,7 @@ public class PlayerWord : WordBase
     [SerializeField] Transform groundCheckers;
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
+    [SerializeField] Transform topCheckers;
     [SerializeField] Transform interactionCheckers;
     [SerializeField] Transform orientSign;
     [SerializeField] float distanceCheck;
@@ -130,6 +131,26 @@ public class PlayerWord : WordBase
             }
         }
         this.transform.SetParent(null, true);
+        return false;
+    }
+
+    private bool HeadIsSticky()
+    {
+        for (int i = 0; i < leftCheckers.childCount; i++)
+        {
+            Transform t = leftCheckers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.left, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+            if (hit.collider != null)
+            {
+                WordObject _block = hit.collider?.GetComponent<WordObject>();
+                if (_block != null && _block.BlockIsSticky)
+                {
+                    //appeler la fonction qui colle le joueur à GAUCHE
+                    this.transform.SetParent(hit.transform, true);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
