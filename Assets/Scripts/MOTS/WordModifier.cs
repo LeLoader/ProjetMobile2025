@@ -97,10 +97,10 @@ public abstract class WordModifier
             list.Add(new StickyModifier(owner));
 
         if (type.HasFlag(WORDTYPE.BALL))
-            throw new NotImplementedException();
+            list.Add(new BallModifier(owner));
 
         if (type.HasFlag(WORDTYPE.STAIRS))
-            throw new NotImplementedException();
+            list.Add(new StairsModifier(owner));
     }
 }
 
@@ -110,6 +110,7 @@ public abstract class WordModifier
 public abstract class ScaleModifier : WordModifier
 {
     public Vector3 scale;
+    public float appliedTimer = 0;
 
     protected ScaleModifier(WordBase owner) : base(owner)
     {
@@ -117,10 +118,18 @@ public abstract class ScaleModifier : WordModifier
 
     public override void Apply(WordObject wordObject)
     {
-        // Vector3 baseScale = transform.localScale;
-        // transform.localScale = new(transform.localScale.x * scale.x, transform.localScale.y * scale.y);
-        wordObject.TargetScale = new Vector3(wordObject.TargetScale.x * scale.x, wordObject.TargetScale.y * scale.y);
+        wordObject.TargetScale = Vector3.Scale(scale, wordObject.TargetScale);
+        //wordObject.TargetScale.Scale(scale);
+        Debug.Log(wordObject.TargetScale);
     }
+
+    public Vector3 GetScale()
+    {
+        return scale;
+    }
+
+    public bool IsGreatScaleX() { return scale.x > 1; }
+    public bool IsGreatScaleY() { return scale.y > 1; }
 }
 
 [Serializable]
@@ -185,6 +194,7 @@ public class LongModifier : ScaleModifier
 
 #endregion
 
+#region NonScale
 public abstract class NonScaleModifier : WordModifier
 {
     protected NonScaleModifier(WordBase owner) : base(owner)
@@ -261,7 +271,7 @@ public class StairsModifier : ShapeModifier
 
     public override void Apply(WordObject wordObject)
     {
-        throw new NotImplementedException();
+        wordObject.SetShape(WORDTYPE.STAIRS);
     }
 
     public override void DebugName()
@@ -270,4 +280,25 @@ public class StairsModifier : ShapeModifier
     }
 }
 
+public class BallModifier : ShapeModifier
+{
+    public BallModifier(WordBase owner) : base(owner)
+    {
+        name = "Ball";
+
+    }
+
+    public override void Apply(WordObject wordObject)
+    {
+        wordObject.SetShape(WORDTYPE.BALL);
+    }
+
+    public override void DebugName()
+    {
+        Debug.Log("BallModifier");
+    }
+}
+
 #endregion
+
+#endregion NonScale

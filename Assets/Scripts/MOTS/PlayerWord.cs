@@ -23,13 +23,18 @@ public class PlayerWord : WordBase
     [SerializeField] Transform interactionCheckers;
     [SerializeField] Transform orientSign;
     [SerializeField] float distanceCheck;
-    [SerializeField] float jumpForce = 3f;
-    [SerializeField] float speedForce = 5f;
+
+
     [SerializeField] bool IsLink = false;
     [SerializeField] CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
+
+    [Header("Movement")]
+    [SerializeField] float accelerationForce = 5f;
+    [SerializeField] float maxSpeed = 3f;
     [SerializeField] bool IsStick;
     [SerializeField] bool CanMove;
+    [SerializeField] float jumpForce = 3f;
 
     int orientX = 1;
 
@@ -86,13 +91,13 @@ public class PlayerWord : WordBase
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
                 if (_block != null && _block.BlockIsSticky)
                 {
-                    speedForce = 3;
+                    maxSpeed = 3;
                     jumpForce  = 2;
                 }
                 return true;
             }
         }
-        speedForce = 7;
+        maxSpeed = 7;
         jumpForce = 5;
         return false;
     }
@@ -108,7 +113,7 @@ public class PlayerWord : WordBase
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
                 if(_block != null && _block.BlockIsSticky)
                 {
-                    //appeler la fonction qui colle le joueur à GAUCHE
+                    //appeler la fonction qui colle le joueur ï¿½ GAUCHE
                     this.transform.SetParent(hit.transform, true);
                     return true;
                 }
@@ -123,7 +128,7 @@ public class PlayerWord : WordBase
                 WordObject _block = hit.collider?.GetComponent<WordObject>();
                 if (_block != null && _block.BlockIsSticky)
                 {
-                    //appeler la fonction qui colle le joueur à DROITE
+                    //appeler la fonction qui colle le joueur ï¿½ DROITE
                     this.transform.SetParent(hit.transform, true);
                     return true;
                 }
@@ -149,14 +154,16 @@ public class PlayerWord : WordBase
     {
         if (Input.GetKey(KeyCode.A) && CanMove)
         {
-            rb.AddForce(Vector2.left * speedForce);
+            rb.AddForce(Vector2.left * accelerationForce);
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
             orientX = -1;
             Unlink();
 
         }
         if (Input.GetKey(KeyCode.D) && CanMove)
         {
-            rb.AddForce(Vector2.right * speedForce);
+            rb.AddForce(Vector2.right * accelerationForce);
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -maxSpeed, maxSpeed);
             orientX = 1;
             Unlink();
         }
@@ -188,7 +195,7 @@ public class PlayerWord : WordBase
             UpdateGravity();
             this.transform.SetParent(null, true);
             Invoke("ReactivateRightCheckers", 0.5f);
-            rb.AddForce(new Vector2(-10, 20) * speedForce * 4);
+            rb.AddForce(new Vector2(-10, 20) * maxSpeed * 4);
             orientX = -1;
         }
         else
@@ -199,7 +206,7 @@ public class PlayerWord : WordBase
             UpdateGravity();
             this.transform.SetParent(null, true);
             Invoke("ReactivateLeftCheckers", 0.5f);
-            rb.AddForce(new Vector2(10, 20) * speedForce * 4);
+            rb.AddForce(new Vector2(10, 20) * maxSpeed * 4);
             orientX = 1;
         }
     }
