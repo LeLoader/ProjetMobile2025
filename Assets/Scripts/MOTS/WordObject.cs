@@ -31,8 +31,8 @@ public class WordObject : WordBase
     private void FixedUpdate()
     {
         ApplyScale();
-        BlockIsBouncy = IsBouncy();
-        BlockIsSticky = IsSticky();
+        //BlockIsBouncy = IsBouncy();
+        //BlockIsSticky = IsSticky();
     }
 
     private bool IsSticky()
