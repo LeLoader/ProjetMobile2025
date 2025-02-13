@@ -30,8 +30,7 @@ public class PlayerWord : WordBase
     [SerializeField] float scale = 1f;
 
 
-    [SerializeField] bool IsLink = false;
-    [SerializeField] CinemachineCamera _camera;
+    [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
 
     [Header("Action")]
@@ -67,17 +66,19 @@ public class PlayerWord : WordBase
     }
 
     [Header("Movement | Default")]
-    [SerializeField] float defaultAccelerationForce = 75f;
-    [SerializeField] float defaultMaxSpeed = 5f;
-    [SerializeField] float defaultJumpHeight = 1.25f;
+    [SerializeField, Tooltip("m/s²")] float defaultAccelerationForce = 150f;
+    [SerializeField, Tooltip("m/s²")] float defaultDecelerationForce = 75f;
+    [SerializeField, Tooltip("m/s")] float defaultMaxSpeed = 5f;
+    [SerializeField, Tooltip("m")] float defaultJumpHeight = 1.25f;
 
     [Header("Movement | Sticked")]
-    [SerializeField] float stickedAccelerationForce = 50f;
-    [SerializeField] float stickedMaxSpeed = 3f;
-    [SerializeField] float stickedJumpHeight = 1f;
+    [SerializeField, Tooltip("m/s²")] float stickedAccelerationForce = 50f;
+    [SerializeField, Tooltip("m/s²")] float stickedDecelerationForce = 75f;
+    [SerializeField, Tooltip("m/s")] float stickedMaxSpeed = 3f;
+    [SerializeField, Tooltip("m")] float stickedJumpHeight = 1f;
 
     [Header("Movement | Bouncy")]
-    [SerializeField] float bouncyJumpHeight = 2f;
+    [SerializeField, Tooltip("m")] float bouncyJumpHeight = 2f;
 
     int orientX = 1;
 
@@ -106,13 +107,13 @@ public class PlayerWord : WordBase
 
     void FixedUpdate()
     {
+        rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, defaultDecelerationForce * Time.fixedDeltaTime); // Method
         Use();
         Move();
         UpdateOrientation();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
-        rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
     }
 
     private float GetAccelerationForce()
@@ -267,14 +268,14 @@ public class PlayerWord : WordBase
     {
         if (Input.GetKey(KeyCode.A) && CanMove)
         {
-            rb.AddForce(Vector2.left * AccelerationForce);
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX - AccelerationForce * Time.fixedDeltaTime, -MaxSpeed, MaxSpeed);
             orientX = -1;
             Unlink();
 
         }
         if (Input.GetKey(KeyCode.D) && CanMove)
         {
-            rb.AddForce(Vector2.right * AccelerationForce);
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX + AccelerationForce * Time.fixedDeltaTime, -MaxSpeed, MaxSpeed);
             orientX = 1;
             Unlink();
         }
@@ -286,7 +287,7 @@ public class PlayerWord : WordBase
         {
             JumpOnSticky();
         }
-        else if(HeadIsStick && !IsTouchingGround())
+        else if (HeadIsStick && !IsTouchingGround())
         {
             FallAfterSticky();
         }
@@ -295,17 +296,17 @@ public class PlayerWord : WordBase
             rightCheckers.gameObject.SetActive(false);
             leftCheckers.gameObject.SetActive(false);
             Invoke("ReactivateRightCheckers", 1);
-            Invoke("ReactivateLeftCheckers" , 1);
+            Invoke("ReactivateLeftCheckers", 1);
             if (orientX < 0)
             {
-                rb.AddForce(Vector2.right, ForceMode2D.Impulse);   
+                rb.AddForce(Vector2.right, ForceMode2D.Impulse);
             }
             else
             {
                 rb.AddForce(Vector2.left, ForceMode2D.Impulse);
             }
         }
-        else
+        else if (IsTouchingGround())
         {
             float yForce = Mathf.Sqrt(defaultJumpHeight * 2 * Physics2D.gravity.magnitude * rb.gravityScale);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
@@ -351,7 +352,7 @@ public class PlayerWord : WordBase
 
     private void Use()
     {
-        if (!Input.GetKeyDown(KeyCode.E) || !IsTouchingGround() || IsLink) return;
+        if (!Input.GetKeyDown(KeyCode.E) || !IsTouchingGround() || LinkedWordBase != null) return;
 
         for (int i = 0; i < interactionCheckers.childCount; i++)
         {
@@ -376,7 +377,6 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
-        IsLink = true;
         StartCoroutine(TransitionCamera(_cameraUnlink, _cameraLink, duration));
     }
 
@@ -390,7 +390,6 @@ public class PlayerWord : WordBase
             }
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
-            IsLink = false;
             StartCoroutine(TransitionCamera(_cameraLink, _cameraUnlink, duration));
         }
     }
@@ -435,5 +434,12 @@ public class PlayerWord : WordBase
     {
         Handles.color = Color.blue;
         Handles.DrawLine(transform.position, transform.position + interactionDistance * orientX * Vector3.right);
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.BeginVertical();
+        GUILayout.TextField(rb.linearVelocity.ToString());
+        GUILayout.EndVertical();
     }
 }
