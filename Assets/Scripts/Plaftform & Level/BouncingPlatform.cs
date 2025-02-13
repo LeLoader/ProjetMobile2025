@@ -1,20 +1,59 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BouncingPlatform : MonoBehaviour
 {
     public GameObject Player;
-    public float jumpForce = 5f;
+    public float minJumpHeight = 2f;
+
     private Rigidbody2D rb;
 
-    public void Start()
+    private bool isTrackingJump = false;
+    private float jumpStartY = 0f;
+    private float maxJumpY = 0f;
+
+    void Start()
     {
         rb = Player.GetComponent<Rigidbody2D>();
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    void Update()
     {
-        Player.SetActive(true);
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        if (!isTrackingJump && rb.linearVelocity.y > 0)
+        {
+            isTrackingJump = true;
+            jumpStartY = Player.transform.position.y;
+            maxJumpY = jumpStartY;
+        }
+
+        if (isTrackingJump)
+        {
+            float currentY = Player.transform.position.y;
+            if (currentY > maxJumpY)
+                maxJumpY = currentY;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject == Player)
+        {
+            if (rb.linearVelocity.y <= 0)
+            {
+                float bounceHeight = minJumpHeight;
+
+                if (isTrackingJump)
+                {
+                    float computedJumpHeight = maxJumpY - jumpStartY;
+                    bounceHeight = (computedJumpHeight >= minJumpHeight) ? computedJumpHeight : minJumpHeight;
+
+                    isTrackingJump = false;
+                    jumpStartY = 0f;
+                    maxJumpY = 0f;
+                }
+
+                float bounceVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics2D.gravity.y) * bounceHeight);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, bounceVelocity);
+            }
+        }
     }
 }
