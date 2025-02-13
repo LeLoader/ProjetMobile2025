@@ -21,6 +21,7 @@ public class PlayerWord : WordBase
     [Header("General")]
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] CapsuleCollider2D capsuleCollider;
     [SerializeField] CircleCollider2D groundChecker;
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
@@ -29,7 +30,6 @@ public class PlayerWord : WordBase
     [SerializeField] SpriteRenderer orientSign;
     [SerializeField] float distanceCheck;
     [SerializeField] float scale = 1f;
-
 
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
@@ -43,7 +43,10 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool CanMove;
     [SerializeField, ReadOnly] bool OnSlope;
-    [SerializeField]
+    Vector2 slopeNormalPerp;
+    float lastSlopeAngle;
+    float slopeAngle;
+
     public float AccelerationForce
     {
         get
@@ -51,7 +54,7 @@ public class PlayerWord : WordBase
             return GetAccelerationForce();
         }
     }
-    [SerializeField]
+
     public float MaxSpeed
     {
         get
@@ -59,7 +62,7 @@ public class PlayerWord : WordBase
             return GetMaxSpeed();
         }
     }
-    [SerializeField]
+
     public float JumpHeight
     {
         get
@@ -114,12 +117,15 @@ public class PlayerWord : WordBase
     void FixedUpdate()
     {
         rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, defaultDecelerationForce * Time.fixedDeltaTime); // Method
+
+        SlopeCheck();
         Use();
-        Move();
         UpdateOrientation();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
+
+        Move();
     }
 
     private float GetAccelerationForce()
@@ -277,23 +283,86 @@ public class PlayerWord : WordBase
         }
     }
 
+    private void SlopeCheck()
+    {
+        Vector2 checkPos = transform.position - new Vector3(0.0f, capsuleCollider.size.y / 2);
+
+        SlopeCheckHorizontal(checkPos);
+        SlopeCheckVertical(checkPos);
+    }
+
+    private void SlopeCheckHorizontal(Vector2 checkPos)
+    {
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+
+        if (slopeHitFront)
+        {
+            OnSlope = true;
+            slopeAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+
+        }
+        else if (slopeHitBack)
+        {
+            OnSlope = true;
+            slopeAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+        }
+        else
+        {
+            slopeAngle = 0.0f;
+            OnSlope = false;
+        }
+    }
+
+    private void SlopeCheckVertical(Vector2 checkPos)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+
+        if (hit)
+        {
+
+            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+
+            float slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (slopeDownAngle != lastSlopeAngle)
+            {
+                OnSlope = true;
+            }
+
+            lastSlopeAngle = slopeDownAngle;
+
+            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+        }
+    }
+
     private void GetInput(InputAction.CallbackContext context)
     {
         xInput = context.ReadValue<Vector2>().x;
-        if (Mathf.Sign(xInput) != Mathf.Sign(xOrient))
+        if (xInput == -xOrient || -xInput == xOrient)
         {
-            xOrient *= 1;
+            xOrient *= -1;
         }
-
     }
 
     private void Move()
     {
         if (CanMove)
         {
-            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime, -MaxSpeed, MaxSpeed);
-            Unlink();
+            if (!OnSlope)
+            {
+                rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(-xInput * AccelerationForce * slopeNormalPerp.x * Time.fixedDeltaTime,
+                                                -xInput * AccelerationForce * slopeNormalPerp.y * Time.fixedDeltaTime);
+            }
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
         }
+
+        Unlink();
     }
 
     private void Jump(InputAction.CallbackContext context)
