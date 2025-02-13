@@ -239,6 +239,8 @@ public class WordObject : WordBase
     private void ResetObject()
     {
         TargetScale = Vector3.one;
+        BlockIsBouncy = false;
+        BlockIsSticky = false;
     }
 
     private void UpdateModifiers()
