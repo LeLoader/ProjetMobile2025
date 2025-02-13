@@ -1,18 +1,19 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 public class LeftButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     bool isPressed = false;
     public GameObject Player;
-    private float Force = -5f;
+    public float Force;
 
-    void Update()
+    void Update ()
     {
         if (isPressed)
         {
-            Player.transform.Translate(Force * Time.deltaTime, 0, 0);
+            Player.transform.Translate(Force  * Time.deltaTime,0 ,0);
         }
     }
 
@@ -20,8 +21,7 @@ public class LeftButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         isPressed = true;
     }
-
-    public void OnPointerUp(PointerEventData evenData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         isPressed = false;
     }
