@@ -38,6 +38,7 @@ public class PlayerWord : WordBase
     [SerializeField] InputActionReference jumpAction;
 
     [Header("Movement")]
+    [SerializeField, ReadOnly] bool HeadIsStick;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool CanMove;
     [SerializeField]
