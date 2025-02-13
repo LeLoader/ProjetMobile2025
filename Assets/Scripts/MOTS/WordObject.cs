@@ -17,13 +17,11 @@ public class WordObject : WordBase
 
     public bool BlockIsSticky;
     public bool BlockIsBouncy;
+   
     public Vector3 TargetScale { get; set; } = Vector3.one;
     protected Vector3 realTargetScale = Vector3.one;
 
     const int MAP_LAYERMASK = 8;
-
-    bool wasStuckOnSide = false;
-    bool wasStuckOnTop = false;
 
     Collider2D coll;
 
@@ -48,46 +46,6 @@ public class WordObject : WordBase
     private void FixedUpdate()
     {
         ApplyScale();
-        //BlockIsBouncy = IsBouncy();
-        //BlockIsSticky = IsSticky();
-    }
-
-    private bool IsSticky()
-    {
-        if(currentModifiers.Count == 1)
-        {
-            if (this.currentModifiers[0].WordUI.Text.text == "Sticky")
-            {
-                return true;
-            }
-        }
-        if (currentModifiers.Count > 1)
-        {
-            if (this.currentModifiers[1].WordUI.Text.text == "Sticky")
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool IsBouncy()
-    {
-        if (currentModifiers.Count == 1)
-        {
-            if (this.currentModifiers[0].WordUI.Text.text == "Bouncy")
-            {
-                return true;
-            }
-        }
-        if (currentModifiers.Count > 1)
-        {
-            if (this.currentModifiers[1].WordUI.Text.text == "Bouncy")
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void SetShape(WORDTYPE type)

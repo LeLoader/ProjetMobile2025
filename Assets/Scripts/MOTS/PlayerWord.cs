@@ -119,13 +119,13 @@ public class PlayerWord : WordBase
         rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, defaultDecelerationForce * Time.fixedDeltaTime); // Method
 
         SlopeCheck();
-        Use();
         UpdateOrientation();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
-
+        IsTouchingWordObject();
         Move();
+        Use();
     }
 
     private float GetAccelerationForce()
@@ -182,20 +182,22 @@ public class PlayerWord : WordBase
 
     private bool IsTouchingGround()
     {
-        /*for (int i = 0; i < groundCheckers.childCount; i++)
-        {
-            Transform t = groundCheckers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.down, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
-            if (hit.collider != null)
-            {
-                WordObject _block = hit.collider?.GetComponent<WordObject>();
-                return true;
-            }
-        }
-        return false;*/
-
         int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
         return Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
+    }
+
+    private void IsTouchingWordObject()
+    {
+        int layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
+        Collider2D coll = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
+        if (coll != null)
+        {
+            WordObject wo = coll.gameObject.GetComponent<WordObject>();
+            if (wo.BlockIsBouncy)
+            {
+                Jump();
+            }
+        }
     }
 
     private bool PlayerIsOnSticky()
@@ -340,6 +342,11 @@ public class PlayerWord : WordBase
     private void GetInput(InputAction.CallbackContext context)
     {
         xInput = context.ReadValue<Vector2>().x;
+        if (xInput != 0)
+        {
+            Unlink();
+        }
+
         if (xInput == -xOrient || -xInput == xOrient)
         {
             xOrient *= -1;
@@ -361,11 +368,14 @@ public class PlayerWord : WordBase
             }
             rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
         }
-
-        Unlink();
     }
 
     private void Jump(InputAction.CallbackContext context)
+    {
+        Jump();
+    }
+
+    private void Jump()
     {
         if (IsStick && !IsTouchingGround())
         {
@@ -392,7 +402,7 @@ public class PlayerWord : WordBase
         }
         else if (IsTouchingGround())
         {
-            float yForce = Mathf.Sqrt(defaultJumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
+            float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
         }
 
