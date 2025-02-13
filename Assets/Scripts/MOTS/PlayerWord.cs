@@ -14,13 +14,15 @@ using Unity.Android.Gradle;
 using Unity.Collections;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine.InputSystem;
+using Unity.Mathematics.Geometry;
 
 public class PlayerWord : WordBase
 {
     [Header("General")]
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] Transform groundCheckers;
+    [SerializeField] CapsuleCollider2D capsuleCollider;
+    [SerializeField] CircleCollider2D groundChecker;
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
     [SerializeField] Transform topCheckers;
@@ -29,18 +31,22 @@ public class PlayerWord : WordBase
     [SerializeField] float distanceCheck;
     [SerializeField] float scale = 1f;
 
-
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
 
     [Header("Action")]
     [SerializeField] InputActionReference jumpAction;
+    [SerializeField] InputActionReference moveAction;
 
     [Header("Movement")]
     [SerializeField, ReadOnly] bool HeadIsStick;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool CanMove;
-    [SerializeField]
+    [SerializeField, ReadOnly] bool OnSlope;
+    Vector2 slopeNormalPerp;
+    float lastSlopeAngle;
+    float slopeAngle;
+
     public float AccelerationForce
     {
         get
@@ -48,7 +54,7 @@ public class PlayerWord : WordBase
             return GetAccelerationForce();
         }
     }
-    [SerializeField]
+
     public float MaxSpeed
     {
         get
@@ -56,7 +62,7 @@ public class PlayerWord : WordBase
             return GetMaxSpeed();
         }
     }
-    [SerializeField]
+
     public float JumpHeight
     {
         get
@@ -80,7 +86,8 @@ public class PlayerWord : WordBase
     [Header("Movement | Bouncy")]
     [SerializeField, Tooltip("m")] float bouncyJumpHeight = 2f;
 
-    int orientX = 1;
+    public int xOrient = 1;
+    float xInput = 0;
 
     const int GROUND_LAYERMASK = 3;
     const int WORDOBJECT_LAYERMASK = 7;
@@ -103,17 +110,22 @@ public class PlayerWord : WordBase
         UpdateWords(currentModifiers);
 
         jumpAction.action.started += Jump;
+        moveAction.action.performed += GetInput;
+        moveAction.action.canceled += GetInput;
     }
 
     void FixedUpdate()
     {
         rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, defaultDecelerationForce * Time.fixedDeltaTime); // Method
+
+        SlopeCheck();
         Use();
-        Move();
         UpdateOrientation();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
+
+        Move();
     }
 
     private float GetAccelerationForce()
@@ -158,11 +170,11 @@ public class PlayerWord : WordBase
 
     private void UpdateOrientation()
     {
-        if (orientX > 0)
+        if (xOrient > 0)
         {
             orientSign.flipY = false;
         }
-        if (orientX < 0)
+        if (xOrient < 0)
         {
             orientSign.flipY = true;
         }
@@ -170,7 +182,7 @@ public class PlayerWord : WordBase
 
     private bool IsTouchingGround()
     {
-        for (int i = 0; i < groundCheckers.childCount; i++)
+        /*for (int i = 0; i < groundCheckers.childCount; i++)
         {
             Transform t = groundCheckers.GetChild(i).transform;
             RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.down, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
@@ -180,7 +192,10 @@ public class PlayerWord : WordBase
                 return true;
             }
         }
-        return false;
+        return false;*/
+
+        int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
+        return Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
     }
 
     private bool PlayerIsOnSticky()
@@ -258,27 +273,96 @@ public class PlayerWord : WordBase
         {
             rb.gravityScale = 0;
         }
+        else if (IsTouchingGround())
+        {
+            rb.gravityScale = 0;
+        }
         else
         {
             rb.gravityScale = 1;
         }
     }
 
-    private void Move()
+    private void SlopeCheck()
     {
-        if (Input.GetKey(KeyCode.A) && CanMove)
+        Vector2 checkPos = transform.position - new Vector3(0.0f, capsuleCollider.size.y / 2);
+
+        SlopeCheckHorizontal(checkPos);
+        SlopeCheckVertical(checkPos);
+    }
+
+    private void SlopeCheckHorizontal(Vector2 checkPos)
+    {
+        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+
+        if (slopeHitFront)
         {
-            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX - AccelerationForce * Time.fixedDeltaTime, -MaxSpeed, MaxSpeed);
-            orientX = -1;
-            Unlink();
+            OnSlope = true;
+            slopeAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
 
         }
-        if (Input.GetKey(KeyCode.D) && CanMove)
+        else if (slopeHitBack)
         {
-            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX + AccelerationForce * Time.fixedDeltaTime, -MaxSpeed, MaxSpeed);
-            orientX = 1;
-            Unlink();
+            OnSlope = true;
+            slopeAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
         }
+        else
+        {
+            slopeAngle = 0.0f;
+            OnSlope = false;
+        }
+    }
+
+    private void SlopeCheckVertical(Vector2 checkPos)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+
+        if (hit)
+        {
+
+            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+
+            float slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+            if (slopeDownAngle != lastSlopeAngle)
+            {
+                OnSlope = true;
+            }
+
+            lastSlopeAngle = slopeDownAngle;
+
+            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
+            Debug.DrawRay(hit.point, hit.normal, Color.green);
+        }
+    }
+
+    private void GetInput(InputAction.CallbackContext context)
+    {
+        xInput = context.ReadValue<Vector2>().x;
+        if (xInput == -xOrient || -xInput == xOrient)
+        {
+            xOrient *= -1;
+        }
+    }
+
+    private void Move()
+    {
+        if (CanMove)
+        {
+            if (!OnSlope)
+            {
+                rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
+            }
+            else
+            {
+                rb.linearVelocity = new Vector3(-xInput * AccelerationForce * slopeNormalPerp.x * Time.fixedDeltaTime,
+                                                -xInput * AccelerationForce * slopeNormalPerp.y * Time.fixedDeltaTime);
+            }
+            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
+        }
+
+        Unlink();
     }
 
     private void Jump(InputAction.CallbackContext context)
@@ -297,7 +381,7 @@ public class PlayerWord : WordBase
             leftCheckers.gameObject.SetActive(false);
             Invoke("ReactivateRightCheckers", 1);
             Invoke("ReactivateLeftCheckers", 1);
-            if (orientX < 0)
+            if (xOrient < 0)
             {
                 rb.AddForce(Vector2.right, ForceMode2D.Impulse);
             }
@@ -308,7 +392,7 @@ public class PlayerWord : WordBase
         }
         else if (IsTouchingGround())
         {
-            float yForce = Mathf.Sqrt(defaultJumpHeight * 2 * Physics2D.gravity.magnitude * rb.gravityScale);
+            float yForce = Mathf.Sqrt(defaultJumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
         }
 
@@ -317,7 +401,7 @@ public class PlayerWord : WordBase
 
     private void JumpOnSticky()
     {
-        if (orientX > 0)
+        if (xOrient > 0)
         {
             rightCheckers.gameObject.SetActive(false);
             IsStick = false;
@@ -326,7 +410,7 @@ public class PlayerWord : WordBase
             this.transform.SetParent(null, true);
             Invoke("ReactivateRightCheckers", 1f);
             rb.AddForce(new Vector2(-10, 20) * JumpHeight);
-            orientX = -1;
+            xOrient = -1;
         }
         else
         {
@@ -337,7 +421,7 @@ public class PlayerWord : WordBase
             this.transform.SetParent(null, true);
             Invoke("ReactivateLeftCheckers", 1f);
             rb.AddForce(new Vector2(10, 20) * JumpHeight);
-            orientX = 1;
+            xOrient = 1;
         }
     }
 
@@ -357,7 +441,7 @@ public class PlayerWord : WordBase
         for (int i = 0; i < interactionCheckers.childCount; i++)
         {
             Transform t = interactionCheckers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right * orientX, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right * xOrient, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
             if (hit.collider != null)
             {
                 if (hit.transform.TryGetComponent<WordObject>(out WordObject wordObject))
@@ -428,12 +512,13 @@ public class PlayerWord : WordBase
     private void OnDestroy()
     {
         jumpAction.action.started -= Jump;
+        moveAction.action.started -= GetInput;
     }
 
     private void OnDrawGizmos()
     {
         Handles.color = Color.blue;
-        Handles.DrawLine(transform.position, transform.position + interactionDistance * orientX * Vector3.right);
+        Handles.DrawLine(transform.position, transform.position + interactionDistance * xOrient * Vector3.right);
     }
 
     private void OnGUI()

@@ -47,7 +47,6 @@ public class WordObject : WordBase
 
     private void FixedUpdate()
     {
-        CheckStuck();
         ApplyScale();
         //BlockIsBouncy = IsBouncy();
         //BlockIsSticky = IsSticky();
@@ -102,7 +101,14 @@ public class WordObject : WordBase
             spriteRenderer.sprite = stairsSprite;
             rb.freezeRotation = true;
             rb.mass = 10000f;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
         else if (type.HasFlag(WORDTYPE.BALL))
         {
@@ -126,31 +132,6 @@ public class WordObject : WordBase
         }
 
         coll.enabled = true;
-    }
-
-    private void CheckStuck()
-    {
-        if (!wasStuckOnSide && IsStuckOnSide())
-        {
-            wasStuckOnSide = true;
-            CalculateNewTargetXScale();
-        }
-
-        if (!wasStuckOnTop && IsTouchingTop())
-        {
-            wasStuckOnTop = true;
-            CalculateNewTargetYScale();
-        }
-    }
-
-    private void CalculateNewTargetXScale()
-    {
-        float maxWidth = transform.localScale.x;
-    }
-
-    private void CalculateNewTargetYScale()
-    {
-        float maxHeight = transform.localScale.y;
     }
 
     private void ApplyScale()
@@ -180,7 +161,7 @@ public class WordObject : WordBase
                 } 
             }
 
-            if (TargetScale.x <= 1 && TargetScale.y <= 1)
+            if (TargetScale.x <= transform.localScale.x && TargetScale.y <= transform.localScale.y)
             {
                 transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, Time.fixedDeltaTime);
             }
@@ -188,11 +169,8 @@ public class WordObject : WordBase
             {
                 transform.localScale = realTargetScale;
             }
-            
         }
     }
-
-
 
     private bool IsStuckOnSide()
     {
