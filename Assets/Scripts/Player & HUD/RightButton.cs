@@ -1,13 +1,13 @@
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class RightButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     bool isPressed = false;
     public GameObject Player;
-    private float Force = 5f;
+    public float Force;
 
     void Update()
     {
@@ -21,8 +21,7 @@ public class RightButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         isPressed = true;
     }
-
-    public void OnPointerUp(PointerEventData evenData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         isPressed = false;
     }

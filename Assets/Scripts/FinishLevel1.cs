@@ -1,8 +1,22 @@
+using UnityEditor;
 using UnityEngine;
 
 public class FinishLevel1 : MonoBehaviour
 {
-    
+    public static FinishLevel1 Instance;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
     public void FinishLevel()

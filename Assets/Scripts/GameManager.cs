@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private SceneAsset _actualScene;
+    [SerializeField] private string _actualScene;
+    [SerializeField] private SceneAsset _scene;
+
+    AudioManager _audioManager;
 
     private void Awake()
     {
@@ -19,7 +22,33 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
+
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Nouvelle scène chargée : " + scene.name);
+        _actualScene = scene.name;
+        for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
+        {
+            if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
+            {
+                _scene = SaveSystem._instance._levelData._level[i]._scene;
+            }
+        }
+        if (_scene != null)
+        {
+            //jouer la musique de background 
+        }
+        else
+        {
+            //jouer la musique de gameplay
+        }
+    }
+
 
     public void ChangeScene(string sceneName)
     {
@@ -37,5 +66,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

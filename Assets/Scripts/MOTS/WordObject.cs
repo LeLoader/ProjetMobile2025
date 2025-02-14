@@ -2,22 +2,42 @@ using NaughtyAttributes;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class WordObject : WordBase
 {
-    [SerializeField] Collider2D coll;
     [SerializeField] bool ShouldWaitUntilGroundToApply;
     [SerializeField] float distanceCheck;
     [SerializeField] float applySpeed;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] Rigidbody2D rb;
 
-    public Vector3 TargetScale { get; set; }
+    public bool BlockIsSticky;
+    public bool BlockIsBouncy;
+   
+    public Vector3 TargetScale { get; set; } = Vector3.one;
+    protected Vector3 realTargetScale = Vector3.one;
 
     const int MAP_LAYERMASK = 8;
 
+    Collider2D coll;
+
+    [Header("Default")]
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] BoxCollider2D defaultCollider;
+    [Header("Stairs")]
+    [SerializeField] Sprite stairsSprite;
+    [SerializeField] PolygonCollider2D stairsCollider;
+    [Header("Ball")]
+    [SerializeField] Sprite ballSprite;
+    [SerializeField] CapsuleCollider2D ballCollider;
+
     private void Start()
     {
+        coll = defaultCollider;
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
         UpdateWords(currentModifiers);
         UpdateModifiers();
@@ -28,13 +48,84 @@ public class WordObject : WordBase
         ApplyScale();
     }
 
+    public void SetShape(WORDTYPE type)
+    {
+        coll.enabled = false;
+        transform.rotation = Quaternion.identity;
+
+        if (type.HasFlag(WORDTYPE.STAIRS))
+        {
+            coll = stairsCollider;
+            spriteRenderer.sprite = stairsSprite;
+            rb.freezeRotation = true;
+            rb.mass = 10000f;
+            if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
+            {
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+        }
+        else if (type.HasFlag(WORDTYPE.BALL))
+        {
+            coll = ballCollider;
+            spriteRenderer.sprite = ballSprite;
+            rb.freezeRotation = false;
+            rb.mass = 1f; // PARAM
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (type == WORDTYPE.NONE)
+        {
+            coll = defaultCollider;
+            spriteRenderer.sprite = defaultSprite;
+            rb.freezeRotation = true;
+            rb.mass = 10000f;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            Debug.LogWarning("Wrong shape type passed");
+        }
+
+        coll.enabled = true;
+    }
+
     private void ApplyScale()
     {
-        if ((ShouldWaitUntilGroundToApply && IsTouchingGround()) || !ShouldWaitUntilGroundToApply)
+        if (LinkedWordBase) return;
+        if (!ShouldWaitUntilGroundToApply || (ShouldWaitUntilGroundToApply && IsTouchingGround()))
         {
-            if (!IsTouchingTop() && !IsStuckOnSide())
+            realTargetScale = Vector3.one;
+            foreach (WordModifier wordModifier in currentModifiers)
             {
-                transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, applySpeed * Time.fixedDeltaTime);
+                if (wordModifier is ScaleModifier modifier)
+                {
+                    if (IsTouchingTop() && (modifier.IsGreatScaleY() /*|| TargetScale.y > 1*/))
+                    {
+
+                    }
+                    else if (IsStuckOnSide() && (modifier.IsGreatScaleX() /*|| TargetScale.x > 1*/))
+                    {
+
+                    }
+                    else
+                    {
+                        modifier.appliedTimer += Time.fixedDeltaTime;
+                    }
+
+                    realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer));
+                } 
+            }
+
+            if (TargetScale.x <= transform.localScale.x && TargetScale.y <= transform.localScale.y)
+            {
+                transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, Time.fixedDeltaTime);
+            }
+            else
+            {
+                transform.localScale = realTargetScale;
             }
         }
     }
@@ -65,7 +156,7 @@ public class WordObject : WordBase
     public void Link(PlayerWord player)
     {
         LinkedWordBase = player;
-        foreach(WordModifier modifier in currentModifiers)
+        foreach (WordModifier modifier in currentModifiers)
         {
             modifier.WordUI.Link();
         }
@@ -84,6 +175,8 @@ public class WordObject : WordBase
     private void ResetObject()
     {
         TargetScale = Vector3.one;
+        BlockIsBouncy = false;
+        BlockIsSticky = false;
     }
 
     private void UpdateModifiers()
@@ -92,6 +185,14 @@ public class WordObject : WordBase
         foreach (WordModifier modifier in currentModifiers)
         {
             modifier.Apply(this);
+            if (modifier is ScaleModifier scaleModifier) // Maybe use a reset method in WordModifier
+            {
+                scaleModifier.appliedTimer = 0;
+            }
+        }
+        if (!currentModifiers.Exists(mod => mod is ShapeModifier)) // If no shape modifier is found, then set shape to default using NONE
+        {
+            SetShape(WORDTYPE.NONE);
         }
     }
 

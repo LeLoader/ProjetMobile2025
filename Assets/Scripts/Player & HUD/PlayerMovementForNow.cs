@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovementForPC : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float move = 5f;
 
     private Rigidbody2D rb;
 
@@ -20,6 +20,6 @@ public class PlayerMovementForPC : MonoBehaviour
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
 
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveInput * move, rb.linearVelocity.y);
     }
 }
