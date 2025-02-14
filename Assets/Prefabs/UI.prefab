@@ -693,7 +693,7 @@ GameObject:
   - component: {fileID: 4029758886411512021}
   - component: {fileID: 3921160907909931064}
   - component: {fileID: 6666351973610518025}
-  - component: {fileID: 3915120735373243394}
+  - component: {fileID: 2291069484964445044}
   m_Layer: 5
   m_Name: ButtonLeft
   m_TagString: Untagged
@@ -803,19 +803,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3915120735373243394
+--- !u!114 &2291069484964445044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3533262914315008705}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3d749f259d6a2478996860308d19e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  m_ControlPath: <Keyboard>/a
 --- !u!1 &3888567447519236483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,7 +1288,7 @@ GameObject:
   - component: {fileID: 8323245939126486895}
   - component: {fileID: 8289794481232176017}
   - component: {fileID: 3591532098671469952}
-  - component: {fileID: 1565788376187138038}
+  - component: {fileID: 1119691343879762399}
   m_Layer: 5
   m_Name: ButtonJump
   m_TagString: Untagged
@@ -1398,25 +1398,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1565788376187138038
+--- !u!114 &1119691343879762399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7198464070098313149}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6d24f7091a18248b09d8680a4098f2, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  groundCheck: {fileID: 0}
-  jumpForce: 7
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  groundCheckRadius: 0.2
+  m_ControlPath: <Keyboard>/space
 --- !u!1 &8145413445283436397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,7 +1498,7 @@ GameObject:
   - component: {fileID: 2012665751556290736}
   - component: {fileID: 262813160792242872}
   - component: {fileID: 842704025686230502}
-  - component: {fileID: 1964471771325909248}
+  - component: {fileID: 7020707681713597817}
   m_Layer: 5
   m_Name: ButtonRight
   m_TagString: Untagged
@@ -1614,19 +1608,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1964471771325909248
+--- !u!114 &7020707681713597817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8406676678368011399}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aabfa4d03610e1149a5421e8c9e6e4b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  m_ControlPath: <Keyboard>/d
 --- !u!1 &8521382612009462041
 GameObject:
   m_ObjectHideFlags: 0

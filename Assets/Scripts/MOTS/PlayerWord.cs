@@ -51,7 +51,8 @@ public class PlayerWord : WordBase
 
     Vector2 slopeNormalPerp;
     float lastSlopeAngle;
-    float slopeAngle;
+    float slopeDownAngle;
+    float slopeSideAngle;
 
     public float AccelerationForce
     {
@@ -355,17 +356,17 @@ public class PlayerWord : WordBase
         if (slopeHitFront)
         {
             OnSlope = true;
-            slopeAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+            slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
 
         }
         else if (slopeHitBack)
         {
             OnSlope = true;
-            slopeAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+            slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
         }
         else
         {
-            slopeAngle = 0.0f;
+            slopeSideAngle = 0.0f;
             OnSlope = false;
         }
     }
@@ -376,10 +377,8 @@ public class PlayerWord : WordBase
 
         if (hit)
         {
-
             slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
-
-            float slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+            slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
             //if (slopeDownAngle != lastSlopeAngle)
             //{
@@ -428,7 +427,7 @@ public class PlayerWord : WordBase
                     float yVel = rb.linearVelocityY;
                     if (rb.linearVelocityY > 0)
                     {
-                        yVel = 0;
+                        yVel = -5;
                     }
                     rb.linearVelocity = new Vector3(rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime,
                                                     yVel);
@@ -481,7 +480,7 @@ public class PlayerWord : WordBase
         }
         else if (OnGround)
         {
-            float yForce = Mathf.Sqrt(defaultJumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
+            float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
             IsJumping = true;
         }

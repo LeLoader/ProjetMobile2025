@@ -242,7 +242,7 @@ public class BouncyModifier : EffectModifier
 
     public override void Apply(WordObject wordObject)
     {
-        
+        wordObject.BlockIsBouncy = true;
     }
 
     public override void DebugName()
