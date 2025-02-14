@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip _backgroundGameplay;
 
 
-    public void PlyBackground(AudioClip clip)
+    public void PlayBackground(AudioClip clip)
     {
         m_Music.clip = clip;
         m_Music.Play();
