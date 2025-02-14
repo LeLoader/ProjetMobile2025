@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SceneAsset _scene;
 
     AudioManager _audioManager;
+    Slider _musicSlider;
+    Slider _soundSlider;
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        
     }
 
 
@@ -32,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Nouvelle scène chargée : " + scene.name);
         _actualScene = scene.name;
+
         for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
         {
             if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
@@ -41,12 +46,17 @@ public class GameManager : MonoBehaviour
         }
         if (_scene != null)
         {
-            //jouer la musique de background 
+            _audioManager.PlayBackground(_audioManager._backgroundMenu);
         }
         else
         {
-            //jouer la musique de gameplay
+            _audioManager.PlayBackground(_audioManager._backgroundGameplay);
         }
+        VolumeSettings.Instance.SaveVolume();
+        _musicSlider = GameObject.FindGameObjectWithTag("musicSlider").GetComponent<Slider>();
+        _soundSlider = GameObject.FindGameObjectWithTag("soundSlider").GetComponent<Slider>();
+        VolumeSettings.Instance.musicSlider = _musicSlider;
+        VolumeSettings.Instance.soundSlider = _soundSlider;
     }
 
 
@@ -58,7 +68,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i<0; i++)
+            for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
             {
                 if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
                 {
@@ -67,6 +77,14 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    private void FinishLevel()
+    {
+
+    }
+
+
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;

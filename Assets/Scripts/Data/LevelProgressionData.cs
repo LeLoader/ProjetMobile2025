@@ -7,6 +7,5 @@ using UnityEngine.SceneManagement;
 public struct LevelProgressionData
 {
     public List<Level> _level;
-
 }
 
