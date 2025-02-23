@@ -46,11 +46,21 @@ public class WordBase : MonoBehaviour
 
     protected void UpdateWords(List<WordModifier> newModifiers)
     {
-        for (int i = 0; i < WordWrapper.transform.childCount; i++)
+        if (Application.IsPlaying(this))
         {
-            Destroy(WordWrapper.transform.GetChild(i).gameObject);
+            for (int i = 0; i < WordWrapper.transform.childCount; i++)
+            {
+                Destroy(WordWrapper.transform.GetChild(i).gameObject);
+            }
         }
-
+        else
+        {
+            for (int i = 0; i < WordWrapper.transform.childCount; i++)
+            {
+                DestroyImmediate(WordWrapper.transform.GetChild(i).gameObject);
+            }
+        }
+       
         foreach (WordModifier modifier in newModifiers)
         {
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
