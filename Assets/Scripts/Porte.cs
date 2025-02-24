@@ -11,16 +11,8 @@ public class Porte : MonoBehaviour
         PlayerWord _player = other.GetComponent<PlayerWord>();
         if (_player != null)
         {
-            FinishLevel1.Instance.FinishLevel();
+            GameManager.Instance.FinishLevel();
             _canva.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            
         }
     }
 }

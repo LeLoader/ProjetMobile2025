@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class DisplayData : MonoBehaviour
 {
     [SerializeField] private Text _actualLevel;
+    [SerializeField] private Text _numberLevel;
+    [SerializeField] private Text _completedLevel;
     List<Level> _levelUnlock = new List<Level>();
 
     private void OnEnable()
@@ -38,6 +40,14 @@ public class DisplayData : MonoBehaviour
         {
             int level = _levelUnlock.Count;
             _actualLevel.text = "Actual Level : " + level;
+        }
+        if (_numberLevel != null)
+        {
+            _numberLevel.text = GameManager.Instance._actualScene;
+        }
+        if (_completedLevel != null)
+        {
+            _completedLevel.text = GameManager.Instance._actualScene + " Completed";
         }
     }
 }

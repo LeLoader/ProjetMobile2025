@@ -28,13 +28,15 @@ public class VolumeSettings : MonoBehaviour
         StartCoroutine(DelayedBuildScene());
     }
 
-    public void SetMusicVolume(float volume)
+    public void SetMusicVolume()
     {
+        float volume = musicSlider.value;
         myMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
     }
 
-    public void SetSoundVolume(float volume)
+    public void SetSoundVolume()
     {
+        float volume = soundSlider.value;
         myMixer.SetFloat("Sound", Mathf.Log10(volume) * 20);
     }
 
@@ -42,11 +44,8 @@ public class VolumeSettings : MonoBehaviour
     {
         soundSlider.value = SaveSystem._instance._soundValue;
         musicSlider.value = SaveSystem._instance._musicValue;
-        soundSlider.onValueChanged.AddListener(SetSoundVolume);
-        musicSlider.onValueChanged.AddListener(SetMusicVolume);
-        SetSoundVolume(soundSlider.value);
-        SetMusicVolume(musicSlider.value);
-        Debug.Log("listener ajoutes VS");
+        SetSoundVolume();
+        SetMusicVolume();
     }
 
     private System.Collections.IEnumerator DelayedBuildScene()

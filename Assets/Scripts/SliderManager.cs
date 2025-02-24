@@ -8,21 +8,23 @@ public class SliderManager : MonoBehaviour
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private VolumeSettings _volumeSettings;
 
-    void Start()
+    public static SliderManager Instance;
+
+    private void Awake()
     {
-
-        _audioManager = GameObject.FindGameObjectWithTag("Audio")?.GetComponent<AudioManager>();
-        _volumeSettings = _audioManager.GetComponentInChildren<VolumeSettings>();
-
-        if (_volumeSettings != null)
+        if (Instance == null)
         {
-            _musicSlider.onValueChanged.AddListener(_volumeSettings.SetMusicVolume);
-            _soundSlider.onValueChanged.AddListener(_volumeSettings.SetSoundVolume);
-            Debug.Log("listener ajoutes SM");
+            Instance = this;
         }
         else
         {
-            Debug.LogError("Script persistant introuvable !");
+            Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        _audioManager = GameObject.FindGameObjectWithTag("Audio")?.GetComponent<AudioManager>();
+        _volumeSettings = _audioManager.GetComponentInChildren<VolumeSettings>();
     }
 }

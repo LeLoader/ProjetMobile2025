@@ -8,7 +8,6 @@ public class ButtonManager : MonoBehaviour
 
     public void OnButtonClicked()
     {
-        VolumeSettings.Instance.SaveVolume();
         GameManager.Instance.ChangeScene(_nameNextScene);
     }
 }
