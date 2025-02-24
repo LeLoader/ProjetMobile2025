@@ -48,14 +48,14 @@ public class WordBase : MonoBehaviour
     {
         if (Application.IsPlaying(this))
         {
-            for (int i = 0; i < WordWrapper.transform.childCount; i++)
+            for (int i = WordWrapper.transform.childCount - 1; i >= 0; i--)
             {
                 Destroy(WordWrapper.transform.GetChild(i).gameObject);
             }
         }
         else
         {
-            for (int i = 0; i < WordWrapper.transform.childCount; i++)
+            for (int i = WordWrapper.transform.childCount - 1; i >= 0; i--)
             {
                 DestroyImmediate(WordWrapper.transform.GetChild(i).gameObject);
             }

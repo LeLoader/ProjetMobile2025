@@ -114,6 +114,8 @@ MonoBehaviour:
   applySpeed: 2
   spriteRenderer: {fileID: 6105696309164971014}
   rb: {fileID: 5495438319057385585}
+  BlockIsSticky: 0
+  BlockIsBouncy: 0
   defaultSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   defaultCollider: {fileID: 6889978546682966058}
   stairsSprite: {fileID: 241153118, guid: 675d01b1d3f850f4893e3cec262234d3, type: 3}
@@ -442,9 +444,9 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
@@ -483,7 +485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_SizeDelta.y
@@ -585,7 +587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_SizeDelta.y

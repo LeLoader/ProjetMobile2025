@@ -51,46 +51,6 @@ public class WordObject : WordBase
     private void FixedUpdate()
     {
         ApplyScale();
-        //BlockIsBouncy = IsBouncy();
-        //BlockIsSticky = IsSticky();
-    }
-
-    private bool IsSticky()
-    {
-        if(currentModifiers.Count == 1)
-        {
-            if (this.currentModifiers[0].WordUI.Text.text == "Sticky")
-            {
-                return true;
-            }
-        }
-        if (currentModifiers.Count > 1)
-        {
-            if (this.currentModifiers[1].WordUI.Text.text == "Sticky")
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool IsBouncy()
-    {
-        if (currentModifiers.Count == 1)
-        {
-            if (this.currentModifiers[0].WordUI.Text.text == "Bouncy")
-            {
-                return true;
-            }
-        }
-        if (currentModifiers.Count > 1)
-        {
-            if (this.currentModifiers[1].WordUI.Text.text == "Bouncy")
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     private Collider2D FindActiveCollider()
@@ -248,6 +208,7 @@ public class WordObject : WordBase
             if (modifier is ScaleModifier scaleModifier) // Maybe use a reset method in WordModifier
             {
                 scaleModifier.appliedTimer = 0;
+                TargetScale.Scale(scaleModifier.GetScale());
             }
         }
         if (!currentModifiers.Exists(mod => mod is ShapeModifier)) // If no shape modifier is found, then set shape to default using NONE
@@ -257,13 +218,18 @@ public class WordObject : WordBase
     }
 
     [Button]
+    private void SetupObject()
+    {
+        AddBaseModifier();
+        ForceUpdateWord();
+    }
+
     private void AddBaseModifier()
     {
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
         wordType = 0;
     }
 
-    [Button]
     private void ForceUpdateWord()
     {
         UpdateModifiers();
@@ -284,5 +250,16 @@ public class WordObject : WordBase
         }
 
         transform.localScale = finalScale;
+    }
+
+    private bool HasAStairs()
+    {
+        return currentModifiers.Exists(mod => mod is StairsModifier);
+    }
+
+    [Button, EnableIf("HasAStairs")]
+    private void ForceRotate()
+    {
+        transform.rotation = Quaternion.Euler(0, 180, 0) * transform.rotation;
     }
 }

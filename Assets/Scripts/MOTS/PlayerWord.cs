@@ -380,11 +380,12 @@ public class PlayerWord : WordBase
             slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
             slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            //if (slopeDownAngle != lastSlopeAngle)
-            //{
-                OnSlope = true;
-            //}
+            if (slopeDownAngle != lastSlopeAngle)
+            {
+                
+            }
 
+            OnSlope = true;
             lastSlopeAngle = slopeDownAngle;
 
             Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
