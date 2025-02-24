@@ -37,10 +37,13 @@ public class WordObject : WordBase
 
     private void Start()
     {
-        coll = defaultCollider;
-        WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
-        UpdateWords(currentModifiers);
-        UpdateModifiers();
+        coll = FindActiveCollider();
+        if (currentModifiers.Count == 0) // Only do setup if not already setup
+        {
+            WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
+            UpdateWords(currentModifiers);
+            UpdateModifiers();
+        }
     }
 
     private void FixedUpdate()
@@ -48,8 +51,23 @@ public class WordObject : WordBase
         ApplyScale();
     }
 
+    private Collider2D FindActiveCollider()
+    {
+        if (ballCollider.enabled == true)
+            return ballCollider;
+        else if (stairsCollider.enabled == true)
+            return stairsCollider;
+        else
+            return defaultCollider; 
+    }
+
     public void SetShape(WORDTYPE type)
     {
+        if (!Application.IsPlaying(this))
+        {
+            coll = FindActiveCollider();
+        }
+
         coll.enabled = false;
         transform.rotation = Quaternion.identity;
 
@@ -188,6 +206,7 @@ public class WordObject : WordBase
             if (modifier is ScaleModifier scaleModifier) // Maybe use a reset method in WordModifier
             {
                 scaleModifier.appliedTimer = 0;
+                TargetScale.Scale(scaleModifier.GetScale());
             }
         }
         if (!currentModifiers.Exists(mod => mod is ShapeModifier)) // If no shape modifier is found, then set shape to default using NONE
@@ -197,9 +216,48 @@ public class WordObject : WordBase
     }
 
     [Button]
+    private void SetupObject()
+    {
+        AddBaseModifier();
+        ForceUpdateWord();
+    }
+
+    private void AddBaseModifier()
+    {
+        WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
+        wordType = 0;
+    }
+
     private void ForceUpdateWord()
     {
         UpdateModifiers();
         UpdateWords(currentModifiers);
+    }
+
+    [Button]
+    private void ForceScale()
+    {
+        Vector3 finalScale = Vector3.one;
+        foreach (WordModifier modifier in currentModifiers)
+        {
+            if (modifier is ScaleModifier scaleModifier)
+            {
+                scaleModifier.appliedTimer = 1;
+                finalScale.Scale(scaleModifier.GetScale());
+            }
+        }
+
+        transform.localScale = finalScale;
+    }
+
+    private bool HasAStairs()
+    {
+        return currentModifiers.Exists(mod => mod is StairsModifier);
+    }
+
+    [Button, EnableIf("HasAStairs")]
+    private void ForceRotate()
+    {
+        transform.rotation = Quaternion.Euler(0, 180, 0) * transform.rotation;
     }
 }

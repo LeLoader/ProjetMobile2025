@@ -192,7 +192,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1960959652548125466}
   - {fileID: 2482512269644855385}
@@ -282,20 +282,27 @@ MonoBehaviour:
   topCheckers: {fileID: 3360866134448070524}
   interactionCheckers: {fileID: 2482512269644855385}
   orientSign: {fileID: 4165194087185683165}
-  distanceCheck: 0.01
+  distanceCheck: 0.05
+  slopeHorizontalDistanceCheck: 1
+  slopeVerticalDistanceCheck: 1
   scale: 1
   _camera: {fileID: 0}
   duration: 0.5
   jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  OnGround: 0
   HeadIsStick: 0
   IsStick: 0
+  IsJumping: 0
   CanMove: 0
   OnSlope: 0
   defaultAccelerationForce: 150
   defaultDecelerationForce: 75
   defaultMaxSpeed: 5
   defaultJumpHeight: 1.25
+  airAccelerationForce: 150
+  airDecelerationForce: 75
+  airMaxSpeed: 5
   stickedAccelerationForce: 100
   stickedDecelerationForce: 75
   stickedMaxSpeed: 3
@@ -323,7 +330,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: d6d60943ccffee645a6d0e8edee5c5c0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -332,7 +339,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1343042605137737762
 CapsuleCollider2D:
@@ -459,7 +466,7 @@ Transform:
   m_GameObject: {fileID: 1933597404492424761}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -500,7 +507,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.55
+  m_Radius: 0.45
 --- !u!1 &2672189786812294493
 GameObject:
   m_ObjectHideFlags: 0
