@@ -50,38 +50,38 @@ public class GameManager : MonoBehaviour
             yield break;
         }
         
-        volumeSettings = _audioManager.GetComponent<VolumeSettings>();
+        volumeSettings = _audioManager.GetComponentInChildren<VolumeSettings>();
         if (volumeSettings == null)
         {
             Debug.LogError("VolumeSettings introuvable sur AudioManager !");
             yield break;
         }
 
-        //_musicSlider = GameObject.FindGameObjectWithTag("musicSlider")?.GetComponent<Slider>();
-        //_soundSlider = GameObject.FindGameObjectWithTag("soundSlider")?.GetComponent<Slider>();
+        _musicSlider = GameObject.FindGameObjectWithTag("musicSlider")?.GetComponent<Slider>();
+        _soundSlider = GameObject.FindGameObjectWithTag("soundSlider")?.GetComponent<Slider>();
 
-        //volumeSettings.musicSlider = _musicSlider;
-        //volumeSettings.soundSlider = _soundSlider;
-
-
-        //if (_musicSlider != null && _soundSlider != null)
-        //{
-        //    Debug.Log("Sliders trouvés et assignés !");
-        //    _musicSlider.onValueChanged.RemoveAllListeners();
-        //    _soundSlider.onValueChanged.RemoveAllListeners();
-
-        //    _musicSlider.onValueChanged.AddListener(volumeSettings.SetMusicVolume);
-        //    _soundSlider.onValueChanged.AddListener(volumeSettings.SetSoundVolume);
-        //    Debug.Log("listener ajoutes GM");
+        volumeSettings.musicSlider = _musicSlider;
+        volumeSettings.soundSlider = _soundSlider;
 
 
-        //    _musicSlider.value = volumeSettings.musicSlider.value;
-        //    _soundSlider.value = volumeSettings.soundSlider.value;
-        //}
-        //else
-        //{
-        //    Debug.LogError("Les sliders ne sont pas trouvés dans la scène !");
-        //}
+        if (_musicSlider != null && _soundSlider != null)
+        {
+            Debug.Log("Sliders trouvés et assignés !");
+            _musicSlider.onValueChanged.RemoveAllListeners();
+            _soundSlider.onValueChanged.RemoveAllListeners();
+
+            _musicSlider.onValueChanged.AddListener(volumeSettings.SetMusicVolume);
+            _soundSlider.onValueChanged.AddListener(volumeSettings.SetSoundVolume);
+            Debug.Log("listener ajoutes GM");
+
+
+            _musicSlider.value = volumeSettings.musicSlider.value;
+            _soundSlider.value = volumeSettings.soundSlider.value;
+        }
+        else
+        {
+            Debug.LogError("Les sliders ne sont pas trouvés dans la scène !");
+        }
     }
 
 

@@ -12,7 +12,7 @@ public class SliderManager : MonoBehaviour
     {
 
         _audioManager = GameObject.FindGameObjectWithTag("Audio")?.GetComponent<AudioManager>();
-        _volumeSettings = _audioManager.GetComponent<VolumeSettings>();
+        _volumeSettings = _audioManager.GetComponentInChildren<VolumeSettings>();
 
         if (_volumeSettings != null)
         {

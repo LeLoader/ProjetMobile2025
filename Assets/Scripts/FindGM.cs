@@ -22,7 +22,7 @@ public class FindGM : MonoBehaviour
             Debug.LogError("AudioManager introuvable !");
         }
 
-        _volumeSettings = _audioManager.GetComponent<VolumeSettings>();
+        _volumeSettings = _audioManager.GetComponentInChildren<VolumeSettings>();
         if (_volumeSettings == null)
         {
             Debug.LogError("VolumeSettings introuvable sur AudioManager !");

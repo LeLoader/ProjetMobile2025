@@ -3061,6 +3061,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808482667}
   m_CullTransparentMesh: 1
+--- !u!1 &822395568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 822395569}
+  - component: {fileID: 822395570}
+  m_Layer: 0
+  m_Name: VolumeSetting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &822395569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822395568}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963686098}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &822395570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822395568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb1329f3807aff44b959f0f88b0c39d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myMixer: {fileID: 24100000, guid: f1f22777ee5185d4690a13875a83cb5b, type: 2}
+  musicSlider: {fileID: 8344261408163268007}
+  soundSlider: {fileID: 8344261408163268006}
 --- !u!1 &829688102
 GameObject:
   m_ObjectHideFlags: 0
@@ -3791,7 +3838,6 @@ GameObject:
   - component: {fileID: 963686098}
   - component: {fileID: 963686097}
   - component: {fileID: 963686099}
-  - component: {fileID: 963686100}
   m_Layer: 0
   m_Name: ---AudioManager---
   m_TagString: Audio
@@ -3826,6 +3872,7 @@ Transform:
   m_Children:
   - {fileID: 55239100}
   - {fileID: 314451646}
+  - {fileID: 822395569}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &963686099
@@ -3844,21 +3891,6 @@ MonoBehaviour:
   m_Sound: {fileID: 314451645}
   _backgroundMenu: {fileID: 8300000, guid: 02438cc97b2e0f6458801dbdff2cf35f, type: 3}
   _backgroundGameplay: {fileID: 8300000, guid: cb1b1eccd8647774e91f1e45ac5b5a47, type: 3}
---- !u!114 &963686100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963686096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb1329f3807aff44b959f0f88b0c39d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myMixer: {fileID: 24100000, guid: f1f22777ee5185d4690a13875a83cb5b, type: 2}
-  musicSlider: {fileID: 8344261408163268007}
-  soundSlider: {fileID: 8344261408163268006}
 --- !u!1 &1044640781
 GameObject:
   m_ObjectHideFlags: 0
@@ -7503,7 +7535,7 @@ PrefabInstance:
     - target: {fileID: 5399437864062442626, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: _volumeSettings
       value: 
-      objectReference: {fileID: 963686100}
+      objectReference: {fileID: 0}
     - target: {fileID: 5510947360274271024, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7519,7 +7551,7 @@ PrefabInstance:
     - target: {fileID: 6462112147829301122, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 963686100}
+      objectReference: {fileID: 0}
     - target: {fileID: 6462112147829301122, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMusicVolume
@@ -7539,7 +7571,7 @@ PrefabInstance:
     - target: {fileID: 7945329896352924389, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 963686100}
+      objectReference: {fileID: 0}
     - target: {fileID: 7945329896352924389, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetSoundVolume
