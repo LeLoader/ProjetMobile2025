@@ -273,7 +273,7 @@ MonoBehaviour:
   currentModifiers: []
   WordWrapper: {fileID: 0}
   WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
-  interactionDistance: 2
+  interactionDistance: 0.8
   rb: {fileID: 71137860090918779}
   capsuleCollider: {fileID: 1343042605137737762}
   groundChecker: {fileID: 7503588908058030300}

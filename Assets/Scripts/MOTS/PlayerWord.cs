@@ -47,6 +47,8 @@ public class PlayerWord : WordBase
     float lastSlopeAngle;
     float slopeAngle;
 
+    private Coroutine _zoomCoroutine;
+
     public float AccelerationForce
     {
         get
@@ -471,7 +473,7 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
-        StartCoroutine(TransitionCamera(_cameraUnlink, _cameraLink, duration));
+        StartZoom(_cameraUnlink, _cameraLink, duration);
     }
 
     private void Unlink()
@@ -484,21 +486,32 @@ public class PlayerWord : WordBase
             }
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
-            StartCoroutine(TransitionCamera(_cameraLink, _cameraUnlink, duration));
+            StartZoom(_cameraLink, _cameraUnlink, duration);
         }
     }
 
-    IEnumerator TransitionCamera(float startValue, float endValue, float duration)
+    private void StartZoom(float startValue, float endValue, float duration)
+    {
+        if (_zoomCoroutine != null) StopCoroutine(_zoomCoroutine);
+        _zoomCoroutine = StartCoroutine(TransitionCamera(startValue, endValue, duration));
+    }
+
+    private IEnumerator TransitionCamera(float startValue, float endValue, float duration)
     {
         float elapsedTime = 0f;
+
         while (elapsedTime < duration)
         {
-            _camera.Lens.OrthographicSize = _currentCamera;
-            _currentCamera = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
+            _currentCamera = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
+            _camera.Lens.OrthographicSize = _currentCamera;
             yield return null;
         }
+
         _currentCamera = endValue;
+        _camera.Lens.OrthographicSize = _currentCamera;
+
+        _zoomCoroutine = null;
     }
 
     private void ReactivateLeftCheckers()
