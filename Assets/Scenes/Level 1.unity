@@ -6227,34 +6227,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1965439153207626647, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1965439153207626647, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1965439153207626647, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
-      value: 
-      objectReference: {fileID: 1002758979}
-    - target: {fileID: 1965439153207626647, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1965439153207626647, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1965439153207626647, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3896857076074242621, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
-      propertyPath: _nameNextScene
-      value: Level 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8181356215330477888, guid: 38f0ac78b82a11f43b26cdab56b02b89, type: 3}
       propertyPath: m_Name
       value: CanvaReglage
