@@ -48,6 +48,7 @@ public class PlayerWord : WordBase
     public bool OnBouncy { get; private set; }
     [SerializeField, ReadOnly] bool CanMove;
     [SerializeField, ReadOnly] bool OnSlope;
+    [SerializeField, ReadOnly] bool OnSideSlope;
 
     Vector2 slopeNormalPerp;
     float lastSlopeAngle;
@@ -357,20 +358,24 @@ public class PlayerWord : WordBase
 
         if (slopeHitFront)
         {
-            OnSlope = true;
+            OnSideSlope = true;
             slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+            slopeNormalPerp = Vector2.Perpendicular(slopeHitFront.normal).normalized;
 
         }
         else if (slopeHitBack)
         {
-            OnSlope = true;
+            OnSideSlope = true;
             slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+            slopeNormalPerp = Vector2.Perpendicular(slopeHitBack.normal).normalized;
         }
         else
         {
             slopeSideAngle = 0.0f;
-            OnSlope = false;
+            slopeNormalPerp = Vector2.up;
+            OnSideSlope = false;
         }
+
     }
 
     private void SlopeCheckVertical(Vector2 checkPos)
@@ -382,13 +387,15 @@ public class PlayerWord : WordBase
             slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
             slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
-            if (slopeDownAngle != lastSlopeAngle)
+            if (Mathf.Approximately(slopeDownAngle, 0))
             {
-                
+                OnSlope = false;
             }
-
-            OnSlope = true;
-            lastSlopeAngle = slopeDownAngle;
+            else
+            {
+                lastSlopeAngle = slopeDownAngle;
+                OnSlope = true;
+            }
 
             Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
@@ -415,30 +422,25 @@ public class PlayerWord : WordBase
         {
             if (OnGround) // GROUND MOVEMENT
             {
-                if (OnSlope)
-                {
-                    rb.linearVelocity = new Vector3(-xInput * 5 * slopeNormalPerp.x,
-                                                    -xInput * 5 * slopeNormalPerp.y);
-                   //rb.linearVelocity = new Vector3(rb.linearVelocityX - xInput * AccelerationForce * slopeNormalPerp.x * Time.fixedDeltaTime,
-                   //                                rb.linearVelocityX - xInput * AccelerationForce * slopeNormalPerp.y * Time.fixedDeltaTime);
-                }
-                else
-                {
-                    rb.linearVelocity = new Vector3(rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime,
-                                                    rb.linearVelocityY);
-                }
+                rb.linearVelocity = new Vector3(rb.linearVelocityX - xInput * AccelerationForce * slopeNormalPerp.x * Time.fixedDeltaTime,
+                                                   rb.linearVelocityY - xInput * AccelerationForce * slopeNormalPerp.y * Time.fixedDeltaTime);
+                //if (OnSlope)
+                //{
+                //    //rb.linearVelocity = new Vector3(-xInput * 5 * slopeNormalPerp.x,
+                //    //                                -xInput * 5 * slopeNormalPerp.y);
+                //    
+                //}
+                //else
+                //{
+                //    rb.linearVelocity = new Vector3(rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime,
+                //                                    rb.linearVelocityY);
+                //}
             }
             else // AIR MOVEMENT
             {
                 if (OnSlope)
                 {
-                    float yVel = rb.linearVelocityY;
-                    if (rb.linearVelocityY > 0)
-                    {
-                        yVel = -5;
-                    }
-                    rb.linearVelocity = new Vector3(rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime,
-                                                    yVel);
+                    rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
                 }                                  
                 else
                 {
@@ -446,7 +448,14 @@ public class PlayerWord : WordBase
                 }  
             }
 
-            rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
+            if (OnGround)
+            {
+                rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, MaxSpeed);
+            }
+            else // Don't clamp Y vel when in air
+            {
+                rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
+            }
         }
     }
 

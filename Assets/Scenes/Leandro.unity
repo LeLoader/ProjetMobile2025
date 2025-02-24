@@ -3182,7 +3182,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1062304150
 MonoBehaviour:
@@ -3222,6 +3222,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062304147}
   m_CullTransparentMesh: 1
+--- !u!1 &1191029680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8406676678368011399, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+  m_PrefabInstance: {fileID: 7715610296862157360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1191029686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191029680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/d
 --- !u!1 &1343595644
 GameObject:
   m_ObjectHideFlags: 0
@@ -3476,6 +3494,42 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 932659512524423338, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
   m_PrefabInstance: {fileID: 7715610296862157360}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1895923493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3533262914315008705, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+  m_PrefabInstance: {fileID: 7715610296862157360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1895923499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895923493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/a
+--- !u!1 &2000830821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7198464070098313149, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+  m_PrefabInstance: {fileID: 7715610296862157360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2000830827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000830821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/space
 --- !u!114 &2121538431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3636,6 +3690,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8008502337653914834, guid: cd8cc389332d58240ac9e41ca640c7d8, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008502337653914834, guid: cd8cc389332d58240ac9e41ca640c7d8, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8008502337653914834, guid: cd8cc389332d58240ac9e41ca640c7d8, type: 3}
@@ -3994,9 +4052,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 3915120735373243394, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+    - {fileID: 1964471771325909248, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+    - {fileID: 1565788376187138038, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3533262914315008705, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1895923499}
+    - targetCorrespondingSourceObject: {fileID: 8406676678368011399, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1191029686}
+    - targetCorrespondingSourceObject: {fileID: 7198464070098313149, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2000830827}
   m_SourcePrefab: {fileID: 100100000, guid: 2cfca8bdffaf29b43b536f4a70d862fe, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
