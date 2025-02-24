@@ -254,20 +254,6 @@ public class PlayerWord : WordBase
         return null;
     }
 
-    private void IsTouchingWordObject()
-    {
-        int layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
-        Collider2D coll = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
-        if (coll != null)
-        {
-            WordObject wo = coll.gameObject.GetComponent<WordObject>();
-            if (wo.BlockIsBouncy)
-            {
-                Jump();
-            }
-        }
-    }
-
     private bool PlayerIsOnSticky()
     {
         for (int i = 0; i < leftCheckers.childCount; i++)
