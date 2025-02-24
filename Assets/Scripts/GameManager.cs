@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,9 +11,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string _actualScene;
     [SerializeField] private SceneAsset _scene;
 
-    AudioManager _audioManager;
-    Slider _musicSlider;
-    Slider _soundSlider;
+    [SerializeField] private VolumeSettings volumeSettings;
+    [SerializeField] AudioManager _audioManager;
+    [SerializeField] Slider _musicSlider;
+    [SerializeField] Slider _soundSlider;
 
     private void Awake()
     {
@@ -25,10 +27,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         SceneManager.sceneLoaded += OnSceneLoaded;
-        _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        
     }
 
 
@@ -37,26 +36,52 @@ public class GameManager : MonoBehaviour
         Debug.Log("Nouvelle scène chargée : " + scene.name);
         _actualScene = scene.name;
 
-        for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
+        StartCoroutine(DelayedFindAudioManager());
+    }
+
+    private System.Collections.IEnumerator DelayedFindAudioManager()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        _audioManager = GameObject.FindGameObjectWithTag("Audio")?.GetComponent<AudioManager>();
+        if (_audioManager == null)
         {
-            if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
-            {
-                _scene = SaveSystem._instance._levelData._level[i]._scene;
-            }
+            Debug.LogError("AudioManager introuvable !");
+            yield break;
         }
-        if (_scene != null)
+        
+        volumeSettings = _audioManager.GetComponent<VolumeSettings>();
+        if (volumeSettings == null)
         {
-            _audioManager.PlayBackground(_audioManager._backgroundMenu);
+            Debug.LogError("VolumeSettings introuvable sur AudioManager !");
+            yield break;
         }
-        else
-        {
-            _audioManager.PlayBackground(_audioManager._backgroundGameplay);
-        }
-        VolumeSettings.Instance.SaveVolume();
-        _musicSlider = GameObject.FindGameObjectWithTag("musicSlider").GetComponent<Slider>();
-        _soundSlider = GameObject.FindGameObjectWithTag("soundSlider").GetComponent<Slider>();
-        VolumeSettings.Instance.musicSlider = _musicSlider;
-        VolumeSettings.Instance.soundSlider = _soundSlider;
+
+        //_musicSlider = GameObject.FindGameObjectWithTag("musicSlider")?.GetComponent<Slider>();
+        //_soundSlider = GameObject.FindGameObjectWithTag("soundSlider")?.GetComponent<Slider>();
+
+        //volumeSettings.musicSlider = _musicSlider;
+        //volumeSettings.soundSlider = _soundSlider;
+
+
+        //if (_musicSlider != null && _soundSlider != null)
+        //{
+        //    Debug.Log("Sliders trouvés et assignés !");
+        //    _musicSlider.onValueChanged.RemoveAllListeners();
+        //    _soundSlider.onValueChanged.RemoveAllListeners();
+
+        //    _musicSlider.onValueChanged.AddListener(volumeSettings.SetMusicVolume);
+        //    _soundSlider.onValueChanged.AddListener(volumeSettings.SetSoundVolume);
+        //    Debug.Log("listener ajoutes GM");
+
+
+        //    _musicSlider.value = volumeSettings.musicSlider.value;
+        //    _soundSlider.value = volumeSettings.soundSlider.value;
+        //}
+        //else
+        //{
+        //    Debug.LogError("Les sliders ne sont pas trouvés dans la scène !");
+        //}
     }
 
 
@@ -77,13 +102,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    private void FinishLevel()
-    {
-
-    }
-
-
 
     private void OnDestroy()
     {
