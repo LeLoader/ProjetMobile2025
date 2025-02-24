@@ -50,7 +50,8 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool OnSlope;
     [SerializeField, ReadOnly] bool OnSideSlope;
 
-    Vector2 slopeNormalPerp;
+    Vector2 downSlopeNormalPerp;
+    Vector2 sideSlopeNormalPerp;
     float lastSlopeAngle;
     float slopeDownAngle;
     float slopeSideAngle;
@@ -241,7 +242,6 @@ public class PlayerWord : WordBase
     {
         int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
         OnGround = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
-        IsJumping = false;
     }
 
     private WordObject IsTouchingWordObject()
@@ -268,7 +268,7 @@ public class PlayerWord : WordBase
                 {
                     //appeler la fonction qui colle le joueur � GAUCHE
                     this.transform.SetParent(hit.transform, true);
-                    if(!OnGround)
+                    if (!OnGround)
                     {
                         rb.linearVelocity = new Vector2(0, 0);
                     }
@@ -326,7 +326,7 @@ public class PlayerWord : WordBase
 
     private void UpdateGravity()
     {
-        if(!OnGround && (PlayerIsOnSticky() || HeadIsSticky()))
+        if (!OnGround && (PlayerIsOnSticky() || HeadIsSticky()))
         {
             rb.gravityScale = 0;
         }
@@ -360,22 +360,21 @@ public class PlayerWord : WordBase
         {
             OnSideSlope = true;
             slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-            slopeNormalPerp = Vector2.Perpendicular(slopeHitFront.normal).normalized;
-
+            sideSlopeNormalPerp = Vector2.Perpendicular(slopeHitFront.normal).normalized;
+            Debug.DrawRay(slopeHitFront.point, sideSlopeNormalPerp, Color.blue);
         }
         else if (slopeHitBack)
         {
             OnSideSlope = true;
             slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-            slopeNormalPerp = Vector2.Perpendicular(slopeHitBack.normal).normalized;
+            sideSlopeNormalPerp = Vector2.Perpendicular(slopeHitBack.normal).normalized;
+            Debug.DrawRay(slopeHitBack.point, sideSlopeNormalPerp, Color.blue);
         }
         else
         {
             slopeSideAngle = 0.0f;
-            slopeNormalPerp = Vector2.up;
             OnSideSlope = false;
         }
-
     }
 
     private void SlopeCheckVertical(Vector2 checkPos)
@@ -384,12 +383,13 @@ public class PlayerWord : WordBase
 
         if (hit)
         {
-            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+            downSlopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
             slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
 
             if (Mathf.Approximately(slopeDownAngle, 0))
             {
                 OnSlope = false;
+                lastSlopeAngle = 0;
             }
             else
             {
@@ -397,8 +397,13 @@ public class PlayerWord : WordBase
                 OnSlope = true;
             }
 
-            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
+            Debug.DrawRay(hit.point, downSlopeNormalPerp, Color.blue);
             Debug.DrawRay(hit.point, hit.normal, Color.green);
+        }
+        else
+        {
+            OnSlope = false;
+            lastSlopeAngle = 0;
         }
     }
 
@@ -422,8 +427,22 @@ public class PlayerWord : WordBase
         {
             if (OnGround) // GROUND MOVEMENT
             {
-                rb.linearVelocity = new Vector3(rb.linearVelocityX - xInput * AccelerationForce * slopeNormalPerp.x * Time.fixedDeltaTime,
-                                                   rb.linearVelocityY - xInput * AccelerationForce * slopeNormalPerp.y * Time.fixedDeltaTime);
+                if (OnSlope && !OnSideSlope) // On top of a peak or on weak slope
+                {
+                    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
+                                                    -xInput * 5 * downSlopeNormalPerp.y);
+                }
+                else if (!OnSlope && OnSideSlope) // About to go on slope or on hard slope
+                {
+                    rb.linearVelocity = new Vector3(-xInput * 5 * sideSlopeNormalPerp.x,
+                                                    -xInput * 5 * sideSlopeNormalPerp.y);
+                }
+                else
+                {
+                    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
+                                                    -xInput * 5 * downSlopeNormalPerp.y);
+                }
+
                 //if (OnSlope)
                 //{
                 //    //rb.linearVelocity = new Vector3(-xInput * 5 * slopeNormalPerp.x,
@@ -440,19 +459,20 @@ public class PlayerWord : WordBase
             {
                 if (OnSlope)
                 {
-                    rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
-                }                                  
+                    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
+                                                    -xInput * 5 * downSlopeNormalPerp.y);
+                }
                 else
                 {
                     rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
-                }  
+                }
             }
 
-            if (OnGround)
+            if (OnGround && !IsJumping)
             {
                 rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, MaxSpeed);
             }
-            else // Don't clamp Y vel when in air
+            else // Don't clamp Y vel when in air or jumping
             {
                 rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
             }
@@ -617,7 +637,7 @@ public class PlayerWord : WordBase
         rightCheckers.gameObject.SetActive(true);
         CanMove = true;
     }
-    
+
     private void ReactivateTopCheckers()
     {
         topCheckers.gameObject.SetActive(true);
@@ -642,6 +662,7 @@ public class PlayerWord : WordBase
         GUILayout.TextField(rb.linearVelocity.ToString());
         GUILayout.TextField("Ground:" + OnGround.ToString());
         GUILayout.TextField("Slope:" + OnSlope.ToString());
+        GUILayout.TextField("SideSlope:" + OnSideSlope.ToString());
         GUILayout.EndVertical();
     }
 }
