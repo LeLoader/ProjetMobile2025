@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BouncingPlatform : MonoBehaviour
 {
@@ -6,7 +6,6 @@ public class BouncingPlatform : MonoBehaviour
     public float minJumpHeight = 2f;
 
     private Rigidbody2D rb;
-
     private bool isTrackingJump = false;
     private float jumpStartY = 0f;
     private float maxJumpY = 0f;
@@ -18,42 +17,51 @@ public class BouncingPlatform : MonoBehaviour
 
     void Update()
     {
-        if (!isTrackingJump && rb.linearVelocity.y > 0)
+        if (rb.linearVelocity.y > 0)
         {
-            isTrackingJump = true;
-            jumpStartY = Player.transform.position.y;
-            maxJumpY = jumpStartY;
+            if (!isTrackingJump)
+            {
+                isTrackingJump = true;
+                jumpStartY = Player.transform.position.y;
+                maxJumpY = jumpStartY;
+            }
+            else
+            {
+                float currentY = Player.transform.position.y;
+                if (currentY > maxJumpY)
+                {
+                    maxJumpY = currentY;
+                }
+            }
         }
+    }
 
-        if (isTrackingJump)
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            float currentY = Player.transform.position.y;
-            if (currentY > maxJumpY)
-                maxJumpY = currentY;
+            ResetJumpData();
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == Player)
+        if (collision.gameObject == Player && rb.linearVelocity.y <= 0)
         {
-            if (rb.linearVelocity.y <= 0)
-            {
-                float bounceHeight = minJumpHeight;
+            float computedJumpHeight = maxJumpY - jumpStartY;
+            float bounceHeight = Mathf.Max(computedJumpHeight, minJumpHeight);
 
-                if (isTrackingJump)
-                {
-                    float computedJumpHeight = maxJumpY - jumpStartY;
-                    bounceHeight = (computedJumpHeight >= minJumpHeight) ? computedJumpHeight : minJumpHeight;
+            float bounceVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics2D.gravity.y) * bounceHeight);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, bounceVelocity);
 
-                    isTrackingJump = false;
-                    jumpStartY = 0f;
-                    maxJumpY = 0f;
-                }
-
-                float bounceVelocity = Mathf.Sqrt(2 * Mathf.Abs(Physics2D.gravity.y) * bounceHeight);
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, bounceVelocity);
-            }
+            ResetJumpData();
         }
+    }
+
+    void ResetJumpData()
+    {
+        isTrackingJump = false;
+        jumpStartY = 0f;
+        maxJumpY = 0f;
     }
 }
