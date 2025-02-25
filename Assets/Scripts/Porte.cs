@@ -31,6 +31,9 @@ public class Porte : MonoBehaviour
     private IEnumerator DelayBeforeEndCanva()
     {
         yield return new WaitForSeconds(3f);
+        _player.CanMove = false;
+        _Leftparticule.Stop();
+        _Rightparticule.Stop();
         GameManager.Instance.FinishLevel();
         _canva.SetActive(true);
     }
