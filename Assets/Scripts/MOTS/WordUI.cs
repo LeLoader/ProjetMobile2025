@@ -19,6 +19,11 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    public void SetWordModifier(WordModifier wordModifier)
+    {
+        WordModifier = wordModifier;
+    }
+
     public void Link()
     {
         Text.color = Color.red;

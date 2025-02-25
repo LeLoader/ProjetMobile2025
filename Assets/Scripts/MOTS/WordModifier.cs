@@ -32,9 +32,9 @@ public enum WORDTYPE
 public abstract class WordModifier
 {
     [field: SerializeField] public WordUI WordUI { get; set; }
-    public WordBase Owner { get; set; }
+    [field: SerializeField, ReadOnly] public WordBase Owner { get; set; }
 
-    protected string name = "WordModifier";
+    [field: SerializeField, ReadOnly] protected string name = "WordModifier";
 
     abstract public void DebugName();
 
@@ -120,7 +120,6 @@ public abstract class ScaleModifier : WordModifier
     public override void Apply(WordObject wordObject)
     {
         wordObject.TargetScale = Vector3.Scale(scale, wordObject.TargetScale);
-        //wordObject.TargetScale.Scale(scale);
         Debug.Log(wordObject.TargetScale);
     }
 

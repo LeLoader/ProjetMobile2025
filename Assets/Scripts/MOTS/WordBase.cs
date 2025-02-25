@@ -28,7 +28,7 @@ public class WordBase : MonoBehaviour
                 
                 target.AddModifier(modifier); // METHOD
                 currentModifiers.Remove(modifier);
-                UpdateWords(currentModifiers);
+                UpdateWords(ref currentModifiers);
                 modifier.Owner = target;
             }
             else
@@ -41,10 +41,10 @@ public class WordBase : MonoBehaviour
     virtual public void AddModifier(WordModifier wordModifier)
     {
         currentModifiers.Add(wordModifier);
-        UpdateWords(currentModifiers);
+        UpdateWords(ref currentModifiers);
     }
 
-    protected void UpdateWords(List<WordModifier> newModifiers)
+    protected void UpdateWords(ref List<WordModifier> newModifiers)
     {
         if (Application.IsPlaying(this))
         {
@@ -65,12 +65,13 @@ public class WordBase : MonoBehaviour
         {
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
             {
+                Debug.Log("Name of new modifier:" + modifier.GetName());
                 wordUI.Text.text = modifier.GetName();
                 if (LinkedWordBase != null)
                 {
                     wordUI.Link();
                 }
-                wordUI.WordModifier = modifier;
+                wordUI.SetWordModifier(modifier);
                 modifier.WordUI = wordUI;
             }
         }

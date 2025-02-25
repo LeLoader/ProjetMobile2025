@@ -29,6 +29,10 @@ public class DisplayData : MonoBehaviour
 
     public void ChangeDisplay()
     {
+        if (SaveSystem._instance == null)
+        {
+            return;
+        }
         foreach(Level _level in SaveSystem._instance._levelData._level)
         {
             if(_level._state == Level.LevelState.Unlock || _level._state == Level.LevelState.Completed)

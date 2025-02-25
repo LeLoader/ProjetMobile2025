@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2faf19550e6df194e9daad46ad1ab5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wordType: 2
+  wordType: 0
   currentModifiers: []
   WordWrapper: {fileID: 0}
   WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
@@ -291,6 +291,7 @@ MonoBehaviour:
   duration: 0.5
   jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  useAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   OnGround: 0
   HeadIsStick: 0
   IsStick: 0

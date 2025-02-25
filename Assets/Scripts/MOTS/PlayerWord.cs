@@ -39,6 +39,7 @@ public class PlayerWord : WordBase
     [Header("Action")]
     [SerializeField] InputActionReference jumpAction;
     [SerializeField] InputActionReference moveAction;
+    [SerializeField] InputActionReference useAction;
 
     [Header("Movement")]
     [SerializeField, ReadOnly] bool OnGround;
@@ -131,11 +132,12 @@ public class PlayerWord : WordBase
         CanMove = true;
 
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
-        UpdateWords(currentModifiers);
+        UpdateWords(ref currentModifiers);
 
         jumpAction.action.started += Jump;
         moveAction.action.performed += GetInput;
         moveAction.action.canceled += GetInput;
+        useAction.action.started += Use;
     }
 
     void FixedUpdate()
@@ -158,8 +160,6 @@ public class PlayerWord : WordBase
         }
 
         UpdateOrientation();
-
-        Use();
     }
 
     private float GetAccelerationForce()
@@ -558,9 +558,9 @@ public class PlayerWord : WordBase
         rb.AddForce(new Vector2(0, -5) * 12);
     }
 
-    private void Use()
+    private void Use(InputAction.CallbackContext context)
     {
-        if (!Input.GetKeyDown(KeyCode.E) || !OnGround || LinkedWordBase != null) return;
+        if (!OnGround || LinkedWordBase != null) return;
 
         for (int i = 0; i < interactionCheckers.childCount; i++)
         {

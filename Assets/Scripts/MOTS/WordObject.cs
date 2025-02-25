@@ -38,10 +38,11 @@ public class WordObject : WordBase
     private void Start()
     {
         coll = FindActiveCollider();
+        ApplyAllModifiers();
         if (currentModifiers.Count == 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
-            UpdateWords(currentModifiers);
+            UpdateWords(ref currentModifiers);
             UpdateModifiers();
         }
     }
@@ -49,6 +50,14 @@ public class WordObject : WordBase
     private void FixedUpdate()
     {
         ApplyScale();
+    }
+
+    private void ApplyAllModifiers()
+    {
+        foreach (WordModifier modifier in currentModifiers)
+        {
+            modifier.Apply(this);
+        }
     }
 
     private Collider2D FindActiveCollider()
@@ -200,13 +209,12 @@ public class WordObject : WordBase
     private void UpdateModifiers()
     {
         ResetObject();
+        ApplyAllModifiers();
         foreach (WordModifier modifier in currentModifiers)
         {
-            modifier.Apply(this);
             if (modifier is ScaleModifier scaleModifier) // Maybe use a reset method in WordModifier
             {
                 scaleModifier.appliedTimer = 0;
-                TargetScale.Scale(scaleModifier.GetScale());
             }
         }
         if (!currentModifiers.Exists(mod => mod is ShapeModifier)) // If no shape modifier is found, then set shape to default using NONE
@@ -231,7 +239,7 @@ public class WordObject : WordBase
     private void ForceUpdateWord()
     {
         UpdateModifiers();
-        UpdateWords(currentModifiers);
+        UpdateWords(ref currentModifiers);
     }
 
     [Button]

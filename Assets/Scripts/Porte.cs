@@ -34,7 +34,10 @@ public class Porte : MonoBehaviour
         _player.CanMove = false;
         _Leftparticule.Stop();
         _Rightparticule.Stop();
-        GameManager.Instance.FinishLevel();
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.FinishLevel();
+        }
         _canva.SetActive(true);
     }
 }
