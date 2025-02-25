@@ -46,7 +46,7 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool IsJumping;
     public bool OnBouncy { get; private set; }
-    [SerializeField, ReadOnly] bool CanMove;
+    [SerializeField, ReadOnly] public bool CanMove;
     [SerializeField, ReadOnly] bool OnSlope;
     [SerializeField, ReadOnly] bool OnSideSlope;
 

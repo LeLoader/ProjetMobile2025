@@ -35,31 +35,31 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        if (string.IsNullOrEmpty(sceneName))
+        for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
         {
-            for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
+            if (string.IsNullOrEmpty(sceneName) && SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
             {
-                if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
-                {
-                    SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
-                }
+                SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
             }
-        }
-        else if (sceneName == "nextLevel")
-        {
-            for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
+
+            else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
             {
-                if(_actualScene == SaveSystem._instance._levelData._level[i]._idLevel &&
+                SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+            }
+
+            else if (sceneName == "nextLevel")
+            {
+                if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel &&
                     SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Completed &&
-                    (SaveSystem._instance._levelData._level[i+1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
+                    (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
                 }
             }
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName);
+            else
+            {
+                SceneManager.LoadScene(sceneName);
+            }
         }
     }
 
