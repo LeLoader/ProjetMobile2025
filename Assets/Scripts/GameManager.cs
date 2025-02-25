@@ -27,19 +27,19 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Nouvelle scène chargée : " + scene.name);
         _actualScene = scene.name;
-
-        //StartCoroutine(DelayedFindAudioManager());
     }
 
     public void ChangeScene(string sceneName)
     {
         for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
         {
-            if (string.IsNullOrEmpty(sceneName) && SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
+            if (sceneName == "lastLevel")
             {
-                SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
+                {
+                    SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                }
             }
 
             else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
@@ -56,11 +56,8 @@ public class GameManager : MonoBehaviour
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
                 }
             }
-            else
-            {
-                SceneManager.LoadScene(sceneName);
-            }
         }
+        SceneManager.LoadScene(sceneName);
     }
 
     public void FinishLevel()

@@ -18,11 +18,14 @@ public class VerifyCompleted : MonoBehaviour
     {
         for(int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
         {
+            UnityEngine.UI.Button bouton = _goLevel[i]?.GetComponentInChildren<UnityEngine.UI.Button>();
+
             if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
             {
                 if(!_goBlocked[i].activeInHierarchy)
                 {
                     _goBlocked[i].SetActive(true);
+                    bouton.gameObject.SetActive(false);
                 }
             }
             else if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Completed)
@@ -30,7 +33,12 @@ public class VerifyCompleted : MonoBehaviour
                 if (!_goCompleted[i].activeInHierarchy)
                 {
                     _goCompleted[i].SetActive(true);
+                    bouton.gameObject.SetActive(true);
                 }
+            }
+            else if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
+            {
+                bouton.gameObject.SetActive(true);
             }
         }
     }
