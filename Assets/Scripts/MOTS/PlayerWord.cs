@@ -41,7 +41,7 @@ public class PlayerWord : WordBase
     [Header("Movement")]
     [SerializeField, ReadOnly] bool HeadIsStick;
     [SerializeField, ReadOnly] bool IsStick;
-    [SerializeField, ReadOnly] bool CanMove;
+    public bool CanMove;
     [SerializeField, ReadOnly] bool OnSlope;
     Vector2 slopeNormalPerp;
     float lastSlopeAngle;
