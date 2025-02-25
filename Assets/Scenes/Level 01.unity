@@ -22232,10 +22232,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1497683069}
     - target: {fileID: 319403068261597164, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
-      propertyPath: wordType
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 319403068261597164, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: WordWrapper
       value: 
       objectReference: {fileID: 1009201151}
@@ -22245,11 +22241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 319403068261597164, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: slopeVerticalDistanceCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 319403068261597164, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
-      propertyPath: slopeHorizontalDistanceCheck
-      value: 0.3
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1257462095712101159, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: m_Name
@@ -22305,7 +22297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7503588908058030300, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: m_Radius
-      value: 0.5
+      value: 0.48
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -425,7 +425,7 @@ public class PlayerWord : WordBase
     {
         if (CanMove)
         {
-            if (OnGround) // GROUND MOVEMENT
+            if (OnGround && !IsJumping) // GROUND MOVEMENT
             {
                 if (OnSlope && !OnSideSlope) // On top of a peak or on weak slope
                 {

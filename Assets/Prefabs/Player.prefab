@@ -283,8 +283,8 @@ MonoBehaviour:
   interactionCheckers: {fileID: 2482512269644855385}
   orientSign: {fileID: 4165194087185683165}
   distanceCheck: 0.05
-  slopeHorizontalDistanceCheck: 1
-  slopeVerticalDistanceCheck: 1
+  slopeHorizontalDistanceCheck: 0.3
+  slopeVerticalDistanceCheck: 0.7
   scale: 1
   _camera: {fileID: 0}
   duration: 0.5
