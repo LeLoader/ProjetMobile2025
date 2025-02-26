@@ -457,15 +457,16 @@ public class PlayerWord : WordBase
             }
             else // AIR MOVEMENT
             {
-                if (OnSlope)
-                {
-                    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
-                                                    -xInput * 5 * downSlopeNormalPerp.y);
-                }
-                else
-                {
-                    rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
-                }
+                //if (OnSlope)
+                //{
+                //    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
+                //                                    -xInput * 5 * downSlopeNormalPerp.y);
+                //}
+                //else
+                //{
+                //    rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
+                //}
+                rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
             }
 
             if (OnGround && !IsJumping)
