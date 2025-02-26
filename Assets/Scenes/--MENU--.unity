@@ -3096,8 +3096,8 @@ Canvas:
   m_GameObject: {fileID: 532033660}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 770200291}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4986,10 +4986,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelData:
     _level:
-    - _scene: {fileID: 102900000, guid: 7d48ab39f171a95449d8b4db6a48d521, type: 3}
+    - _scene: {fileID: 102900000, guid: e2a590b81c00dc243a1385039e6655e8, type: 3}
       _idLevel: Level 1
       _state: 1
-    - _scene: {fileID: 102900000, guid: baa4af1c70ad23d4983f3a95f1d7e585, type: 3}
+    - _scene: {fileID: 102900000, guid: 2400fdf7c63041a49b2bab838f45485d, type: 3}
       _idLevel: Level 2
       _state: 0
     - _scene: {fileID: 102900000, guid: af216bd328f284048a2a0102bb563c42, type: 3}
