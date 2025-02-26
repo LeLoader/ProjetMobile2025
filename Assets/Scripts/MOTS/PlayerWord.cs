@@ -328,7 +328,7 @@ public class PlayerWord : WordBase
         {
             rb.gravityScale = 0;
         }
-        else if (OnGround)
+        else if (OnSideSlope || OnSlope)
         {
             rb.gravityScale = 0;
         }
@@ -340,7 +340,7 @@ public class PlayerWord : WordBase
 
     private void CheckIsFalling()
     {
-        if (lastVelY > rb.linearVelocityY)
+        if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
             IsJumping = false;
         }
@@ -524,6 +524,7 @@ public class PlayerWord : WordBase
         }
         else if (OnGround)
         {
+            rb.linearVelocityY = 0; // Reset vel in case player already has some
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
             IsJumping = true;
