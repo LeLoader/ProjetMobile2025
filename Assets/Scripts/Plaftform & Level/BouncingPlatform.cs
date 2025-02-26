@@ -5,10 +5,10 @@ public class BouncingPlatform : MonoBehaviour
     public GameObject Player;
     public float minJumpHeight = 2f;
 
-    private Rigidbody2D rb;
-    private bool isTrackingJump = false;
-    private float jumpStartY = 0f;
-    private float maxJumpY = 0f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private bool isTrackingJump = false;
+    [SerializeField] private float jumpStartY = 0f;
+    [SerializeField] private float maxJumpY = 0f;
 
     void Start()
     {

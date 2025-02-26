@@ -146,8 +146,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.8867924, g: 0.5997532, b: 0.054378804, a: 1}
+  m_Sprite: {fileID: 3286163911610860551, guid: 9def2faf4746a3b4ab8336211f0c102d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -180,11 +180,14 @@ MonoBehaviour:
   rb: {fileID: 279381465389864736}
   BlockIsSticky: 0
   BlockIsBouncy: 0
-  defaultSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  emptySprite: {fileID: 3286163911610860551, guid: 26f42df3daa6348499fbcd8f939fd31e, type: 3}
   defaultCollider: {fileID: 1302911581383112435}
-  stairsSprite: {fileID: 241153118, guid: 675d01b1d3f850f4893e3cec262234d3, type: 3}
+  scaleSprite: {fileID: 3286163911610860551, guid: e3ba6aba1c7a93e4c8de8912bebff9af, type: 3}
+  stickySprite: {fileID: 3286163911610860551, guid: 6d49bbb0663782e46a4b837afac0c9b3, type: 3}
+  bouncySprite: {fileID: 3286163911610860551, guid: 6857e2f38132fd647b57ce4e2bb263d4, type: 3}
+  stairsSprite: {fileID: 3286163911610860551, guid: bb7f93d2c631b584bbb5becd87bb4951, type: 3}
   stairsCollider: {fileID: 7443647957407925836}
-  ballSprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  ballSprite: {fileID: 3286163911610860551, guid: 9def2faf4746a3b4ab8336211f0c102d, type: 3}
   ballCollider: {fileID: 4180964458863058459}
   references:
     version: 2
@@ -376,7 +379,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9069619627058150233}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 45}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.022721676, y: 0.022721676, z: 0.022721676}
   m_ConstrainProportionsScale: 1
   m_Children:
