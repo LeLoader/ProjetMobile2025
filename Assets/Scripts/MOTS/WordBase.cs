@@ -28,7 +28,6 @@ public class WordBase : MonoBehaviour
                 
                 target.AddModifier(modifier); // METHOD
                 currentModifiers.Remove(modifier);
-                UpdateWords(ref currentModifiers);
                 modifier.Owner = target;
             }
             else
