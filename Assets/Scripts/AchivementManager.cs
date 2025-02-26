@@ -18,7 +18,7 @@ public static class AchivementManager
     public const string KeyOfSuccess        = " code de l'achivement : Déverrouiller tout les niveaux";
     public const string ForAnAchivement     = " code de l'achivement : Sauter 1 000 000 de fois en 1 niveau.";
     public const string FloorIsLava         = " code de l'achivement : ne pas toucher le sol 1 min  (peut marcher sur des blocs).";
-    public const string Statue              = " code de l'achivement : ne pas bouger pendant 1 minute";
+    public const string AreYouStillHere     = " code de l'achivement : ne pas bouger pendant 10 minute";
     public const string LePoidsDesMots      = " code de l'achivement : avoir cumulé 50 mots dans la seringue";
     public const string Ecrivain            = " code de l'achivement : avoir cumulé 100 mots dans la seringue ";
     public const string Dramaturge          = " code de l'achivement : avoir cumulé 1000 mots dans la seringue ";
