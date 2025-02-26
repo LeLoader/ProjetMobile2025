@@ -241,7 +241,7 @@ public class PlayerWord : WordBase
         if (IsOnBouncy)
         {
             Debug.Log(maxPositionYValue - transform.position.y);
-            return MathF.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
+            return Mathf.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
         else if (IsStick)
         {
@@ -366,6 +366,7 @@ public class PlayerWord : WordBase
     {
         if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
+            Debug.Log(transform.position.y);
             IsJumping = false;
         }
 
