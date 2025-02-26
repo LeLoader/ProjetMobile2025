@@ -13,7 +13,9 @@ public class WordObject : WordBase
 
     public bool BlockIsSticky;
     public bool BlockIsBouncy;
-   
+
+    bool DuringSetup = true;
+
     public Vector3 TargetScale { get; set; } = Vector3.one;
     protected Vector3 realTargetScale = Vector3.one;
 
@@ -54,6 +56,7 @@ public class WordObject : WordBase
             UpdateModifiers();
             ApplySkin();
         }
+        DuringSetup = false;
     }
 
     private void FixedUpdate()
@@ -76,7 +79,7 @@ public class WordObject : WordBase
         else if (stairsCollider.enabled == true)
             return stairsCollider;
         else
-            return defaultCollider; 
+            return defaultCollider;
     }
 
     public void SetShape(WORDTYPE type)
@@ -94,7 +97,7 @@ public class WordObject : WordBase
             coll = stairsCollider;
             rb.freezeRotation = true;
             rb.mass = 10000f;
-            if (currentModifiers.Count == 0)
+            if (!DuringSetup)
             {
                 if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
                 {
@@ -136,19 +139,25 @@ public class WordObject : WordBase
             return;
         }
 
-        foreach (WordModifier modifier in currentModifiers)
+        foreach (WordModifier modifier in currentModifiers) // Stops when a non scale modifier is found
         {
-            
-            if (modifier is BouncyModifier)
-                spriteRenderer.sprite = bouncySprite;
-            else if (modifier is StickyModifier)
-                spriteRenderer.sprite = stickySprite;
-            else if (modifier is StairsModifier)
-                spriteRenderer.sprite = stairsSprite;
-            else if (modifier is BallModifier)
-                spriteRenderer.sprite = ballSprite;
-            else if (modifier is ScaleModifier)
+            if (modifier is NonScaleModifier)
+            {
+                if (modifier is BouncyModifier)
+                    spriteRenderer.sprite = bouncySprite;
+                else if (modifier is StickyModifier)
+                    spriteRenderer.sprite = stickySprite;
+                else if (modifier is StairsModifier)
+                    spriteRenderer.sprite = stairsSprite;
+                else if (modifier is BallModifier)
+                    spriteRenderer.sprite = ballSprite;
+
+                break;
+            }
+            else
+            {
                 spriteRenderer.sprite = scaleSprite;
+            }
         }
     }
 
@@ -176,7 +185,7 @@ public class WordObject : WordBase
                     }
 
                     realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer));
-                } 
+                }
             }
 
             if (TargetScale.x <= transform.localScale.x && TargetScale.y <= transform.localScale.y)
@@ -254,6 +263,7 @@ public class WordObject : WordBase
         {
             SetShape(WORDTYPE.NONE);
         }
+        ApplySkin();
     }
 
     [Button]

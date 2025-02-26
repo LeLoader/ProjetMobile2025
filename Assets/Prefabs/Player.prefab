@@ -276,7 +276,7 @@ MonoBehaviour:
   WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
   interactionDistance: 0.8
   rb: {fileID: 71137860090918779}
-  capsuleCollider: {fileID: 1343042605137737762}
+  playerCollider: {fileID: 1343042605137737762}
   groundChecker: {fileID: 7503588908058030300}
   leftCheckers: {fileID: 8152439958006678037}
   rightCheckers: {fileID: 5909059791282546703}
@@ -296,9 +296,11 @@ MonoBehaviour:
   HeadIsStick: 0
   IsStick: 0
   IsJumping: 0
+  IsOnBouncy: 0
   CanMove: 0
   OnSlope: 0
   OnSideSlope: 0
+  maxPositionYValue: 0
   defaultAccelerationForce: 150
   defaultDecelerationForce: 75
   defaultMaxSpeed: 5
@@ -310,7 +312,7 @@ MonoBehaviour:
   stickedDecelerationForce: 75
   stickedMaxSpeed: 3
   stickedJumpHeight: 1
-  bouncyJumpHeight: 2
+  defaultBouncyJumpHeight: 2.5
   xOrient: 1
   _cameraUnlink: 6
   _cameraLink: 3

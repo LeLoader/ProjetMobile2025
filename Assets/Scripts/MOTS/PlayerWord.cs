@@ -265,22 +265,34 @@ public class PlayerWord : WordBase
         }
     }
 
-    private void IsTouchingGround()
+#nullable enable
+    private Collider2D? IsTouchingGround()
     {
-        OnGround = IsTouchingWordObject() != null;
-    }
+        int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
+        Collider2D coll = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius * groundChecker.transform.lossyScale.x, layerMask);
 
-    private WordObject IsTouchingWordObject()
-    {
-        int layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
-        Collider2D coll = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
-        //Collider2D coll = Physics2D.OverlapBox(groundChecker.bounds.center, groundChecker.bounds.size, 0f, layerMask);
         if (coll != null)
         {
-            return coll.GetComponent<WordObject>();
+            OnGround = true;
+            return coll;
+        }
+        OnGround = false;
+        return null;
+    }
+
+    private WordObject? IsTouchingWordObject()
+    {
+        Collider2D? coll = IsTouchingGround();
+        if (coll != null)
+        {
+            if (coll.TryGetComponent<WordObject>(out WordObject wo))
+            {
+                return wo;
+            }
         }
         return null;
     }
+#nullable disable
 
     private bool PlayerIsOnSticky()
     {
@@ -364,7 +376,7 @@ public class PlayerWord : WordBase
 
     private void CheckIsFalling()
     {
-        if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
+        if (lastVelY > 0 && 0 >= rb.linearVelocityY)
         {
             Debug.Log(transform.position.y);
             IsJumping = false;
@@ -550,6 +562,7 @@ public class PlayerWord : WordBase
         else if (OnGround)
         {
             Debug.Log("SAUT");
+            rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
         }
