@@ -31,7 +31,7 @@ public class PlayerWord : WordBase
     [SerializeField] float distanceCheck = 0.01f;
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
     [SerializeField] float slopeVerticalDistanceCheck = 1f;
-    [SerializeField] float scale = 1f;
+    [SerializeField] float sideSlopeOffset = 0.01f;
 
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
@@ -111,6 +111,8 @@ public class PlayerWord : WordBase
     [Header("Movement | Bouncy")]
     [SerializeField, Tooltip("m")] float bouncyJumpHeight = 2f;
 
+    private float lastVelY;
+
     public int xOrient = 1;
     float xInput = 0;
 
@@ -126,7 +128,6 @@ public class PlayerWord : WordBase
 
     private void Start()
     {
-
         contactFilter.layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         contactFilter.useLayerMask = true;
         CanMove = true;
@@ -143,6 +144,8 @@ public class PlayerWord : WordBase
     void FixedUpdate()
     {
         rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, DecelerationForce * Time.fixedDeltaTime); // Method
+        CheckIsFalling();
+
         Move();
 
         IsTouchingGround();
@@ -267,7 +270,6 @@ public class PlayerWord : WordBase
                 if (_block != null && _block.BlockIsSticky)
                 {
                     //appeler la fonction qui colle le joueur � GAUCHE
-                    this.transform.SetParent(hit.transform, true);
                     if (!OnGround)
                     {
                         rb.linearVelocity = new Vector2(0, 0);
@@ -286,8 +288,6 @@ public class PlayerWord : WordBase
                 if (_block != null && _block.BlockIsSticky)
                 {
                     //appeler la fonction qui colle le joueur � DROITE
-                    this.transform.SetParent(hit.transform, true);
-                    this.transform.localScale = new Vector2(0.5f, 0.5f);
                     if (!OnGround)
                     {
                         rb.linearVelocity = new Vector2(0, 0);
@@ -296,8 +296,6 @@ public class PlayerWord : WordBase
                 }
             }
         }
-        this.transform.SetParent(null, true);
-        this.transform.localScale = Vector3.one;
         return false;
     }
 
@@ -340,9 +338,19 @@ public class PlayerWord : WordBase
         }
     }
 
+    private void CheckIsFalling()
+    {
+        if (lastVelY > rb.linearVelocityY)
+        {
+            IsJumping = false;
+        }
+
+        lastVelY = rb.linearVelocityY;
+    }
+
     private void SlopeCheck()
     {
-        Vector2 checkPos = transform.position - new Vector3(0.0f, capsuleCollider.size.y / 2);
+        Vector2 checkPos = transform.position - new Vector3(0.0f, capsuleCollider.size.y / 2 * transform.localScale.y + sideSlopeOffset);
 
         SlopeCheckHorizontal(checkPos);
         SlopeCheckVertical(checkPos);
@@ -457,15 +465,16 @@ public class PlayerWord : WordBase
             }
             else // AIR MOVEMENT
             {
-                if (OnSlope)
-                {
-                    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
-                                                    -xInput * 5 * downSlopeNormalPerp.y);
-                }
-                else
-                {
-                    rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
-                }
+                //if (OnSlope)
+                //{
+                //    rb.linearVelocity = new Vector3(-xInput * 5 * downSlopeNormalPerp.x,
+                //                                    -xInput * 5 * downSlopeNormalPerp.y);
+                //}
+                //else
+                //{
+                //    rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
+                //}
+                rb.linearVelocityX = rb.linearVelocityX + xInput * AccelerationForce * Time.fixedDeltaTime;
             }
 
             if (OnGround && !IsJumping)
