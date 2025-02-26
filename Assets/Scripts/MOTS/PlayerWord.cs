@@ -21,7 +21,7 @@ public class PlayerWord : WordBase
     [Header("General")]
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] CapsuleCollider2D capsuleCollider;
+    //[SerializeField]  playerCollider;
     [SerializeField] CircleCollider2D groundChecker;
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
@@ -32,6 +32,9 @@ public class PlayerWord : WordBase
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
     [SerializeField] float slopeVerticalDistanceCheck = 1f;
     [SerializeField] float scale = 1f;
+    [SerializeField] float positionY;
+    [SerializeField] float positionYOnGroud;
+    [SerializeField] float maxPositionY;
 
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
@@ -150,6 +153,7 @@ public class PlayerWord : WordBase
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
+        MaxPositionY();
         WordObject wo = IsTouchingWordObject(); // Update all state at once?
         if (wo)
         {
@@ -242,12 +246,14 @@ public class PlayerWord : WordBase
     {
         int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
         OnGround = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
+        //OnGround = Physics2D.OverlapBox(groundChecker.bounds.center, groundChecker.bounds.size, 0f, layerMask);
     }
 
     private WordObject IsTouchingWordObject()
     {
         int layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         Collider2D coll = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
+        //Collider2D coll = Physics2D.OverlapBox(groundChecker.bounds.center, groundChecker.bounds.size, 0f, layerMask);
         if (coll != null)
         {
             return coll.gameObject.GetComponent<WordObject>();
@@ -287,7 +293,7 @@ public class PlayerWord : WordBase
                 {
                     //appeler la fonction qui colle le joueur � DROITE
                     this.transform.SetParent(hit.transform, true);
-                    this.transform.localScale = new Vector2(0.5f, 0.5f);
+                    this.transform.localScale = new Vector2(0.5f, 1f);
                     if (!OnGround)
                     {
                         rb.linearVelocity = new Vector2(0, 0);
@@ -297,7 +303,7 @@ public class PlayerWord : WordBase
             }
         }
         this.transform.SetParent(null, true);
-        this.transform.localScale = Vector3.one;
+        this.transform.localScale = new Vector3(1f, 1.5f);
         return false;
     }
 
@@ -342,7 +348,7 @@ public class PlayerWord : WordBase
 
     private void SlopeCheck()
     {
-        Vector2 checkPos = transform.position - new Vector3(0.0f, capsuleCollider.size.y / 2);
+        Vector2 checkPos = transform.position - new Vector3(0.0f, playerCollider.size.y / 2);
 
         SlopeCheckHorizontal(checkPos);
         SlopeCheckVertical(checkPos);
@@ -573,6 +579,24 @@ public class PlayerWord : WordBase
                     Link(wordObject);
                     return;
                 };
+            }
+        }
+    }
+
+    private void MaxPositionY()
+    {
+        if(OnGround)
+        {
+            positionYOnGroud = transform.position.y;
+        }
+        else
+        {
+            positionY = transform.position.y;
+
+            if (transform.position.y < positionY)
+            {
+                Debug.Log("Descente");
+                maxPositionY = positionY - positionYOnGroud;
             }
         }
     }
