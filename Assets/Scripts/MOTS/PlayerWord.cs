@@ -21,7 +21,7 @@ public class PlayerWord : WordBase
     [Header("General")]
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] CapsuleCollider2D capsuleCollider;
+    [SerializeField] CapsuleCollider2D playerCollider;
     [SerializeField] CircleCollider2D groundChecker;
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
@@ -32,6 +32,9 @@ public class PlayerWord : WordBase
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
     [SerializeField] float slopeVerticalDistanceCheck = 1f;
     [SerializeField] float scale = 1f;
+    [SerializeField] float positionY;
+    [SerializeField] float positionYOnGroud;
+    [SerializeField] float maxPositionY;
 
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
@@ -46,7 +49,7 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool HeadIsStick;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool IsJumping;
-    public bool OnBouncy { get; private set; }
+    public bool OnBouncy;
     [SerializeField, ReadOnly] public bool CanMove;
     [SerializeField, ReadOnly] bool OnSlope;
     [SerializeField, ReadOnly] bool OnSideSlope;
@@ -150,6 +153,7 @@ public class PlayerWord : WordBase
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
+        MaxPositionY();
         WordObject wo = IsTouchingWordObject(); // Update all state at once?
         if (wo)
         {
@@ -248,9 +252,10 @@ public class PlayerWord : WordBase
     {
         int layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         Collider2D coll = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
+        //Collider2D coll = Physics2D.OverlapBox(groundChecker.bounds.center, groundChecker.bounds.size, 0f, layerMask);
         if (coll != null)
         {
-            return coll.gameObject.GetComponent<WordObject>();
+            return coll.GetComponent<WordObject>();
         }
         return null;
     }
@@ -342,7 +347,7 @@ public class PlayerWord : WordBase
 
     private void SlopeCheck()
     {
-        Vector2 checkPos = transform.position - new Vector3(0.0f, capsuleCollider.size.y / 2);
+        Vector2 checkPos = transform.position - new Vector3(0.0f, playerCollider.size.y / 2);
 
         SlopeCheckHorizontal(checkPos);
         SlopeCheckVertical(checkPos);
@@ -486,6 +491,7 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
+
         if (IsStick && !OnGround)
         {
             JumpOnSticky();
@@ -518,6 +524,10 @@ public class PlayerWord : WordBase
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
             IsJumping = true;
+        }
+        else if (OnBouncy)
+        {
+            rb.AddForce(Vector2.up * JumpHeight, ForceMode2D.Impulse);
         }
 
         Unlink();
@@ -573,6 +583,24 @@ public class PlayerWord : WordBase
                     Link(wordObject);
                     return;
                 };
+            }
+        }
+    }
+
+    private void MaxPositionY()
+    {
+        if(OnGround)
+        {
+            positionYOnGroud = transform.position.y;
+        }
+        else
+        {
+            positionY = transform.position.y;
+
+            if (transform.position.y < positionY)
+            {
+                Debug.Log("Descente");
+                maxPositionY = positionY - positionYOnGroud;
             }
         }
     }

@@ -22,5 +22,6 @@ public static class AchivementManager
     public const string LePoidsDesMots      = " code de l'achivement : avoir cumulé 50 mots dans la seringue";
     public const string Ecrivain            = " code de l'achivement : avoir cumulé 100 mots dans la seringue ";
     public const string Dramaturge          = " code de l'achivement : avoir cumulé 1000 mots dans la seringue ";
+    public const string IDidIt              = " code de l'achivement : avoir toutes les réussites";
 
 }
