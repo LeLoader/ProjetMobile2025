@@ -32,9 +32,6 @@ public class PlayerWord : WordBase
     [SerializeField] float distanceCheck = 0.01f;
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
     [SerializeField] float slopeVerticalDistanceCheck = 1f;
-    [SerializeField] float positionY;
-    [SerializeField] float lastMaxpositionY;
-    [SerializeField] float positionYOnGroud;
     [SerializeField] float sideSlopeOffset = 0.01f;
 
     [SerializeField] public CinemachineCamera _camera;
@@ -153,13 +150,25 @@ public class PlayerWord : WordBase
         CheckIsFalling();
 
         Move();
-        GetMaxLastJump();
+        //GetMaxLastJump();
 
         IsTouchingGround();
+        BlockIsBouncy();
         SlopeCheck();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
+
+        UpdateOrientation();
+    }
+
+    private void Update()
+    {
+        GetMaxLastJump();
+    }
+
+    private void BlockIsBouncy()
+    {
         WordObject wo = IsTouchingWordObject(); // Update all state at once?
         if (wo)
         {
@@ -168,25 +177,26 @@ public class PlayerWord : WordBase
                 IsOnBouncy = true;
                 Jump();
             }
+            else
+            {
+                IsOnBouncy = false;
+            }
         }
-
-        UpdateOrientation();
+        else
+        {
+            IsOnBouncy = false;
+        }
     }
 
     private void GetMaxLastJump()
     {
         if (OnGround)
         {
-            positionYOnGroud = transform.position.y;
-            if(!IsOnBouncy)
-            {
-                maxPositionYValue = 0f;
-            }
+            maxPositionYValue = transform.position.y;
         }
-        positionY = transform.position.y;
-        if (positionY - positionYOnGroud > maxPositionYValue)
+        if (transform.position.y > maxPositionYValue)
         {
-            maxPositionYValue = positionY - positionYOnGroud;
+            maxPositionYValue = transform.position.y;
         }
     }
 
@@ -242,12 +252,8 @@ public class PlayerWord : WordBase
     {
         if (IsOnBouncy)
         {
-            //if(maxPositionYValue > defaultBouncyJumpHeight)
-            //{
-            //    return maxPositionYValue;
-            //}
-            //return defaultBouncyJumpHeight;
-            return MathF.Max(maxPositionYValue, defaultBouncyJumpHeight);
+            Debug.Log(maxPositionYValue - transform.position.y);
+            return MathF.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
         else if (IsStick)
         {
@@ -371,7 +377,7 @@ public class PlayerWord : WordBase
 
     private void CheckIsFalling()
     {
-        if (lastVelY > rb.linearVelocityY)
+        if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
             IsJumping = false;
         }
@@ -526,8 +532,9 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
-        IsJumping = true;
+        if (IsJumping) return;
 
+        IsJumping = true;
         if (IsStick && !OnGround)
         {
             JumpOnSticky();
@@ -549,15 +556,15 @@ public class PlayerWord : WordBase
             else
             {
                 rb.AddForce(Vector2.left, ForceMode2D.Impulse);
-                
+
             }
         }
         else if (OnGround)
         {
-            float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
+            Debug.Log("SAUT");
+            float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
         }
-
         Unlink();
     }
 
