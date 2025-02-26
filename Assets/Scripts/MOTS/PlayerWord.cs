@@ -21,7 +21,7 @@ public class PlayerWord : WordBase
     [Header("General")]
     [SerializeField] float interactionDistance = 5;
     [SerializeField] Rigidbody2D rb;
-    //[SerializeField]  playerCollider;
+    [SerializeField] CapsuleCollider2D playerCollider;
     [SerializeField] CircleCollider2D groundChecker;
     [SerializeField] Transform leftCheckers;
     [SerializeField] Transform rightCheckers;
@@ -49,7 +49,7 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool HeadIsStick;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool IsJumping;
-    public bool OnBouncy { get; private set; }
+    public bool OnBouncy;
     [SerializeField, ReadOnly] public bool CanMove;
     [SerializeField, ReadOnly] bool OnSlope;
     [SerializeField, ReadOnly] bool OnSideSlope;
@@ -246,7 +246,6 @@ public class PlayerWord : WordBase
     {
         int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
         OnGround = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
-        //OnGround = Physics2D.OverlapBox(groundChecker.bounds.center, groundChecker.bounds.size, 0f, layerMask);
     }
 
     private WordObject IsTouchingWordObject()
@@ -256,7 +255,7 @@ public class PlayerWord : WordBase
         //Collider2D coll = Physics2D.OverlapBox(groundChecker.bounds.center, groundChecker.bounds.size, 0f, layerMask);
         if (coll != null)
         {
-            return coll.gameObject.GetComponent<WordObject>();
+            return coll.GetComponent<WordObject>();
         }
         return null;
     }
@@ -293,7 +292,7 @@ public class PlayerWord : WordBase
                 {
                     //appeler la fonction qui colle le joueur � DROITE
                     this.transform.SetParent(hit.transform, true);
-                    this.transform.localScale = new Vector2(0.5f, 1f);
+                    this.transform.localScale = new Vector2(0.5f, 0.5f);
                     if (!OnGround)
                     {
                         rb.linearVelocity = new Vector2(0, 0);
@@ -303,7 +302,7 @@ public class PlayerWord : WordBase
             }
         }
         this.transform.SetParent(null, true);
-        this.transform.localScale = new Vector3(1f, 1.5f);
+        this.transform.localScale = Vector3.one;
         return false;
     }
 
@@ -492,6 +491,7 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
+
         if (IsStick && !OnGround)
         {
             JumpOnSticky();
@@ -524,6 +524,10 @@ public class PlayerWord : WordBase
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude /** rb.gravityScale*/); //Gravity scale 0 or 1
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
             IsJumping = true;
+        }
+        else if (OnBouncy)
+        {
+            rb.AddForce(Vector2.up * JumpHeight, ForceMode2D.Impulse);
         }
 
         Unlink();
