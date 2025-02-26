@@ -25,12 +25,23 @@ public class WordObject : WordBase
 
     Collider2D coll;
 
-    [Header("Default")]
-    [SerializeField] Sprite defaultSprite;
+    [Header("Empty")]
+    [SerializeField] Sprite emptySprite;
     [SerializeField] BoxCollider2D defaultCollider;
+
+    [Header("Scale")]
+    [SerializeField] Sprite scaleSprite;
+
+    [Header("Sticky")]
+    [SerializeField] Sprite stickySprite;
+
+    [Header("Bouncy")]
+    [SerializeField] Sprite bouncySprite;
+
     [Header("Stairs")]
     [SerializeField] Sprite stairsSprite;
     [SerializeField] PolygonCollider2D stairsCollider;
+
     [Header("Ball")]
     [SerializeField] Sprite ballSprite;
     [SerializeField] CapsuleCollider2D ballCollider;
@@ -39,11 +50,13 @@ public class WordObject : WordBase
     {
         coll = FindActiveCollider();
         ApplyAllModifiers();
+
         if (currentModifiers.Count == 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
             UpdateWords(ref currentModifiers);
             UpdateModifiers();
+            ApplySkin();
         }
     }
 
@@ -78,27 +91,28 @@ public class WordObject : WordBase
         }
 
         coll.enabled = false;
-        transform.rotation = Quaternion.identity;
+        //transform.rotation = Quaternion.identity;
 
         if (type.HasFlag(WORDTYPE.STAIRS))
         {
             coll = stairsCollider;
-            spriteRenderer.sprite = stairsSprite;
             rb.freezeRotation = true;
             rb.mass = 10000f;
-            if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
+            if (currentModifiers.Count == 0)
             {
-                transform.rotation = Quaternion.Euler(0, 180, 0);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
+                {
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
             }
         }
         else if (type.HasFlag(WORDTYPE.BALL))
         {
             coll = ballCollider;
-            spriteRenderer.sprite = ballSprite;
             rb.freezeRotation = false;
             rb.mass = 1f; // PARAM
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -106,7 +120,6 @@ public class WordObject : WordBase
         else if (type == WORDTYPE.NONE)
         {
             coll = defaultCollider;
-            spriteRenderer.sprite = defaultSprite;
             rb.freezeRotation = true;
             rb.mass = 10000f;
             transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -117,6 +130,29 @@ public class WordObject : WordBase
         }
 
         coll.enabled = true;
+    }
+
+    private void ApplySkin()
+    {
+        if (currentModifiers.Count == 0)
+        {
+            spriteRenderer.sprite = emptySprite;
+            return;
+        }
+
+        foreach (WordModifier modifier in currentModifiers)
+        {
+            if (modifier is ScaleModifier)
+                spriteRenderer.sprite = scaleSprite;
+            else if (modifier is BouncyModifier)
+                spriteRenderer.sprite = bouncySprite;
+            else if (modifier is StickyModifier)
+                spriteRenderer.sprite = stickySprite;
+            else if (modifier is StairsModifier)
+                spriteRenderer.sprite = stairsSprite;
+            else if (modifier is BallModifier)
+                spriteRenderer.sprite = ballSprite;
+        }
     }
 
     private void ApplyScale()
@@ -240,6 +276,7 @@ public class WordObject : WordBase
     {
         UpdateModifiers();
         UpdateWords(ref currentModifiers);
+        ApplySkin();
     }
 
     [Button]
