@@ -1,8 +1,4 @@
 using NaughtyAttributes;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -142,9 +138,8 @@ public class WordObject : WordBase
 
         foreach (WordModifier modifier in currentModifiers)
         {
-            if (modifier is ScaleModifier)
-                spriteRenderer.sprite = scaleSprite;
-            else if (modifier is BouncyModifier)
+            
+            if (modifier is BouncyModifier)
                 spriteRenderer.sprite = bouncySprite;
             else if (modifier is StickyModifier)
                 spriteRenderer.sprite = stickySprite;
@@ -152,6 +147,8 @@ public class WordObject : WordBase
                 spriteRenderer.sprite = stairsSprite;
             else if (modifier is BallModifier)
                 spriteRenderer.sprite = ballSprite;
+            else if (modifier is ScaleModifier)
+                spriteRenderer.sprite = scaleSprite;
         }
     }
 

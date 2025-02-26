@@ -1,20 +1,9 @@
-using NaughtyAttributes;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 using Unity.Cinemachine;
 using System.Collections;
-using Unity.Android.Gradle;
-using Unity.Collections;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine.InputSystem;
-using Unity.Mathematics.Geometry;
 
 public class PlayerWord : WordBase
 {
@@ -243,8 +232,7 @@ public class PlayerWord : WordBase
 
     private void IsTouchingGround()
     {
-        int layerMask = (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK);
-        OnGround = Physics2D.OverlapCircle(groundChecker.transform.position, groundChecker.radius, layerMask);
+        OnGround = IsTouchingWordObject() != null;
     }
 
     private WordObject IsTouchingWordObject()
@@ -340,7 +328,7 @@ public class PlayerWord : WordBase
 
     private void CheckIsFalling()
     {
-        if (lastVelY > rb.linearVelocityY)
+        if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
             IsJumping = false;
         }
@@ -661,8 +649,8 @@ public class PlayerWord : WordBase
 
     private void OnDrawGizmos()
     {
-        Handles.color = Color.blue;
-        Handles.DrawLine(transform.position, transform.position + interactionDistance * xOrient * Vector3.right);
+        //Handles.color = Color.blue;
+        //Handles.DrawLine(transform.position, transform.position + interactionDistance * xOrient * Vector3.right);
     }
 
     private void OnGUI()
