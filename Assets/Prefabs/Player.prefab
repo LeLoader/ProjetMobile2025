@@ -190,9 +190,9 @@ Transform:
   m_GameObject: {fileID: 1257462095712101159}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.75, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1960959652548125466}
   - {fileID: 2482512269644855385}
@@ -285,8 +285,8 @@ MonoBehaviour:
   orientSign: {fileID: 4165194087185683165}
   distanceCheck: 0.05
   slopeHorizontalDistanceCheck: 0.3
-  slopeVerticalDistanceCheck: 0.7
-  scale: 1
+  slopeVerticalDistanceCheck: 0.3
+  sideSlopeOffset: -0.01
   _camera: {fileID: 0}
   duration: 0.5
   jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -5402,7 +5402,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.47
+  m_Radius: 0.46
 --- !u!1 &2672189786812294493
 GameObject:
   m_ObjectHideFlags: 0
