@@ -1,15 +1,13 @@
 using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public string _actualScene;
-    [SerializeField] private SceneAsset _scene;
+    //[SerializeField] private SceneAsset _scene;
 
     private void Awake()
     {
