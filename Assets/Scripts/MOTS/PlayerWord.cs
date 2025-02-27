@@ -424,7 +424,7 @@ public class PlayerWord : WordBase
         }
         else
         {
-            if(OnSlope == true)
+            if (OnSlope == true)
             {
                 rb.linearVelocityY = 0;
             }
@@ -441,9 +441,12 @@ public class PlayerWord : WordBase
             Unlink();
         }
 
-        if (xInput == -xOrient || -xInput == xOrient)
+        if (!IsStick)
         {
-            xOrient *= -1;
+            if (xInput == -xOrient || -xInput == xOrient)
+            {
+                xOrient *= -1;
+            }
         }
     }
 
