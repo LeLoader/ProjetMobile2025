@@ -3,25 +3,25 @@ using UnityEngine;
 public static class AchivementManager
 {
 
-    public const string FirstTry            = " code de l'achivement : finir le niveau 1 ";
-    public const string PaperKnight         = " code de l'achivement : finir tous les niveaux";
-    public const string PaperKing           = " code de l'achivement : finir tous les niveaux en moins de 30 minutes ";
-    public const string PaperGod            = " code de l'achivement : finir tous les niveaux en moins de 15 minutes ";
-    public const string BetterLuckNextTime  = " code de l'achivement : utiliser le bouton replay ";
-    public const string perseverance        = " code de l'achivement : lancer le Jeu une deuxième fois ";
-    public const string Ragequit            = " code de l'achivement : réassayer 5 fois un niveau puis quitter le jeu ";
-    public const string BouleQuiRoule       = " code de l'achivement : faire rouler la boule sur une pente a grande vitesse";
-    public const string StickyStick         = " code de l'achivement : grimper 10 fois grâce aux blocs Sticky Tall";
-    public const string SpiderMan           = " code de l'achivement : rester collé a un mur pendant 15 secondes";
-    public const string Maniac              = " code de l'achivement : sauter 100 fois en 1 niveau";
-    public const string Really              = " code de l'achivement : Recommencer un niveau 100 fois.";
-    public const string KeyOfSuccess        = " code de l'achivement : Déverrouiller tout les niveaux";
-    public const string ForAnAchivement     = " code de l'achivement : Sauter 1 000 000 de fois en 1 niveau.";
-    public const string FloorIsLava         = " code de l'achivement : ne pas toucher le sol 1 min  (peut marcher sur des blocs).";
-    public const string AreYouStillHere     = " code de l'achivement : ne pas bouger pendant 10 minute";
-    public const string LePoidsDesMots      = " code de l'achivement : avoir cumulé 50 mots dans la seringue";
-    public const string Ecrivain            = " code de l'achivement : avoir cumulé 100 mots dans la seringue ";
-    public const string Dramaturge          = " code de l'achivement : avoir cumulé 1000 mots dans la seringue ";
-    public const string IDidIt              = " code de l'achivement : avoir toutes les réussites";
+    public const string FirstTry            = "CgkI6M2W0bwfEAIQAA";
+    public const string PaperKnight         = "CgkI6M2W0bwfEAIQAQ";
+    public const string PaperKing           = "CgkI6M2W0bwfEAIQAg";
+    public const string PaperGod            = "CgkI6M2W0bwfEAIQAw";
+    public const string BetterLuckNextTime  = "CgkI6M2W0bwfEAIQBA";
+    public const string perseverance        = "CgkI6M2W0bwfEAIQBQ";
+    public const string Ragequit            = "CgkI6M2W0bwfEAIQBg";
+    public const string RollingStone        = "CgkI6M2W0bwfEAIQBw";
+    public const string StickyStick         = "CgkI6M2W0bwfEAIQCA";
+    public const string SpiderMan           = "CgkI6M2W0bwfEAIQCQ";
+    public const string Maniac              = "CgkI6M2W0bwfEAIQCg";
+    public const string Really              = "CgkI6M2W0bwfEAIQCw";
+    public const string KeyOfSuccess        = "CgkI6M2W0bwfEAIQDA";
+    public const string ForAnAchivement     = "CgkI6M2W0bwfEAIQDQ";
+    public const string FloorIsLava         = "CgkI6M2W0bwfEAIQDg";
+    public const string AreYouStillHere     = "CgkI6M2W0bwfEAIQDw";
+    public const string LePoidsDesMots      = "CgkI6M2W0bwfEAIQEA";
+    public const string Ecrivain            = "CgkI6M2W0bwfEAIQEQ";
+    public const string Dramaturge          = "CgkI6M2W0bwfEAIQEg";
+    public const string IDidIt              = "CgkI6M2W0bwfEAIQEw";
 
 }

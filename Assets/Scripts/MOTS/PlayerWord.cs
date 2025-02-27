@@ -135,10 +135,13 @@ public class PlayerWord : WordBase
     void FixedUpdate()
     {
         rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, DecelerationForce * Time.fixedDeltaTime); // Method
+        //if (IsJumping)
+        //{
+        //    rb.linearVelocityY = Mathf.MoveTowards(rb.linearVelocityY, 0, DecelerationForce * Time.fixedDeltaTime); // Method
+        //}
         CheckIsFalling();
 
         Move();
-        //GetMaxLastJump();
 
         IsTouchingGround();
         BlockIsBouncy();
@@ -296,39 +299,30 @@ public class PlayerWord : WordBase
 
     private bool PlayerIsOnSticky()
     {
-        for (int i = 0; i < leftCheckers.childCount; i++)
+        return (CheckSticky(rightCheckers, Vector2.right) || CheckSticky(leftCheckers, Vector2.left));
+    }
+
+    private bool CheckSticky(Transform checkers, Vector2 dir)
+    {
+        for (int i = 0; i < checkers.childCount; i++)
         {
-            Transform t = leftCheckers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.left, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
-            if (hit.collider != null)
+            if (checkers.gameObject.activeInHierarchy)
             {
-                WordObject _block = hit.collider?.GetComponent<WordObject>();
-                if (_block != null && _block.BlockIsSticky)
+                Transform t = checkers.GetChild(i).transform;
+                RaycastHit2D hit = Physics2D.Raycast(t.position, dir, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
+                if (hit.collider != null)
                 {
-                    //appeler la fonction qui colle le joueur � GAUCHE
-                    if (!OnGround)
+                    WordObject _block = hit.collider?.GetComponent<WordObject>();
+                    if (_block != null && _block.BlockIsSticky)
                     {
-                        rb.linearVelocity = new Vector2(0, 0);
+                        //appeler la fonction qui colle le joueur
+                        if (!OnGround)
+                        {
+                            CanMove = false;
+                            rb.linearVelocity = new Vector2(0, 0);
+                        }
+                        return true;
                     }
-                    return true;
-                }
-            }
-        }
-        for (int i = 0; i < rightCheckers.childCount; i++)
-        {
-            Transform t = rightCheckers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
-            if (hit.collider != null)
-            {
-                WordObject _block = hit.collider?.GetComponent<WordObject>();
-                if (_block != null && _block.BlockIsSticky)
-                {
-                    //appeler la fonction qui colle le joueur � DROITE
-                    if (!OnGround)
-                    {
-                        rb.linearVelocity = new Vector2(0, 0);
-                    }
-                    return true;
                 }
             }
         }
@@ -337,25 +331,8 @@ public class PlayerWord : WordBase
 
     private bool HeadIsSticky()
     {
-        for (int i = 0; i < topCheckers.childCount; i++)
-        {
-            Transform t = topCheckers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.up, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
-            if (hit.collider != null)
-            {
-                WordObject _block = hit.collider?.GetComponent<WordObject>();
-                if (_block != null && _block.BlockIsSticky)
-                {
-                    //appeler la fonction qui colle le joueur � GAUCHE
-                    this.transform.SetParent(hit.transform, true);
-                    CanMove = false;
-                    rb.linearVelocity = new Vector2(0, 0);
-                    return true;
-                }
-            }
-        }
-        CanMove = true;
-        return false;
+        return CheckSticky(topCheckers, Vector2.up);
+
     }
 
     private void UpdateGravity()
@@ -376,7 +353,7 @@ public class PlayerWord : WordBase
 
     private void CheckIsFalling()
     {
-        if (lastVelY > 0 && 0 >= rb.linearVelocityY)
+        if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
             Debug.Log(transform.position.y);
             IsJumping = false;
@@ -447,6 +424,10 @@ public class PlayerWord : WordBase
         }
         else
         {
+            if(OnSlope == true)
+            {
+                rb.linearVelocityY = 0;
+            }
             OnSlope = false;
             lastSlopeAngle = 0;
         }
@@ -571,36 +552,31 @@ public class PlayerWord : WordBase
 
     private void JumpOnSticky()
     {
+
         if (xOrient > 0)
         {
             rightCheckers.gameObject.SetActive(false);
-            IsStick = false;
-            CanMove = false;
-            UpdateGravity();
-            this.transform.SetParent(null, true);
             Invoke("ReactivateRightCheckers", 1f);
-            rb.AddForce(new Vector2(-10, 20) * JumpHeight);
-            xOrient = -1;
         }
         else
         {
             leftCheckers.gameObject.SetActive(false);
-            CanMove = false;
-            IsStick = false;
-            UpdateGravity();
-            this.transform.SetParent(null, true);
             Invoke("ReactivateLeftCheckers", 1f);
-            rb.AddForce(new Vector2(10, 20) * JumpHeight);
-            xOrient = 1;
         }
+        xOrient *= -1;
+        Debug.Log("JumpOnSticky");
+        IsStick = false;
+        CanMove = false;
+        rb.AddForce(new Vector2(5 * xOrient, 5), ForceMode2D.Impulse);
     }
 
     private void FallAfterSticky()
     {
+        Debug.Log("FallAfterSticky");
         topCheckers.gameObject.SetActive(false);
         HeadIsStick = false;
-        UpdateGravity();
-        Invoke("ReactivateTopCheckers", 2f);
+        CanMove = true;
+        Invoke("ReactivateTopCheckers", 0.5f);
         rb.AddForce(new Vector2(0, -5) * 12);
     }
 
@@ -687,7 +663,6 @@ public class PlayerWord : WordBase
     private void ReactivateTopCheckers()
     {
         topCheckers.gameObject.SetActive(true);
-        CanMove = true;
     }
 
     private void OnDestroy()
