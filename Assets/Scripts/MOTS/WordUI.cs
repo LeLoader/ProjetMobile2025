@@ -29,6 +29,6 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
 
     public void Unlink()
     {
-        Text.color = Color.white;
+        Text.color = Color.black;
     }
 }
