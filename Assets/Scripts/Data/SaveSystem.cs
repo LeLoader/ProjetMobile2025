@@ -24,7 +24,16 @@ public class SaveSystem : MonoBehaviour
 
         _savePath = Path.Combine(Application.persistentDataPath, "saveData.json");
         LoadData();
+
+        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+        string[] scenes = new string[sceneCount];
+        for (int i = 0; i < sceneCount; i++)
+        {
+            scenes *= System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+        }
     }
+
+
 
     public void SaveData()
     {
