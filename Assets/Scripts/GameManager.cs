@@ -37,12 +37,14 @@ public class GameManager : MonoBehaviour
                 if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                    return;
                 }
             }
 
             else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
             {
                 SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                return;
             }
 
             else if (sceneName == "nextLevel")
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
                     (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
+                    return;
                 }
             }
         }
