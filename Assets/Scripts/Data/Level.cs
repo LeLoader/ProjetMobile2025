@@ -1,5 +1,5 @@
+using NaughtyAttributes;
 using System;
-using UnityEditor;
 
 [Serializable]
 public class Level
@@ -12,6 +12,7 @@ public class Level
     }
 
     //public SceneAsset _scene;
+    [Scene]
     public string _idLevel;
     public LevelState _state;
 
