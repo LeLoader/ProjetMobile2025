@@ -679,7 +679,9 @@ public class PlayerWord : WordBase
     private void OnDestroy()
     {
         jumpAction.action.started -= Jump;
-        moveAction.action.started -= GetInput;
+        moveAction.action.performed -= GetInput;
+        moveAction.action.canceled -= GetInput;
+        useAction.action.started -= Use;
     }
 
     private void OnDrawGizmos()
