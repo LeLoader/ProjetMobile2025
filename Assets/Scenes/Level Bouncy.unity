@@ -219,17 +219,9 @@ PrefabInstance:
       propertyPath: WordWrapper
       value: 
       objectReference: {fileID: 1191669730}
-    - target: {fileID: 319403068261597164, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
-      propertyPath: playerCollider
-      value: 
-      objectReference: {fileID: 388727760}
     - target: {fileID: 1257462095712101159, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1960959652548125466, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.45
       objectReference: {fileID: 0}
     - target: {fileID: 6505440375804945609, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -276,11 +268,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
---- !u!70 &388727760 stripped
-CapsuleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 1343042605137737762, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
-  m_PrefabInstance: {fileID: 384714063}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &388727764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6505440375804945609, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
@@ -777,6 +764,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5495438319057385585, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495438319057385585, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5878660720626791383, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -815,11 +810,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7409159781002312968, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.5
+      value: 8.539
       objectReference: {fileID: 0}
     - target: {fileID: 7409159781002312968, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.5
+      value: -3.466
       objectReference: {fileID: 0}
     - target: {fileID: 7409159781002312968, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
       propertyPath: m_LocalPosition.z
@@ -855,7 +850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7848989442088676967, guid: 026714d2cf7822649b6f4256a03b1577, type: 3}
       propertyPath: wordType
-      value: 512
+      value: 1024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -155,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 825069415924140334}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1.01, z: 0}
+  m_LocalPosition: {x: -0.22, y: 0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -306,7 +306,7 @@ MonoBehaviour:
   defaultMaxSpeed: 5
   defaultJumpHeight: 1.25
   airAccelerationForce: 150
-  airDecelerationForce: 75
+  airDecelerationForce: 5
   airMaxSpeed: 5
   stickedAccelerationForce: 100
   stickedDecelerationForce: 75
@@ -5331,7 +5331,7 @@ Transform:
   m_GameObject: {fileID: 1883281751702235676}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.01, z: 0}
+  m_LocalPosition: {x: 0.22, y: 0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5363,7 +5363,7 @@ Transform:
   m_GameObject: {fileID: 1933597404492424761}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.45, z: 0}
+  m_LocalPosition: {x: 0, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5583,9 +5583,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7804497177744756413}
   - {fileID: 8874666899113589445}
   - {fileID: 8483271641303219708}
-  - {fileID: 7804497177744756413}
   m_Father: {fileID: 6505440375804945609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3624511371717209780
