@@ -4101,7 +4101,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c70dc09a22f65ba428810bc928a0dc89, type: 3}
     m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
@@ -4113,7 +4113,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Choose Level
+  m_Text: 'CHOOSE
+
+    LEVEL'
 --- !u!222 &784370541
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4986,17 +4988,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelData:
     _level:
-    - _scene: {fileID: 102900000, guid: e2a590b81c00dc243a1385039e6655e8, type: 3}
-      _idLevel: Level 1
+    - _idLevel: Level 1
       _state: 1
-    - _scene: {fileID: 102900000, guid: 2400fdf7c63041a49b2bab838f45485d, type: 3}
-      _idLevel: Level 2
+    - _idLevel: Level 2
       _state: 0
-    - _scene: {fileID: 102900000, guid: af216bd328f284048a2a0102bb563c42, type: 3}
-      _idLevel: Level 3
+    - _idLevel: Level 3
       _state: 0
-    - _scene: {fileID: 102900000, guid: 15e575de087080f4b8d3bb91161fc0ad, type: 3}
-      _idLevel: Level 4
+    - _idLevel: Level 4
       _state: 0
   _musicValue: 0
   _soundValue: 0
@@ -5028,7 +5026,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actualScene: 
-  _scene: {fileID: 0}
 --- !u!1 &1134533649
 GameObject:
   m_ObjectHideFlags: 0
@@ -5955,19 +5952,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: c70dc09a22f65ba428810bc928a0dc89, type: 3}
+    m_FontSize: 70
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_MinSize: 0
+    m_MaxSize: 70
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Seringue Game
+  m_Text: SERINGUE GAME
 --- !u!222 &1276283502
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6206,7 +6203,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c70dc09a22f65ba428810bc928a0dc89, type: 3}
     m_FontSize: 30
     m_FontStyle: 3
     m_BestFit: 0
@@ -6218,7 +6215,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Actual Level
+  m_Text: ACTUAL LEVEL
 --- !u!222 &1365881043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6885,19 +6882,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_Font: {fileID: 12800000, guid: c70dc09a22f65ba428810bc928a0dc89, type: 3}
+    m_FontSize: 70
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 50
+    m_MaxSize: 70
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Play '
+  m_Text: PLAY
 --- !u!222 &1637093477
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -24,4 +24,11 @@ public static class AchivementManager
     public const string Dramaturge          = "CgkI6M2W0bwfEAIQEg";
     public const string IDidIt              = "CgkI6M2W0bwfEAIQEw";
 
+
+    //public void UnlockAchivement(string code)
+    //{
+
+    //}
+
 }
+

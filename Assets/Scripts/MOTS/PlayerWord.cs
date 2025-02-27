@@ -102,6 +102,9 @@ public class PlayerWord : WordBase
     [Header("Movement | Bouncy")]
     [SerializeField, Tooltip("m")] float defaultBouncyJumpHeight = 2.5f;
 
+    [Header("Tools")]
+    [SerializeField] private GameObject reglage;
+
     private float lastVelY;
 
     public int xOrient = 1;
@@ -424,7 +427,7 @@ public class PlayerWord : WordBase
         }
         else
         {
-            if(OnSlope == true)
+            if (OnSlope == true)
             {
                 rb.linearVelocityY = 0;
             }
@@ -441,9 +444,12 @@ public class PlayerWord : WordBase
             Unlink();
         }
 
-        if (xInput == -xOrient || -xInput == xOrient)
+        if (!IsStick)
         {
-            xOrient *= -1;
+            if (xInput == -xOrient || -xInput == xOrient)
+            {
+                xOrient *= -1;
+            }
         }
     }
 
