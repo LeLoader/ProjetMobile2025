@@ -102,6 +102,9 @@ public class PlayerWord : WordBase
     [Header("Movement | Bouncy")]
     [SerializeField, Tooltip("m")] float defaultBouncyJumpHeight = 2.5f;
 
+    [Header("Tools")]
+    [SerializeField] private GameObject reglage;
+
     private float lastVelY;
 
     public int xOrient = 1;
