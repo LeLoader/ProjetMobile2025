@@ -607,6 +607,7 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
+        _camera.Target.TrackingTarget = wordObject?.transform;
         StartZoom(_cameraUnlink, _cameraLink, duration);
     }
 
@@ -620,6 +621,10 @@ public class PlayerWord : WordBase
             }
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
+            if (transform != null)
+            {
+                _camera.Target.TrackingTarget = transform;
+            }
             StartZoom(_cameraLink, _cameraUnlink, duration);
         }
     }
