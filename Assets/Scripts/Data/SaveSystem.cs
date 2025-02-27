@@ -29,7 +29,7 @@ public class SaveSystem : MonoBehaviour
         string[] scenes = new string[sceneCount];
         for (int i = 0; i < sceneCount; i++)
         {
-            scenes *= System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+            //scenes *= System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
         }
     }
 
