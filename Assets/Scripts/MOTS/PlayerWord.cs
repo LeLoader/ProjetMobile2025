@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
+using System.ComponentModel;
 
 public class PlayerWord : WordBase
 {
@@ -35,6 +36,7 @@ public class PlayerWord : WordBase
     [Header("Movement")]
     [SerializeField, ReadOnly] bool OnGround;
     [SerializeField, ReadOnly] bool HeadIsStick;
+    [SerializeField, ReadOnly] bool OnSticky;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool IsJumping;
     [SerializeField, ReadOnly] bool IsOnBouncy;
@@ -146,7 +148,7 @@ public class PlayerWord : WordBase
         Move();
 
         IsTouchingGround();
-        BlockIsBouncy();
+        UpdateStates();
         SlopeCheck();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
@@ -160,7 +162,7 @@ public class PlayerWord : WordBase
         GetMaxLastJump();
     }
 
-    private void BlockIsBouncy()
+    private void UpdateStates()
     {
         WordObject wo = IsTouchingWordObject(); // Update all state at once?
         if (wo)
@@ -168,16 +170,26 @@ public class PlayerWord : WordBase
             if (wo.BlockIsBouncy)
             {
                 IsOnBouncy = true;
-                AudioManager.Instance.PlaySFX(AudioManager.Instance._BouncySFX1);
+                AudioManager.Instance?.PlaySFX(AudioManager.Instance._BouncySFX1);
                 Jump();
             }
             else
             {
                 IsOnBouncy = false;
             }
+
+            if (wo.BlockIsSticky)
+            {
+                OnSticky = true;
+            }
+            else
+            {
+                OnSticky = false;
+            }
         }
         else
         {
+            OnSticky = false;
             IsOnBouncy = false;
         }
     }
@@ -196,7 +208,7 @@ public class PlayerWord : WordBase
 
     private float GetAccelerationForce()
     {
-        if (IsStick)
+        if (OnSticky)
         {
             return stickedAccelerationForce;
         }
@@ -212,7 +224,7 @@ public class PlayerWord : WordBase
 
     private float GetDecelerationForce()
     {
-        if (IsStick)
+        if (OnSticky)
         {
             return stickedDecelerationForce;
         }
@@ -228,7 +240,7 @@ public class PlayerWord : WordBase
 
     private float GetMaxSpeed()
     {
-        if (IsStick)
+        if (OnSticky)
         {
             return stickedMaxSpeed;
         }
@@ -249,7 +261,7 @@ public class PlayerWord : WordBase
             Debug.Log(maxPositionYValue - transform.position.y);
             return Mathf.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
-        else if (IsStick)
+        else if (OnSticky)
         {
             return stickedJumpHeight;
         }
@@ -518,14 +530,12 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
-
-
         if (IsJumping) return;
 
         IsJumping = true;
         if (IsStick && !OnGround)
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
             JumpOnSticky();
         }
         else if (HeadIsStick && !OnGround)
@@ -550,7 +560,7 @@ public class PlayerWord : WordBase
         }
         else if (OnGround)
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
             rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
@@ -564,12 +574,12 @@ public class PlayerWord : WordBase
         if (xOrient > 0)
         {
             rightCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateRightCheckers", 1f);
+            Invoke("ReactivateRightCheckers", 0.5f);
         }
         else
         {
             leftCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateLeftCheckers", 1f);
+            Invoke("ReactivateLeftCheckers", 0.5f);
         }
         xOrient *= -1;
         Debug.Log("JumpOnSticky");
@@ -615,7 +625,7 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
-        AudioManager.Instance.PlaySFX(AudioManager.Instance._SeringuePlantée);
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance._SeringuePlantée);
         _camera.Target.TrackingTarget = wordObject?.transform;
         StartZoom(_cameraUnlink, _cameraLink, duration);
     }
