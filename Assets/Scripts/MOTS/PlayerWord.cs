@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
+using System.ComponentModel;
 
 public class PlayerWord : WordBase
 {
@@ -35,6 +36,7 @@ public class PlayerWord : WordBase
     [Header("Movement")]
     [SerializeField, ReadOnly] bool OnGround;
     [SerializeField, ReadOnly] bool HeadIsStick;
+    [SerializeField, ReadOnly] bool OnSticky;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool IsJumping;
     [SerializeField, ReadOnly] bool IsOnBouncy;
@@ -146,7 +148,7 @@ public class PlayerWord : WordBase
         Move();
 
         IsTouchingGround();
-        BlockIsBouncy();
+        UpdateStates();
         SlopeCheck();
         IsStick = PlayerIsOnSticky();
         HeadIsStick = HeadIsSticky();
@@ -160,7 +162,7 @@ public class PlayerWord : WordBase
         GetMaxLastJump();
     }
 
-    private void BlockIsBouncy()
+    private void UpdateStates()
     {
         WordObject wo = IsTouchingWordObject(); // Update all state at once?
         if (wo)
@@ -175,9 +177,19 @@ public class PlayerWord : WordBase
             {
                 IsOnBouncy = false;
             }
+
+            if (wo.BlockIsSticky)
+            {
+                OnSticky = true;
+            }
+            else
+            {
+                OnSticky = false;
+            }
         }
         else
         {
+            OnSticky = false;
             IsOnBouncy = false;
         }
     }
@@ -196,7 +208,7 @@ public class PlayerWord : WordBase
 
     private float GetAccelerationForce()
     {
-        if (IsStick)
+        if (OnSticky)
         {
             return stickedAccelerationForce;
         }
@@ -212,7 +224,7 @@ public class PlayerWord : WordBase
 
     private float GetDecelerationForce()
     {
-        if (IsStick)
+        if (OnSticky)
         {
             return stickedDecelerationForce;
         }
@@ -228,7 +240,7 @@ public class PlayerWord : WordBase
 
     private float GetMaxSpeed()
     {
-        if (IsStick)
+        if (OnSticky)
         {
             return stickedMaxSpeed;
         }
@@ -249,7 +261,7 @@ public class PlayerWord : WordBase
             Debug.Log(maxPositionYValue - transform.position.y);
             return Mathf.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
-        else if (IsStick)
+        else if (IsTouchingWordObject().BlockIsSticky)
         {
             return stickedJumpHeight;
         }

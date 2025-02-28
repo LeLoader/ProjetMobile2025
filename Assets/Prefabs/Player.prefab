@@ -294,6 +294,7 @@ MonoBehaviour:
   useAction: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   OnGround: 0
   HeadIsStick: 0
+  OnSticky: 0
   IsStick: 0
   IsJumping: 0
   IsOnBouncy: 0
@@ -313,7 +314,6 @@ MonoBehaviour:
   stickedMaxSpeed: 3
   stickedJumpHeight: 1
   defaultBouncyJumpHeight: 2.5
-  reglage: {fileID: 0}
   xOrient: 1
   _cameraUnlink: 6
   _cameraLink: 3
