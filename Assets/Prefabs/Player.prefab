@@ -310,8 +310,8 @@ MonoBehaviour:
   airMaxSpeed: 2.45
   stickedAccelerationForce: 100
   stickedDecelerationForce: 75
-  stickedMaxSpeed: 3
-  stickedJumpHeight: 1
+  stickedMaxSpeed: 1.5
+  stickedJumpHeight: 0.1
   defaultBouncyJumpHeight: 2.5
   xOrient: 1
   _cameraUnlink: 6
