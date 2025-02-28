@@ -42,9 +42,6 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool OnSlope;
     [SerializeField, ReadOnly] bool OnSideSlope;
 
-    [Header("Unity Event SFX")]
-    [SerializeField] UnityEvent onJump;
-
     Vector2 downSlopeNormalPerp;
     Vector2 sideSlopeNormalPerp;
     float lastSlopeAngle;
@@ -107,8 +104,8 @@ public class PlayerWord : WordBase
     [Header("Movement | Bouncy")]
     [SerializeField, Tooltip("m")] float defaultBouncyJumpHeight = 2.5f;
 
-    [Header("Tools")]
-    [SerializeField] private GameObject reglage;
+    //[Header("Tools")]
+    //[SerializeField] private GameObject reglage;
 
     private float lastVelY;
 
