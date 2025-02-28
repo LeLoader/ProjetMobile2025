@@ -518,8 +518,6 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
-
-
         if (IsJumping) return;
 
         IsJumping = true;
