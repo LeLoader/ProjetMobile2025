@@ -261,7 +261,7 @@ public class PlayerWord : WordBase
             Debug.Log(maxPositionYValue - transform.position.y);
             return Mathf.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
-        else if (IsTouchingWordObject().BlockIsSticky)
+        else if (OnSticky)
         {
             return stickedJumpHeight;
         }
