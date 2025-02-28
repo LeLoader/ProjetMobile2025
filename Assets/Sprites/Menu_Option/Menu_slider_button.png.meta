@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Sprites/end.png.meta
-guid: aa633e48a2f95ab4abf80d3f1b2a3d8b
+guid: 956b733cb5187ba4db756e29b26c752c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7347265049222261331
-    second: end_0
-========
-guid: e95c9634cace5cd4c992e05be10601cf
-TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -4884458997329859553
-    second: IMG_0108_0
->>>>>>>> dev:Assets/Sprites/IMG_0108.png.meta
+      213: 6194926396194877046
+    second: Menu_slider_button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,27 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-<<<<<<<< HEAD:Assets/Sprites/end.png.meta
-      name: end_0
+      name: Menu_slider_button_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 0
-        width: 262
-        height: 400
-========
-      name: IMG_0108_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
->>>>>>>> dev:Assets/Sprites/IMG_0108.png.meta
+        x: 899
+        y: 479
+        width: 122
+        height: 122
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,13 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-<<<<<<<< HEAD:Assets/Sprites/end.png.meta
-      spriteID: 35a298182aab6f560800000000000000
-      internalID: 7347265049222261331
-========
-      spriteID: f1c6130cb6ae63cb0800000000000000
-      internalID: -4884458997329859553
->>>>>>>> dev:Assets/Sprites/IMG_0108.png.meta
+      spriteID: 67ee2e63cbcc8f550800000000000000
+      internalID: 6194926396194877046
       vertices: []
       indices: 
       edges: []
@@ -162,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -172,11 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-<<<<<<<< HEAD:Assets/Sprites/end.png.meta
-      end_0: 7347265049222261331
-========
-      IMG_0108_0: -4884458997329859553
->>>>>>>> dev:Assets/Sprites/IMG_0108.png.meta
+      Menu_slider_button_0: 6194926396194877046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
