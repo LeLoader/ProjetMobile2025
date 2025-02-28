@@ -358,7 +358,6 @@ public class PlayerWord : WordBase
     {
         if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
-            Debug.Log(transform.position.y);
             IsJumping = false;
         }
 
@@ -548,7 +547,6 @@ public class PlayerWord : WordBase
         }
         else if (OnGround)
         {
-            Debug.Log("SAUT");
             rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
@@ -679,7 +677,9 @@ public class PlayerWord : WordBase
     private void OnDestroy()
     {
         jumpAction.action.started -= Jump;
-        moveAction.action.started -= GetInput;
+        moveAction.action.performed -= GetInput;
+        moveAction.action.canceled -= GetInput;
+        useAction.action.started -= Use;
     }
 
     private void OnDrawGizmos()

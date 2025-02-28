@@ -9,10 +9,8 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("OnPointerDown");
         if (WordModifier.Owner.LinkedWordBase != null)
         {
-            Debug.Log($"Trying to give {WordModifier.GetName()} to {WordModifier.Owner.LinkedWordBase} from {WordModifier.Owner}");
             WordModifier.Owner.GiveObjectTo(WordModifier.Owner.LinkedWordBase, WordModifier);
         }
     }

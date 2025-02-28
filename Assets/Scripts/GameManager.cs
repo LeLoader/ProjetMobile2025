@@ -1,3 +1,4 @@
+using GooglePlayGames;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        AchivementManager.Connect();
         if (Instance == null)
         {
             Instance = this;
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
                     (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
+                    AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
                     return;
                 }
             }

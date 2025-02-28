@@ -1,5 +1,8 @@
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using UnityEngine;
 
+// Achievement*
 public static class AchivementManager
 {
 
@@ -24,11 +27,36 @@ public static class AchivementManager
     public const string Dramaturge          = "CgkI6M2W0bwfEAIQEg";
     public const string IDidIt              = "CgkI6M2W0bwfEAIQEw";
 
+    public static void Connect()
+    {
+        PlayGamesPlatform.Activate();
+        PlayGamesPlatform.Instance.Authenticate(
+            (SignInStatus status) =>
+            {
+                switch (status)
+                {
+                    case SignInStatus.Success:
+                        Debug.Log("Success");
+                        break;
+                    case SignInStatus.InternalError:
+                        Debug.Log("InternalError");
+                        break;
+                    case SignInStatus.Canceled:
+                        Debug.Log("Canceled");
+                        break;
+                }
+            });
+    }
 
-    //public void UnlockAchivement(string code)
-    //{
-
-    //}
+    public static void UnlockAchivement(string code, int progress = 100)
+    {
+        PlayGamesPlatform.Instance.IncrementAchievement(
+                        code, progress, (bool result) =>
+                        {
+                            Debug.Log($"Tried to unlock achievement {code} with progress {progress}: {result}");
+                        }
+                        );
+    }
 
 }
 
