@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        AchivementManager.Connect();
+        AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
             Instance = this;
@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+    }
+    public void ManualConnect()
+    {
+        AchivementManager.ManualConnect();
+
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -135,7 +140,7 @@ public class GameManager : MonoBehaviour
 
     //    if (_musicSlider != null && _soundSlider != null)
     //    {
-    //        Debug.Log("Sliders trouvés et assignés !");
+    //        Debug.Log("Sliders trouvï¿½s et assignï¿½s !");
     //        _musicSlider.onValueChanged.RemoveAllListeners();
     //        _soundSlider.onValueChanged.RemoveAllListeners();
 
@@ -149,7 +154,7 @@ public class GameManager : MonoBehaviour
     //    }
     //    else
     //    {
-    //        Debug.LogError("Les sliders ne sont pas trouvés dans la scène !");
+    //        Debug.LogError("Les sliders ne sont pas trouvï¿½s dans la scï¿½ne !");
     //    }
     //}
 }
