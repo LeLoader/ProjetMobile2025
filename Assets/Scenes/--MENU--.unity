@@ -8117,53 +8117,54 @@ MonoBehaviour:
   _levelData:
     _level:
     - _idLevel: Level 1
-      _state: 2
+      _state: 1
     - _idLevel: Level 2
-      _state: 2
+      _state: 0
     - _idLevel: Level 3
-      _state: 2
+      _state: 0
     - _idLevel: Level 4
-      _state: 2
+      _state: 0
     - _idLevel: Level 5
-      _state: 2
+      _state: 0
     - _idLevel: Level 6
-      _state: 2
+      _state: 0
     - _idLevel: Level 7
-      _state: 2
+      _state: 0
     - _idLevel: Level 8
-      _state: 2
+      _state: 0
     - _idLevel: Level 9
-      _state: 2
+      _state: 0
     - _idLevel: Level 10
-      _state: 2
+      _state: 0
     - _idLevel: Level 11
-      _state: 2
+      _state: 0
     - _idLevel: Level 12
-      _state: 2
+      _state: 0
     - _idLevel: Level 13
-      _state: 2
+      _state: 0
     - _idLevel: Level 14
-      _state: 2
+      _state: 0
     - _idLevel: Level 15
-      _state: 2
+      _state: 0
     - _idLevel: Level 16
-      _state: 2
+      _state: 0
     - _idLevel: Level 17
-      _state: 2
+      _state: 0
     - _idLevel: Level 18
-      _state: 2
+      _state: 0
     - _idLevel: Level 19
-      _state: 2
+      _state: 0
     - _idLevel: Level 20
-      _state: 2
+      _state: 0
     - _idLevel: Level 21
-      _state: 2
+      _state: 0
     - _idLevel: Level 22
-      _state: 2
+      _state: 0
     - _idLevel: Level 23
-      _state: 2
+      _state: 0
   _musicValue: 0
   _soundValue: 0
+  levelsFolderPath: Assets/Scenes/Levels
 --- !u!4 &1085693722
 Transform:
   m_ObjectHideFlags: 0
@@ -10859,7 +10860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1652401492
 RectTransform:
   m_ObjectHideFlags: 0
