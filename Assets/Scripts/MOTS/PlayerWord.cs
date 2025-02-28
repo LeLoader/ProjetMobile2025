@@ -135,15 +135,12 @@ public class PlayerWord : WordBase
         moveAction.action.performed += GetInput;
         moveAction.action.canceled += GetInput;
         useAction.action.started += Use;
+
     }
 
     void FixedUpdate()
     {
         rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, DecelerationForce * Time.fixedDeltaTime); // Method
-        //if (IsJumping)
-        //{
-        //    rb.linearVelocityY = Mathf.MoveTowards(rb.linearVelocityY, 0, DecelerationForce * Time.fixedDeltaTime); // Method
-        //}
         CheckIsFalling();
 
         Move();
