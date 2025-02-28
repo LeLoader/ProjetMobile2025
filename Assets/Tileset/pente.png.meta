@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67e7fb230c1d819419214579777e8e71
+guid: de4023653c393b84788f46663fe044e3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1442229226560295789
-    second: background-432_0
+      213: -7040571700147359375
+    second: pente_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,40 +109,49 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background-432_0
+      name: pente_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 432
-        height: 432
+        width: 100
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: d6310dd17d3d30410800000000000000
-      internalID: 1442229226560295789
+      spriteID: bf7e5627bd4ea9f40b80ee469b0db839
+      internalID: 1330380909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pente_1
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f322617a5e399d94fb865346afbd7cf5
+      internalID: -1632713193
       vertices: []
       indices: 
       edges: []
@@ -151,7 +160,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 520b19c8706a87544b7aac2a81dcc482
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +170,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      background-432_0: 1442229226560295789
+      pente_0: 1330380909
+      pente_1: -1632713193
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

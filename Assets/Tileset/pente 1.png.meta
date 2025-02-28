@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67e7fb230c1d819419214579777e8e71
+guid: 92cb8ef352be0df4fbc980008a7df23a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1442229226560295789
-    second: background-432_0
+      213: 2845830210832544940
+    second: pente 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background-432_0
+      name: pente 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 432
-        height: 432
+        width: 200
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d6310dd17d3d30410800000000000000
-      internalID: 1442229226560295789
+      spriteID: ca4bfb7bf7b6e7720800000000000000
+      internalID: 2845830210832544940
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      background-432_0: 1442229226560295789
+      pente 1_0: 2845830210832544940
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
