@@ -1,3 +1,4 @@
+using GooglePlayGames;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,8 +10,11 @@ public class GameManager : MonoBehaviour
     public string _actualScene;
     //[SerializeField] private SceneAsset _scene;
 
+    public GameObject _canvaReglage;
+
     private void Awake()
     {
+        AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
             Instance = this;
@@ -21,6 +25,16 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+    }
+    public void ManualConnect()
+    {
+        AchivementManager.ManualConnect();
+
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -37,6 +51,8 @@ public class GameManager : MonoBehaviour
                 if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                    AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
+                    _canvaReglage.SetActive(false);
                     return;
                 }
             }
@@ -44,6 +60,7 @@ public class GameManager : MonoBehaviour
             else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
             {
                 SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                _canvaReglage.SetActive(false);
                 return;
             }
 
@@ -54,11 +71,15 @@ public class GameManager : MonoBehaviour
                     (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
+                    AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+                    _canvaReglage.SetActive(false );    
                     return;
                 }
             }
         }
         SceneManager.LoadScene(sceneName);
+        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+        _canvaReglage.SetActive(true);
     }
 
     public void FinishLevel()
@@ -74,6 +95,16 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Play()
+    {
+        Time.timeScale = 1;
     }
 
     private void OnDestroy()
@@ -109,7 +140,7 @@ public class GameManager : MonoBehaviour
 
     //    if (_musicSlider != null && _soundSlider != null)
     //    {
-    //        Debug.Log("Sliders trouvés et assignés !");
+    //        Debug.Log("Sliders trouvï¿½s et assignï¿½s !");
     //        _musicSlider.onValueChanged.RemoveAllListeners();
     //        _soundSlider.onValueChanged.RemoveAllListeners();
 
@@ -123,7 +154,7 @@ public class GameManager : MonoBehaviour
     //    }
     //    else
     //    {
-    //        Debug.LogError("Les sliders ne sont pas trouvés dans la scène !");
+    //        Debug.LogError("Les sliders ne sont pas trouvï¿½s dans la scï¿½ne !");
     //    }
     //}
 }

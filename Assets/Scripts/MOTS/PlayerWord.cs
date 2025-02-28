@@ -4,6 +4,8 @@ using ReadOnlyAttribute = NaughtyAttributes.ReadOnlyAttribute;
 using Unity.Cinemachine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using System;
+using UnityEngine.Events;
 
 public class PlayerWord : WordBase
 {
@@ -102,8 +104,8 @@ public class PlayerWord : WordBase
     [Header("Movement | Bouncy")]
     [SerializeField, Tooltip("m")] float defaultBouncyJumpHeight = 2.5f;
 
-    [Header("Tools")]
-    [SerializeField] private GameObject reglage;
+    //[Header("Tools")]
+    //[SerializeField] private GameObject reglage;
 
     private float lastVelY;
 
@@ -169,6 +171,7 @@ public class PlayerWord : WordBase
             if (wo.BlockIsBouncy)
             {
                 IsOnBouncy = true;
+                AudioManager.Instance.PlaySFX(AudioManager.Instance._BouncySFX1);
                 Jump();
             }
             else
@@ -358,7 +361,6 @@ public class PlayerWord : WordBase
     {
         if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
-            Debug.Log(transform.position.y);
             IsJumping = false;
         }
 
@@ -427,7 +429,7 @@ public class PlayerWord : WordBase
         }
         else
         {
-            if (OnSlope == true)
+            if (OnSlope == true && !IsJumping)
             {
                 rb.linearVelocityY = 0;
             }
@@ -519,11 +521,14 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
+
+
         if (IsJumping) return;
 
         IsJumping = true;
         if (IsStick && !OnGround)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
             JumpOnSticky();
         }
         else if (HeadIsStick && !OnGround)
@@ -548,7 +553,7 @@ public class PlayerWord : WordBase
         }
         else if (OnGround)
         {
-            Debug.Log("SAUT");
+            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
             rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
@@ -613,6 +618,7 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
+        AudioManager.Instance.PlaySFX(AudioManager.Instance._SeringuePlantée);
         _camera.Target.TrackingTarget = wordObject?.transform;
         StartZoom(_cameraUnlink, _cameraLink, duration);
     }
@@ -679,7 +685,9 @@ public class PlayerWord : WordBase
     private void OnDestroy()
     {
         jumpAction.action.started -= Jump;
-        moveAction.action.started -= GetInput;
+        moveAction.action.performed -= GetInput;
+        moveAction.action.canceled -= GetInput;
+        useAction.action.started -= Use;
     }
 
     private void OnDrawGizmos()
