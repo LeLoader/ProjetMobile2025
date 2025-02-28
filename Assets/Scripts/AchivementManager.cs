@@ -27,7 +27,7 @@ public static class AchivementManager
     public const string Dramaturge          = "CgkI6M2W0bwfEAIQEg";
     public const string IDidIt              = "CgkI6M2W0bwfEAIQEw";
 
-    public static void Connect()
+    public static void AutomaticConnect()
     {
         PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(
@@ -36,13 +36,34 @@ public static class AchivementManager
                 switch (status)
                 {
                     case SignInStatus.Success:
-                        Debug.Log("Success");
+                        Debug.Log("Authenticate: Success");
                         break;
                     case SignInStatus.InternalError:
-                        Debug.Log("InternalError");
+                        Debug.Log("Authenticate: InternalError");
                         break;
                     case SignInStatus.Canceled:
-                        Debug.Log("Canceled");
+                        Debug.Log("Authenticate: Canceled");
+                        break;
+                }
+            });
+    }
+
+    public static void ManualConnect()
+    {
+        PlayGamesPlatform.Activate();
+        PlayGamesPlatform.Instance.ManuallyAuthenticate(
+            (SignInStatus status) =>
+            {
+                switch (status)
+                {
+                    case SignInStatus.Success:
+                        Debug.Log("ManuallyAuthenticate: Success");
+                        break;
+                    case SignInStatus.InternalError:
+                        Debug.Log("ManuallyAuthenticate: InternalError");
+                        break;
+                    case SignInStatus.Canceled:
+                        Debug.Log("ManuallyAuthenticate: Canceled");
                         break;
                 }
             });

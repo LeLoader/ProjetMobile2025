@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        AchivementManager.Connect();
+        AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
             Instance = this;
@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void ManualConnect()
+    {
+        AchivementManager.ManualConnect();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

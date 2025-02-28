@@ -426,7 +426,7 @@ public class PlayerWord : WordBase
         }
         else
         {
-            if (OnSlope == true)
+            if (OnSlope == true && !IsJumping)
             {
                 rb.linearVelocityY = 0;
             }
