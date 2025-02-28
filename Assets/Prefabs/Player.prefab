@@ -303,16 +303,17 @@ MonoBehaviour:
   maxPositionYValue: 0
   defaultAccelerationForce: 150
   defaultDecelerationForce: 75
-  defaultMaxSpeed: 5
-  defaultJumpHeight: 1.25
+  defaultMaxSpeed: 3
+  defaultJumpHeight: 1.07
   airAccelerationForce: 150
   airDecelerationForce: 5
-  airMaxSpeed: 5
+  airMaxSpeed: 2.45
   stickedAccelerationForce: 100
   stickedDecelerationForce: 75
   stickedMaxSpeed: 3
   stickedJumpHeight: 1
   defaultBouncyJumpHeight: 2.5
+  reglage: {fileID: 0}
   xOrient: 1
   _cameraUnlink: 6
   _cameraLink: 3
