@@ -61,7 +61,10 @@ public class GameManager : MonoBehaviour
                     (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
+<<<<<<< HEAD
                     AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+=======
+>>>>>>> origin/LD
                     return;
                 }
             }

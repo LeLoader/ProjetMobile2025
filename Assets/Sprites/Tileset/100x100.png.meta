@@ -37,7 +37,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< HEAD
     filterMode: 0
+=======
+    filterMode: 1
+>>>>>>> origin/LD
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -235,12 +239,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
+<<<<<<< HEAD
       physicsShape:
       - - {x: 50, y: 31}
         - {x: 1, y: 13}
         - {x: -50, y: -7}
         - {x: -50, y: -50}
         - {x: 50, y: -50}
+=======
+      physicsShape: []
+>>>>>>> origin/LD
       tessellationDetail: 0
       bones: []
       spriteID: 6a611c9b5e93f5049ba0dab38d1e1c2b
@@ -262,10 +270,14 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
+<<<<<<< HEAD
       physicsShape:
       - - {x: 50, y: 50}
         - {x: -50, y: -50}
         - {x: 50, y: -50}
+=======
+      physicsShape: []
+>>>>>>> origin/LD
       tessellationDetail: 0
       bones: []
       spriteID: 5bb787a5433cf114da505155b4a8d60a
@@ -287,11 +299,15 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
+<<<<<<< HEAD
       physicsShape:
       - - {x: 50, y: 50}
         - {x: 24, y: 50}
         - {x: -18, y: -50}
         - {x: 50, y: -50}
+=======
+      physicsShape: []
+>>>>>>> origin/LD
       tessellationDetail: 0
       bones: []
       spriteID: 976ab22f873c96d498cf34b5aae8ab15
