@@ -1,4 +1,8 @@
+using NaughtyAttributes;
+using NUnit.Framework;
 using System.IO;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
@@ -33,7 +37,49 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    [SerializeField] string levelsFolderPath = "Assets/Scenes/Levels";
+    [Button]
+    private void FindAndAddMissingLevelData()
+    {
+        var assets = AssetDatabase.FindAssets("t:SceneAsset", new[] { levelsFolderPath });
+        for (int i = 0; i < assets.Length; i++)
+        {
+            string guid = assets[i];
+            SceneAsset scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(guid));
+            if (!_levelData._level.Exists(level => level._idLevel == scene.name))
+            {
+                if (i != 0)
+                {
+                    _levelData._level.Add(new Level(scene.name));
+                }
+                else
+                {
+                    _levelData._level.Add(new Level(scene.name, Level.LevelState.Unlock));
+                }
+            }   
+        }
+        _levelData._level = _levelData._level.OrderBy(level => int.Parse(level._idLevel.Split(' ')[1])).ToList();
+    }
 
+    [Button]
+    private void EraseAndGenerateLevelData()
+    {
+        var assets = AssetDatabase.FindAssets("t:SceneAsset", new[] { levelsFolderPath });
+        _levelData._level.Clear();
+        for (int i = 0; i < assets.Length; i++)
+        {
+            string guid = assets[i];
+            SceneAsset scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(AssetDatabase.GUIDToAssetPath(guid));
+            if (i != 0)
+            {
+                _levelData._level.Add(new Level(scene.name));
+            }
+            else
+            {
+                _levelData._level.Add(new Level(scene.name, Level.LevelState.Unlock));
+            }
+        }
+    }
 
     public void SaveData()
     {

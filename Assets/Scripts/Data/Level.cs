@@ -16,4 +16,9 @@ public class Level
     public string _idLevel;
     public LevelState _state;
 
+    public Level(string id, LevelState initialState = LevelState.Blocked)
+    {
+        _idLevel = id;
+        _state = initialState;
+    }
 }
