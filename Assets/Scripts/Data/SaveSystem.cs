@@ -1,12 +1,9 @@
-using NaughtyAttributes;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class SaveSystem : MonoBehaviour
 {
-     
+
     public LevelProgressionData _levelData;
     public float _musicValue;
     public float _soundValue;
@@ -27,7 +24,16 @@ public class SaveSystem : MonoBehaviour
 
         _savePath = Path.Combine(Application.persistentDataPath, "saveData.json");
         LoadData();
+
+        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
+        string[] scenes = new string[sceneCount];
+        for (int i = 0; i < sceneCount; i++)
+        {
+            //scenes *= System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+        }
     }
+
+
 
     public void SaveData()
     {
