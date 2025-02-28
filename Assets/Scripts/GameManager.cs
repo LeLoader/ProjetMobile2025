@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        AchivementManager.AutomaticConnect();
+        //AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
             Instance = this;
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
     public void ManualConnect()
     {
-        AchivementManager.ManualConnect();
+        //AchivementManager.ManualConnect();
 
     }
 
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
                     (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
-                    AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+                    //AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
                     _canvaReglage.SetActive(false );    
                     return;
                 }
