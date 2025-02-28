@@ -22,7 +22,7 @@ public class Porte : MonoBehaviour
         {
             _Leftparticule.Play();
             _Rightparticule.Play();
-            //ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
+            _player.CanMove = false;
             StartCoroutine(DelayBeforeEndCanva());
         }
     }
