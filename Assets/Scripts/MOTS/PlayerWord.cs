@@ -168,7 +168,7 @@ public class PlayerWord : WordBase
             if (wo.BlockIsBouncy)
             {
                 IsOnBouncy = true;
-                AudioManager.Instance.PlaySFX(AudioManager.Instance._BouncySFX1);
+                AudioManager.Instance?.PlaySFX(AudioManager.Instance._BouncySFX1);
                 Jump();
             }
             else
@@ -523,7 +523,7 @@ public class PlayerWord : WordBase
         IsJumping = true;
         if (IsStick && !OnGround)
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
             JumpOnSticky();
         }
         else if (HeadIsStick && !OnGround)
@@ -548,7 +548,7 @@ public class PlayerWord : WordBase
         }
         else if (OnGround)
         {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
+            AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
             rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
@@ -613,7 +613,7 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
-        AudioManager.Instance.PlaySFX(AudioManager.Instance._SeringuePlantée);
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance._SeringuePlantée);
         _camera.Target.TrackingTarget = wordObject?.transform;
         StartZoom(_cameraUnlink, _cameraLink, duration);
     }
