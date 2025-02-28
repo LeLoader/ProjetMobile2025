@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public string _actualScene;
     //[SerializeField] private SceneAsset _scene;
 
+    public GameObject _canvaReglage;
+
     private void Awake()
     {
         AchivementManager.Connect();
@@ -23,6 +25,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -39,6 +46,8 @@ public class GameManager : MonoBehaviour
                 if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                    AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
+                    _canvaReglage.SetActive(false);
                     return;
                 }
             }
@@ -46,6 +55,7 @@ public class GameManager : MonoBehaviour
             else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
             {
                 SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                _canvaReglage.SetActive(false);
                 return;
             }
 
@@ -57,11 +67,14 @@ public class GameManager : MonoBehaviour
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
                     AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+                    _canvaReglage.SetActive(false );    
                     return;
                 }
             }
         }
         SceneManager.LoadScene(sceneName);
+        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+        _canvaReglage.SetActive(true);
     }
 
     public void FinishLevel()
@@ -77,6 +90,16 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Play()
+    {
+        Time.timeScale = 1;
     }
 
     private void OnDestroy()

@@ -12,6 +12,7 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
         if (WordModifier.Owner.LinkedWordBase != null)
         {
             WordModifier.Owner.GiveObjectTo(WordModifier.Owner.LinkedWordBase, WordModifier);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance._SeringuePlantée);
         }
     }
 

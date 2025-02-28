@@ -8,9 +8,20 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource m_Music;
     [SerializeField] AudioSource m_Sound;
 
-    [Header("-----Audio Clip -----")]
+    [Header("-----MUSIC BACKGROUND -----")]
     public AudioClip _backgroundMenu;
     public AudioClip _backgroundGameplay;
+    public AudioClip _pauseSFX;
+
+    
+    [Header("-----PLAYER SFX -----")]
+    public AudioClip _JumpSFX;
+    public AudioClip _BouncySFX1;
+    public AudioClip _BouncySFX2;
+    public AudioClip _SeringuePlantée;
+    public AudioClip _mistakeWord1;
+    public AudioClip _mistakeWord2;
+    public AudioClip _takeWord;
 
     public static AudioManager Instance;
 
