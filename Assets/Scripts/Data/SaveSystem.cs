@@ -37,6 +37,8 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+
     [SerializeField] string levelsFolderPath = "Assets/Scenes/Levels";
     [Button]
     private void FindAndAddMissingLevelData()
@@ -81,6 +83,7 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+#endif
     public void SaveData()
     {
         VolumeSettings.Instance.SaveVolume();
