@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -11,6 +12,7 @@ public class SaveSystem : MonoBehaviour
     public LevelProgressionData _levelData;
     public float _musicValue;
     public float _soundValue;
+    public PlayerStats _playerStats;
 
     private string _savePath;
     public static SaveSystem _instance { get; private set; }
@@ -36,6 +38,8 @@ public class SaveSystem : MonoBehaviour
             //scenes *= System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
         }
     }
+
+    
 
 #if UNITY_EDITOR
 
@@ -82,8 +86,8 @@ public class SaveSystem : MonoBehaviour
             }
         }
     }
-
 #endif
+
     public void SaveData()
     {
         VolumeSettings.Instance.SaveVolume();
@@ -91,6 +95,7 @@ public class SaveSystem : MonoBehaviour
         data.levelData = _levelData;
         data.musicValue = _musicValue;
         data.soundValue = _soundValue;
+        data.stats = _playerStats;
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(_savePath, json);
         Debug.Log("Game Saved : " + _savePath);
@@ -98,6 +103,7 @@ public class SaveSystem : MonoBehaviour
 
     public void LoadData()
     {
+        Debug.Log("Loading Data: ");
         if (File.Exists(_savePath))
         {
             string json = File.ReadAllText(_savePath);
@@ -106,10 +112,13 @@ public class SaveSystem : MonoBehaviour
             _levelData = data.levelData;
             _musicValue = data.musicValue;
             _soundValue = data.soundValue;
+            _playerStats = data.stats;
+            Debug.Log("Success!");
         }
         else
         {
             NewData();
+            Debug.Log("No data found, creating a data!");
         }
     }
 
@@ -124,6 +133,7 @@ public class SaveSystem : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        Stats.IncrementStat(Stats.STATS.IN_GAME_TIME, (int)Time.realtimeSinceStartup);
         SaveData();
     }
 }
@@ -134,4 +144,5 @@ public class SaveDataWrapper
     public LevelProgressionData levelData;
     public float musicValue;
     public float soundValue;
+    public PlayerStats stats;
 }

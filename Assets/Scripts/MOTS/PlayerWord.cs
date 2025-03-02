@@ -150,7 +150,13 @@ public class PlayerWord : WordBase
         IsTouchingGround();
         UpdateStates();
         SlopeCheck();
+        bool lastIsStick = IsStick;
         IsStick = PlayerIsOnSticky();
+        if (IsStick && !lastIsStick)
+        {
+            Stats.IncrementStat(Stats.STATS.STICK_COUNT);
+        }
+        
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
 
@@ -171,6 +177,7 @@ public class PlayerWord : WordBase
             {
                 IsOnBouncy = true;
                 AudioManager.Instance?.PlaySFX(AudioManager.Instance._BouncySFX1);
+                Stats.IncrementStat(Stats.STATS.BOUNCE_COUNT);
                 Jump();
             }
             else
@@ -258,7 +265,6 @@ public class PlayerWord : WordBase
     {
         if (IsOnBouncy)
         {
-            Debug.Log(maxPositionYValue - transform.position.y);
             return Mathf.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
         else if (OnSticky)
@@ -347,7 +353,6 @@ public class PlayerWord : WordBase
     private bool HeadIsSticky()
     {
         return CheckSticky(topCheckers, Vector2.up);
-
     }
 
     private void UpdateGravity()
@@ -537,10 +542,14 @@ public class PlayerWord : WordBase
         {
             AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
             JumpOnSticky();
+
+            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         else if (HeadIsStick && !OnGround)
         {
             FallAfterSticky();
+
+            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         else if (IsStick && OnGround)
         {
@@ -557,6 +566,8 @@ public class PlayerWord : WordBase
                 rb.AddForce(Vector2.left, ForceMode2D.Impulse);
 
             }
+
+            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         else if (OnGround)
         {
@@ -564,6 +575,8 @@ public class PlayerWord : WordBase
             rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
+
+            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         Unlink();
     }
@@ -600,7 +613,7 @@ public class PlayerWord : WordBase
 
     private void Use(InputAction.CallbackContext context)
     {
-        if (!OnGround || LinkedWordBase != null) return;
+        if (!OnGround || IsLinked) return;
 
         for (int i = 0; i < interactionCheckers.childCount; i++)
         {
@@ -632,12 +645,13 @@ public class PlayerWord : WordBase
 
     private void Unlink()
     {
-        if (LinkedWordBase != null)
+        if (IsLinked)
         {
             foreach (WordModifier modifier in currentModifiers)
             {
                 modifier.WordUI.Unlink();
             }
+            Stats.IncrementStat(Stats.STATS.SERINGUE_COUNT, currentModifiers.Count); // Spamming will increment a lot
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
             if (transform != null)

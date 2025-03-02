@@ -1,5 +1,6 @@
 using GooglePlayGames;
 using NaughtyAttributes;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Stats.IncrementStat(Stats.STATS.APPLICATION_STARTED_COUNT);
+
         AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
@@ -45,7 +48,6 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        
         if (sceneName == "--MENU--")
         {
             SceneManager.LoadScene(sceneName);
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
                     _canvaReglage.SetActive(false);
+
+                    Stats.IncrementStat(Stats.STATS.RESTART_COUNT);
                     return;
                 }
                 else if (sceneName == "nextLevel")
