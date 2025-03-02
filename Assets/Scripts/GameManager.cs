@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
             _canvaReglage.SetActive(true);
-            //VerifyCompleted.Instance.Verify();
+            VerifyCompleted.Instance.Verify();
         }
         else
         {

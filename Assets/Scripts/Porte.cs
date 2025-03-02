@@ -13,6 +13,8 @@ public class Porte : MonoBehaviour
     {
         _Leftparticule = GameObject.FindGameObjectWithTag("LeftConfetti")?.GetComponent<ParticleSystem>();
         _Rightparticule = GameObject.FindGameObjectWithTag("RightConfetti")?.GetComponent<ParticleSystem>();
+        _canva = GameObject.FindGameObjectWithTag("CanvaFin");
+        _player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerWord>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
