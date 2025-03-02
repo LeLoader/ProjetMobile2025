@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,8 +11,8 @@ public class SaveSystem : MonoBehaviour
 {
 
     public LevelProgressionData _levelData;
-    public float _musicValue;
-    public float _soundValue;
+    public float _musicValue = 0.5f;
+    public float _soundValue = 0.5f;
     public PlayerStats _playerStats;
 
     private string _savePath;
@@ -30,13 +31,6 @@ public class SaveSystem : MonoBehaviour
 
         _savePath = Path.Combine(Application.persistentDataPath, "saveData.json");
         LoadData();
-
-        int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
-        string[] scenes = new string[sceneCount];
-        for (int i = 0; i < sceneCount; i++)
-        {
-            //scenes *= System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
-        }
     }
 
     
@@ -107,28 +101,34 @@ public class SaveSystem : MonoBehaviour
         if (File.Exists(_savePath))
         {
             string json = File.ReadAllText(_savePath);
-            SaveDataWrapper data = JsonUtility.FromJson<SaveDataWrapper>(json);
-
-            _levelData = data.levelData;
-            _musicValue = data.musicValue;
-            _soundValue = data.soundValue;
-            _playerStats = data.stats;
-            Debug.Log("Success!");
+            try
+            {
+                SaveDataWrapper data = JsonUtility.FromJson<SaveDataWrapper>(json);
+                _levelData = data.levelData;
+                _musicValue = data.musicValue;
+                _soundValue = data.soundValue;
+                _playerStats = data.stats;
+                Debug.Log("Success!");
+            }
+            catch (ArgumentException ex)
+            {
+                Debug.LogError("Error while loading data, possibly corrupted file: " + ex.Message);
+                string corruptedFileSavePath = Application.persistentDataPath + "/corrupted_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".json";
+                File.WriteAllText(corruptedFileSavePath, json);
+                Debug.LogError("Created a save of corrupted file at " + corruptedFileSavePath);
+                NewData();
+            }
         }
         else
         {
-            NewData();
             Debug.Log("No data found, creating a data!");
+            NewData();
         }
     }
 
     public void NewData()
     {
-        _musicValue = 0.5f;
-        _soundValue = 0.5f;
-
         SaveData();
-        Debug.Log("New data created and saved at: " + _savePath);
     }
 
     private void OnApplicationQuit()
