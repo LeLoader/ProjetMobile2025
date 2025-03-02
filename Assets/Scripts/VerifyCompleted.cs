@@ -1,5 +1,7 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class VerifyCompleted : MonoBehaviour
@@ -8,6 +10,20 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private List<GameObject> _goLevel = new List<GameObject>();
     [SerializeField] private List<GameObject> _goBlocked = new List<GameObject>();
     [SerializeField] private List<GameObject> _goCompleted = new List<GameObject>();
+
+    public static VerifyCompleted Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {

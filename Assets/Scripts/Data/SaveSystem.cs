@@ -7,6 +7,7 @@ public class SaveSystem : MonoBehaviour
     public LevelProgressionData _levelData;
     public float _musicValue;
     public float _soundValue;
+    public string _lastLevelUnlocked;
 
     private string _savePath;
     public static SaveSystem _instance { get; private set; }
@@ -42,6 +43,7 @@ public class SaveSystem : MonoBehaviour
         data.levelData = _levelData;
         data.musicValue = _musicValue;
         data.soundValue = _soundValue;
+        data.lastLevelUnlock = _lastLevelUnlocked;
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(_savePath, json);
         Debug.Log("Game Saved : " + _savePath);
@@ -57,6 +59,7 @@ public class SaveSystem : MonoBehaviour
             _levelData = data.levelData;
             _musicValue = data.musicValue;
             _soundValue = data.soundValue;
+            _lastLevelUnlocked = data.lastLevelUnlock;
         }
         else
         {
@@ -68,7 +71,7 @@ public class SaveSystem : MonoBehaviour
     {
         _musicValue = 0.5f;
         _soundValue = 0.5f;
-
+        _lastLevelUnlocked = "Level 1";
         SaveData();
         Debug.Log("New data created and saved at: " + _savePath);
     }
@@ -85,4 +88,5 @@ public class SaveDataWrapper
     public LevelProgressionData levelData;
     public float musicValue;
     public float soundValue;
+    public string lastLevelUnlock;
 }
