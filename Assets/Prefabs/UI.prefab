@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5479811346397638724}
   - component: {fileID: 1591776892936331184}
   - component: {fileID: 6226802222299799295}
-  - component: {fileID: 2650551819175964085}
   m_Layer: 5
   m_Name: WordWrapper
   m_TagString: Untagged
@@ -72,19 +71,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &2650551819175964085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932659512524423338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Keyboard>/e
 --- !u!1 &1003303930319747857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,6 +1127,7 @@ GameObject:
   - component: {fileID: 9181411070318538094}
   - component: {fileID: 1050167406764428899}
   - component: {fileID: 809299235191372806}
+  - component: {fileID: 2003668132428750435}
   m_Layer: 5
   m_Name: Seringue
   m_TagString: Untagged
@@ -1206,6 +1193,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2003668132428750435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958874195843041102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ControlPath: <Keyboard>/e
 --- !u!1 &7198464070098313149
 GameObject:
   m_ObjectHideFlags: 0
