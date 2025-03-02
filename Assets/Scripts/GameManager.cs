@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Scene]
     public string _actualScene;
     [SerializeField] int targetFrameRate = 60;
     //[SerializeField] private SceneAsset _scene;

@@ -227,6 +227,7 @@ public class WordObject : WordBase
         LinkedWordBase = player;
         foreach (WordModifier modifier in currentModifiers)
         {
+            modifier.WordUI.enabled = true;
             modifier.WordUI.Link();
         }
     }
@@ -236,6 +237,7 @@ public class WordObject : WordBase
         foreach (WordModifier modifier in currentModifiers)
         {
             modifier.WordUI.Unlink();
+            modifier.WordUI.enabled = false;
         }
         LinkedWordBase = null;
         UpdateModifiers();

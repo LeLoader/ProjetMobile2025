@@ -72,6 +72,7 @@ public class WordBase : MonoBehaviour
         {
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
             {
+                wordUI.enabled = true;
                 wordUI.Text.text = modifier.GetName();
                 if (LinkedWordBase != null)
                 {
