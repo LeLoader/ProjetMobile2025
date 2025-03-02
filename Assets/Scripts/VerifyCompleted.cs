@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class VerifyCompleted : MonoBehaviour
@@ -10,6 +11,10 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private List<GameObject> _goLevel = new List<GameObject>();
     [SerializeField] private List<GameObject> _goBlocked = new List<GameObject>();
     [SerializeField] private List<GameObject> _goCompleted = new List<GameObject>();
+    [SerializeField] private GameObject _prefabLevel;
+    [SerializeField] private GameObject _pageOne;
+    [SerializeField] private GameObject _pageTwo;
+    [SerializeField] private GameObject _pageThree;
 
     public static VerifyCompleted Instance;
 
@@ -27,7 +32,33 @@ public class VerifyCompleted : MonoBehaviour
 
     private void Start()
     {
-        Verify();
+        //Verify();
+        ButtonCreate();
+    }
+
+    public void ButtonCreate()
+    {
+        for( int i = 0; i < SaveSystem._instance._levelData._level.Count; i ++)
+        {
+            GameObject levelObject;
+
+            if(i < 10)
+            {
+                levelObject = Instantiate(_prefabLevel, _pageOne.transform);
+            }
+            else if(i < 20)
+            {
+                levelObject = Instantiate(_prefabLevel, _pageTwo.transform);
+            }
+            else
+            {
+                levelObject = Instantiate(_prefabLevel, _pageThree.transform);
+            }
+            ButtonManager boutton = levelObject.GetComponent<ButtonManager>();
+            Text nombreLevel = levelObject.GetComponentInChildren<Text>();
+            boutton._nameNextScene = "Level " + (i + 1); ;
+            nombreLevel.text = "Level\n" + (i + 1); ;
+        }
     }
 
     public void Verify()

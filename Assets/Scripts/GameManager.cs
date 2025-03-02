@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         _actualScene = scene.name;
         if (scene.name == "--MENU--")
         {
+            AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
             _canvaReglage.SetActive(true);
             //VerifyCompleted.Instance.Verify();
         }
@@ -77,11 +78,11 @@ public class GameManager : MonoBehaviour
         }
         else if (sceneName == "lastLevel")
         {
-            Level lastUnlockedLevel = GetLastUnlockedLevel();
+            string lastUnlockedLevel = GetLastUnlockedLevel();
 
             if (lastUnlockedLevel != null)
             {
-                SceneManager.LoadScene(lastUnlockedLevel._idLevel);
+                SceneManager.LoadScene(lastUnlockedLevel);
                 AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
                 return;
             }
@@ -89,7 +90,6 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene(sceneName);
-            //AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
         }
     }
 
@@ -116,9 +116,9 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    private Level GetLastUnlockedLevel()
+    private string GetLastUnlockedLevel()
     {
-        return SaveSystem._instance._levelData._level.FindLast(level => level._state == Level.LevelState.Unlock);
+        return SaveSystem._instance._lastLevelUnlocked;
     }
 
 
