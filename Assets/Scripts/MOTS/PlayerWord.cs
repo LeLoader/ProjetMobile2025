@@ -636,6 +636,7 @@ public class PlayerWord : WordBase
         LinkedWordBase = wordObject;
         foreach (WordModifier modifier in currentModifiers)
         {
+            modifier.WordUI.enabled = true;
             modifier.WordUI.Link();
         }
         AudioManager.Instance?.PlaySFX(AudioManager.Instance._SeringuePlantée);
@@ -650,6 +651,7 @@ public class PlayerWord : WordBase
             foreach (WordModifier modifier in currentModifiers)
             {
                 modifier.WordUI.Unlink();
+                modifier.WordUI.enabled = false;
             }
             Stats.IncrementStat(Stats.STATS.SERINGUE_COUNT, currentModifiers.Count); // Spamming will increment a lot
             ((WordObject)LinkedWordBase).Unlink();
