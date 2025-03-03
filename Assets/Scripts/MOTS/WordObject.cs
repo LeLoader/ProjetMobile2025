@@ -309,9 +309,21 @@ public class WordObject : WordBase
         return currentModifiers.Exists(mod => mod is StairsModifier);
     }
 
+    private bool HasAStickyOrBouncy()
+    {
+        return currentModifiers.Exists(mod => mod is EffectModifier);
+    }
+
     [Button, EnableIf("HasAStairs")]
     private void ForceRotate()
     {
         transform.rotation = Quaternion.Euler(0, 180, 0) * transform.rotation;
+    }
+
+    [Button, EnableIf("HasAStickyOrBouncy")]
+    private void ForceStuck()
+    {
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.gravityScale = 0;
     }
 }
