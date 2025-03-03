@@ -146,7 +146,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: 9def2faf4746a3b4ab8336211f0c102d, type: 3}
+  m_Sprite: {fileID: 3286163911610860551, guid: 17df6ad8eab56664a98cf42353462e8b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,14 +180,14 @@ MonoBehaviour:
   rb: {fileID: 279381465389864736}
   BlockIsSticky: 0
   BlockIsBouncy: 0
-  emptySprite: {fileID: 3286163911610860551, guid: 26f42df3daa6348499fbcd8f939fd31e, type: 3}
+  emptySprite: {fileID: 3286163911610860551, guid: dfc64eae0abad4d4e9bab37189bc22d3, type: 3}
   defaultCollider: {fileID: 1302911581383112435}
-  scaleSprite: {fileID: 3286163911610860551, guid: e3ba6aba1c7a93e4c8de8912bebff9af, type: 3}
-  stickySprite: {fileID: 3286163911610860551, guid: 6d49bbb0663782e46a4b837afac0c9b3, type: 3}
-  bouncySprite: {fileID: 3286163911610860551, guid: 6857e2f38132fd647b57ce4e2bb263d4, type: 3}
-  stairsSprite: {fileID: 3286163911610860551, guid: bb7f93d2c631b584bbb5becd87bb4951, type: 3}
+  scaleSprite: {fileID: 3286163911610860551, guid: fea07571ecc4ea24b9810c9bc207e30c, type: 3}
+  stickySprite: {fileID: 3286163911610860551, guid: 73336bc0b64e6e64e8a6fe1719e98d65, type: 3}
+  bouncySprite: {fileID: 3286163911610860551, guid: 9e7d9e96d516b7f4ba764c334886355d, type: 3}
+  stairsSprite: {fileID: 3286163911610860551, guid: 8133f2cc281c6704089597095cb14962, type: 3}
   stairsCollider: {fileID: 7443647957407925836}
-  ballSprite: {fileID: 3286163911610860551, guid: 9def2faf4746a3b4ab8336211f0c102d, type: 3}
+  ballSprite: {fileID: 3286163911610860551, guid: 17df6ad8eab56664a98cf42353462e8b, type: 3}
   ballCollider: {fileID: 4180964458863058459}
   references:
     version: 2
@@ -230,7 +230,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.97544557, y: 0.9831262}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -276,7 +276,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.97544557, y: 0.9831262}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
