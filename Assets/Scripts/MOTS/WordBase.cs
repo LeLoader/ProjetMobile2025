@@ -29,6 +29,7 @@ public class WordBase : MonoBehaviour
                     if (target.currentModifiers.Exists(mod => mod is NonScaleModifier))
                     {
                         Debug.LogWarning("Cannot add more NonScaleModifier to this object");
+                        AudioManager.Instance.PlaySFX(AudioManager.Instance._mistakeWord2);
                         return;
                     }
                 }
@@ -37,10 +38,12 @@ public class WordBase : MonoBehaviour
                 currentModifiers.Remove(modifier);
                 UpdateWords(ref currentModifiers);
                 modifier.Owner = target;
+                AudioManager.Instance.PlaySFX(AudioManager.Instance._takeWord);
             }
             else
             {
                 Debug.LogWarning("Cannot add more modifier to this object");
+                AudioManager.Instance.PlaySFX(AudioManager.Instance._mistakeWord1);
             }
         }
     }
