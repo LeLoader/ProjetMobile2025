@@ -11,9 +11,7 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private GameObject _complete;
     [SerializeField] private GameObject _blocked;
     [SerializeField] private GameObject _prefabLevel;
-    [SerializeField] private GameObject _pageOne;
-    [SerializeField] private GameObject _pageTwo;
-    [SerializeField] private GameObject _pageThree;
+    [SerializeField] private GameObject _prefabPage;
     [SerializeField] private List<GameObject> _levelBoutton;
 
     public static VerifyCompleted Instance;
@@ -38,23 +36,33 @@ public class VerifyCompleted : MonoBehaviour
 
     public void ButtonCreate()
     {
-        for( int i = 0; i < SaveSystem._instance._levelData._level.Count; i ++)
+        GameObject levelPanel = Instantiate(_prefabPage, this.transform);
+        GameObject levelObject;
+        for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i ++)
         {
-            GameObject levelObject;
-
-            if(i < 10)
+            if(i % 10 != 0 || i == 0)
             {
-                levelObject = Instantiate(_prefabLevel, _pageOne.transform);
+                levelObject = Instantiate(_prefabLevel, levelPanel.transform);
             }
-            else if(i < 20)
+            else if(i % 10 == 0)
             {
-                levelObject = Instantiate(_prefabLevel, _pageTwo.transform);
+                levelPanel = Instantiate(_prefabPage, this.transform);
+                levelObject = Instantiate(_prefabLevel, levelPanel.transform);
+            }
+            else if(i % 20 != 0)
+            {
+                levelObject = Instantiate(_prefabLevel, levelPanel.transform);
+            }
+            else if (i % 20 == 0)
+            {
+                levelPanel = Instantiate(_prefabLevel, this.transform);
+                levelObject = Instantiate(_prefabLevel, levelPanel.transform);
             }
             else
             {
-                levelObject = Instantiate(_prefabLevel, _pageThree.transform);
+                levelObject = Instantiate(_prefabLevel, levelPanel.transform);
             }
-            ButtonManager boutton = levelObject.GetComponent<ButtonManager>();
+            ButtonManager boutton = levelObject?.GetComponent<ButtonManager>();
             Text nombreLevel = levelObject.GetComponentInChildren<Text>();
             boutton._nameNextScene = "Level " + (i + 1); ;
             nombreLevel.text = "Level\n" + (i + 1); ;
