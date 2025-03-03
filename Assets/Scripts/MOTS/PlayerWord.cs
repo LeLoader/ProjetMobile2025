@@ -147,8 +147,8 @@ public class PlayerWord : WordBase
 
         Move();
 
-        IsTouchingGround();
         UpdateStates();
+        IsTouchingGround();
         SlopeCheck();
         bool lastIsStick = IsStick;
         IsStick = PlayerIsOnSticky();
@@ -203,7 +203,7 @@ public class PlayerWord : WordBase
 
     private void GetMaxLastJump()
     {
-        if (OnGround)
+        if (OnGround && !IsOnBouncy)
         {
             maxPositionYValue = transform.position.y;
         }
