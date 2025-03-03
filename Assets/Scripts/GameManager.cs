@@ -1,4 +1,6 @@
 using GooglePlayGames;
+using NaughtyAttributes;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,14 +9,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Scene]
     public string _actualScene;
+    [SerializeField] int targetFrameRate = 60;
     //[SerializeField] private SceneAsset _scene;
 
     public GameObject _canvaReglage;
 
     private void Awake()
     {
-        //AchivementManager.AutomaticConnect();
+        Application.targetFrameRate = targetFrameRate;
+        Stats.IncrementStat(Stats.STATS.APPLICATION_STARTED_COUNT);
+        AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
             Instance = this;
@@ -40,17 +46,14 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _actualScene = scene.name;
-        if (scene.name == "--MENU--")
+        if (sceneName == "--MENU--")
         {
             AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
             _canvaReglage.SetActive(true);
             VerifyCompleted.Instance.Verify();
         }
-        else
-        {
-            _canvaReglage.SetActive(false);
-        }
     }
+
 
     public void ChangeScene(string sceneName)
     {
