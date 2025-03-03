@@ -9,10 +9,10 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (WordModifier.Owner.IsLinked)
+        if (WordModifier.Owner.LinkedWordBase != null)
         {
             WordModifier.Owner.GiveObjectTo(WordModifier.Owner.LinkedWordBase, WordModifier);
-            AudioManager.Instance?.PlaySFX(AudioManager.Instance._SeringuePlantée);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance._SeringuePlantée);
         }
     }
 

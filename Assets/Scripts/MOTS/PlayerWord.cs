@@ -6,7 +6,6 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
-using System.ComponentModel;
 
 public class PlayerWord : WordBase
 {
@@ -36,7 +35,6 @@ public class PlayerWord : WordBase
     [Header("Movement")]
     [SerializeField, ReadOnly] bool OnGround;
     [SerializeField, ReadOnly] bool HeadIsStick;
-    [SerializeField, ReadOnly] bool OnSticky;
     [SerializeField, ReadOnly] bool IsStick;
     [SerializeField, ReadOnly] bool IsJumping;
     [SerializeField, ReadOnly] bool IsOnBouncy;
@@ -148,15 +146,9 @@ public class PlayerWord : WordBase
         Move();
 
         IsTouchingGround();
-        UpdateStates();
+        BlockIsBouncy();
         SlopeCheck();
-        bool lastIsStick = IsStick;
         IsStick = PlayerIsOnSticky();
-        if (IsStick && !lastIsStick)
-        {
-            Stats.IncrementStat(Stats.STATS.STICK_COUNT);
-        }
-        
         HeadIsStick = HeadIsSticky();
         UpdateGravity();
 
@@ -168,7 +160,7 @@ public class PlayerWord : WordBase
         GetMaxLastJump();
     }
 
-    private void UpdateStates()
+    private void BlockIsBouncy()
     {
         WordObject wo = IsTouchingWordObject(); // Update all state at once?
         if (wo)
@@ -176,27 +168,16 @@ public class PlayerWord : WordBase
             if (wo.BlockIsBouncy)
             {
                 IsOnBouncy = true;
-                AudioManager.Instance?.PlaySFX(AudioManager.Instance._BouncySFX1);
-                Stats.IncrementStat(Stats.STATS.BOUNCE_COUNT);
+                AudioManager.Instance.PlaySFX(AudioManager.Instance._BouncySFX1);
                 Jump();
             }
             else
             {
                 IsOnBouncy = false;
             }
-
-            if (wo.BlockIsSticky)
-            {
-                OnSticky = true;
-            }
-            else
-            {
-                OnSticky = false;
-            }
         }
         else
         {
-            OnSticky = false;
             IsOnBouncy = false;
         }
     }
@@ -215,7 +196,7 @@ public class PlayerWord : WordBase
 
     private float GetAccelerationForce()
     {
-        if (OnSticky)
+        if (IsStick)
         {
             return stickedAccelerationForce;
         }
@@ -231,7 +212,7 @@ public class PlayerWord : WordBase
 
     private float GetDecelerationForce()
     {
-        if (OnSticky)
+        if (IsStick)
         {
             return stickedDecelerationForce;
         }
@@ -247,7 +228,7 @@ public class PlayerWord : WordBase
 
     private float GetMaxSpeed()
     {
-        if (OnSticky)
+        if (IsStick)
         {
             return stickedMaxSpeed;
         }
@@ -265,9 +246,10 @@ public class PlayerWord : WordBase
     {
         if (IsOnBouncy)
         {
+            Debug.Log(maxPositionYValue - transform.position.y);
             return Mathf.Max(maxPositionYValue - transform.position.y, defaultBouncyJumpHeight);
         }
-        else if (OnSticky)
+        else if (IsStick)
         {
             return stickedJumpHeight;
         }
@@ -353,6 +335,7 @@ public class PlayerWord : WordBase
     private bool HeadIsSticky()
     {
         return CheckSticky(topCheckers, Vector2.up);
+
     }
 
     private void UpdateGravity()
@@ -535,21 +518,19 @@ public class PlayerWord : WordBase
 
     private void Jump()
     {
+
+
         if (IsJumping) return;
 
         IsJumping = true;
         if (IsStick && !OnGround)
         {
-            AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
             JumpOnSticky();
-
-            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         else if (HeadIsStick && !OnGround)
         {
             FallAfterSticky();
-
-            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         else if (IsStick && OnGround)
         {
@@ -566,17 +547,13 @@ public class PlayerWord : WordBase
                 rb.AddForce(Vector2.left, ForceMode2D.Impulse);
 
             }
-
-            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         else if (OnGround)
         {
-            AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance._JumpSFX);
             rb.linearVelocityY = 0;
             float yForce = Mathf.Sqrt(JumpHeight * 2 * Physics2D.gravity.magnitude);
             rb.AddForce(Vector2.up * yForce, ForceMode2D.Impulse);
-
-            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
         Unlink();
     }
@@ -587,12 +564,12 @@ public class PlayerWord : WordBase
         if (xOrient > 0)
         {
             rightCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateRightCheckers", 0.5f);
+            Invoke("ReactivateRightCheckers", 1f);
         }
         else
         {
             leftCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateLeftCheckers", 0.5f);
+            Invoke("ReactivateLeftCheckers", 1f);
         }
         xOrient *= -1;
         Debug.Log("JumpOnSticky");
@@ -613,7 +590,7 @@ public class PlayerWord : WordBase
 
     private void Use(InputAction.CallbackContext context)
     {
-        if (!OnGround || IsLinked) return;
+        if (!OnGround || LinkedWordBase != null) return;
 
         for (int i = 0; i < interactionCheckers.childCount; i++)
         {
@@ -638,20 +615,19 @@ public class PlayerWord : WordBase
         {
             modifier.WordUI.Link();
         }
-        AudioManager.Instance?.PlaySFX(AudioManager.Instance._SeringuePlantée);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance._SeringuePlantée);
         _camera.Target.TrackingTarget = wordObject?.transform;
         StartZoom(_cameraUnlink, _cameraLink, duration);
     }
 
     private void Unlink()
     {
-        if (IsLinked)
+        if (LinkedWordBase != null)
         {
             foreach (WordModifier modifier in currentModifiers)
             {
                 modifier.WordUI.Unlink();
             }
-            Stats.IncrementStat(Stats.STATS.SERINGUE_COUNT, currentModifiers.Count); // Spamming will increment a lot
             ((WordObject)LinkedWordBase).Unlink();
             LinkedWordBase = null;
             if (transform != null)

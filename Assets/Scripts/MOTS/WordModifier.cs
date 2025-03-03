@@ -117,6 +117,7 @@ public abstract class ScaleModifier : WordModifier
     public override void Apply(WordObject wordObject)
     {
         wordObject.TargetScale = Vector3.Scale(scale, wordObject.TargetScale);
+        Debug.Log(wordObject.TargetScale);
     }
 
     public Vector3 GetScale()
