@@ -11,6 +11,13 @@ public class WordBase : MonoBehaviour
 
 
     public WordBase LinkedWordBase { get; protected set; }
+    public bool IsLinked
+    {
+        get
+        {
+            return LinkedWordBase != null ? true : false;
+        }
+    }
 
     public void GiveObjectTo(WordBase target, WordModifier modifier)
     {

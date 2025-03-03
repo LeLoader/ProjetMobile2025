@@ -26,6 +26,7 @@ public class VolumeSettings : MonoBehaviour
     private void Start()
     {
         StartCoroutine(DelayedBuildScene());
+        //LoadVolume();
     }
 
     public void SetMusicVolume()
