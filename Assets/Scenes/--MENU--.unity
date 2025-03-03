@@ -7526,11 +7526,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7914252681318562071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 419}
-  m_SizeDelta: {x: 1000, y: 300}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1000, y: 150}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1019656578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8117,53 +8117,62 @@ MonoBehaviour:
   _levelData:
     _level:
     - _idLevel: Level 1
-      _state: 2
+      _state: 1
     - _idLevel: Level 2
-      _state: 2
+      _state: 0
     - _idLevel: Level 3
-      _state: 2
+      _state: 0
     - _idLevel: Level 4
-      _state: 2
+      _state: 0
     - _idLevel: Level 5
-      _state: 2
+      _state: 0
     - _idLevel: Level 6
-      _state: 2
+      _state: 0
     - _idLevel: Level 7
-      _state: 2
+      _state: 0
     - _idLevel: Level 8
-      _state: 2
+      _state: 0
     - _idLevel: Level 9
-      _state: 2
+      _state: 0
     - _idLevel: Level 10
-      _state: 2
+      _state: 0
     - _idLevel: Level 11
-      _state: 2
+      _state: 0
     - _idLevel: Level 12
-      _state: 2
+      _state: 0
     - _idLevel: Level 13
-      _state: 2
+      _state: 0
     - _idLevel: Level 14
-      _state: 2
+      _state: 0
     - _idLevel: Level 15
-      _state: 2
+      _state: 0
     - _idLevel: Level 16
-      _state: 2
+      _state: 0
     - _idLevel: Level 17
-      _state: 2
+      _state: 0
     - _idLevel: Level 18
-      _state: 2
+      _state: 0
     - _idLevel: Level 19
-      _state: 2
+      _state: 0
     - _idLevel: Level 20
-      _state: 2
+      _state: 0
     - _idLevel: Level 21
-      _state: 2
+      _state: 0
     - _idLevel: Level 22
-      _state: 2
+      _state: 0
     - _idLevel: Level 23
-      _state: 2
-  _musicValue: 0
-  _soundValue: 0
+      _state: 0
+  _musicValue: 0.5
+  _soundValue: 0.5
+  _playerStats:
+    application_started_count: 0
+    in_game_time: 0
+    restart_count: 0
+    seringue_count: 0
+    jump_count: 0
+    bounce_count: 0
+    stick_count: 0
+  levelsFolderPath: Assets/Scenes/Levels
 --- !u!4 &1085693722
 Transform:
   m_ObjectHideFlags: 0
@@ -9357,11 +9366,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1704629966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 475}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 730, y: 200}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1276283501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10859,7 +10868,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1652401492
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13882,7 +13891,7 @@ MonoBehaviour:
   m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.381
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -14086,10 +14095,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 7107914955782719717}
   m_HandleRect: {fileID: 4590879854459932309}
   m_Direction: 0
-  m_MinValue: 0.0001
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.381
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

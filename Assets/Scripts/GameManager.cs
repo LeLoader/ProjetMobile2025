@@ -1,4 +1,6 @@
 using GooglePlayGames;
+using NaughtyAttributes;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,7 +16,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //AchivementManager.AutomaticConnect();
+        Stats.IncrementStat(Stats.STATS.APPLICATION_STARTED_COUNT);
+
+        AchivementManager.AutomaticConnect();
         if (Instance == null)
         {
             Instance = this;
@@ -33,7 +37,7 @@ public class GameManager : MonoBehaviour
     }
     public void ManualConnect()
     {
-        //AchivementManager.ManualConnect();
+        AchivementManager.ManualConnect();
 
     }
 
@@ -44,42 +48,51 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScene(string sceneName)
     {
-        for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
+        if (sceneName == "--MENU--")
         {
-            if (sceneName == "lastLevel")
+            SceneManager.LoadScene(sceneName);
+            _canvaReglage.SetActive(true);
+        }
+
+        else
+        {
+            for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
             {
-                if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
+                if (sceneName == "lastLevel")
+                {
+                    if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
+                    {
+                        SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
+                        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
+                        _canvaReglage.SetActive(false);
+                        return;
+                    }
+                }
+                else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
                 {
                     SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
-                    AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
                     _canvaReglage.SetActive(false);
+
+                    Stats.IncrementStat(Stats.STATS.RESTART_COUNT);
                     return;
                 }
-            }
-
-            else if (sceneName == "thisScene" && _actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
-            {
-                SceneManager.LoadScene(SaveSystem._instance._levelData._level[i]._idLevel);
-                _canvaReglage.SetActive(false);
-                return;
-            }
-
-            else if (sceneName == "nextLevel")
-            {
-                if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel &&
-                    SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Completed &&
-                    (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
+                else if (sceneName == "nextLevel")
                 {
-                    SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
-                    //AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
-                    _canvaReglage.SetActive(false );    
-                    return;
+                    if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel &&
+                        SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Completed &&
+                        (SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Unlock || SaveSystem._instance._levelData._level[i + 1]._state == Level.LevelState.Completed))
+                    {
+                        SceneManager.LoadScene(SaveSystem._instance._levelData._level[i + 1]._idLevel);
+                        AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+                        _canvaReglage.SetActive(false);
+                        return;
+                    }
                 }
             }
+            SceneManager.LoadScene(sceneName);
+            AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+            _canvaReglage.SetActive(false);
         }
-        SceneManager.LoadScene(sceneName);
-        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
-        _canvaReglage.SetActive(true);
     }
 
     public void FinishLevel()
