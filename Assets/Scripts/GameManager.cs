@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene(sceneName);
+            AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
         }
     }
 
