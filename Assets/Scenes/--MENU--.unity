@@ -2809,6 +2809,9 @@ MonoBehaviour:
   _prefabPage: {fileID: 3771927809118886327, guid: 1f236b69162c6ef4d84bacfeca37f261, type: 3}
   _levelBoutton: []
   _pageBoutton: []
+  _currentPage: 0
+  _next: {fileID: 252738632}
+  _prev: {fileID: 1770573923}
 --- !u!1 &2119224421
 GameObject:
   m_ObjectHideFlags: 0
