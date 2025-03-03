@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
 using System.ComponentModel;
+using Unity.Collections;
 
 public class PlayerWord : WordBase
 {
@@ -112,7 +113,7 @@ public class PlayerWord : WordBase
     private float lastVelY;
 
     public int xOrient = 1;
-    float xInput = 0;
+    [SerializeField, ReadOnly] float xInput = 0;
 
     const int GROUND_LAYERMASK = 3;
     const int WORDOBJECT_LAYERMASK = 7;
@@ -142,10 +143,7 @@ public class PlayerWord : WordBase
 
     void FixedUpdate()
     {
-        rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, DecelerationForce * Time.fixedDeltaTime); // Method
         CheckIsFalling();
-
-        Move();
 
         UpdateStates();
         IsTouchingGround();
@@ -156,11 +154,14 @@ public class PlayerWord : WordBase
         {
             Stats.IncrementStat(Stats.STATS.STICK_COUNT);
         }
-        
         HeadIsStick = HeadIsSticky();
-        UpdateGravity();
 
+        rb.linearVelocityX = Mathf.MoveTowards(rb.linearVelocityX, 0, DecelerationForce * Time.fixedDeltaTime); // Method
+        Move();
+
+        UpdateGravity();
         UpdateOrientation();
+
     }
 
     private void Update()
@@ -460,7 +461,12 @@ public class PlayerWord : WordBase
             Unlink();
         }
 
-        if (!IsStick)
+        UpdateOrientBasedOnInput();
+    }
+
+    private void UpdateOrientBasedOnInput()
+    {
+        if (CanMove)
         {
             if (xInput == -xOrient || -xInput == xOrient)
             {
@@ -521,7 +527,7 @@ public class PlayerWord : WordBase
             {
                 rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, MaxSpeed);
             }
-            else // Don't clamp Y vel when in air or jumping
+            else// Don't clamp Y vel when in air or jumping
             {
                 rb.linearVelocityX = Mathf.Clamp(rb.linearVelocityX, -MaxSpeed, MaxSpeed);
             }
@@ -538,7 +544,7 @@ public class PlayerWord : WordBase
         if (IsJumping) return;
 
         IsJumping = true;
-        if (IsStick && !OnGround)
+        if (IsStick)
         {
             AudioManager.Instance?.PlaySFX(AudioManager.Instance._JumpSFX);
             JumpOnSticky();
@@ -548,24 +554,6 @@ public class PlayerWord : WordBase
         else if (HeadIsStick && !OnGround)
         {
             FallAfterSticky();
-
-            Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
-        }
-        else if (IsStick && OnGround)
-        {
-            rightCheckers.gameObject.SetActive(false);
-            leftCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateRightCheckers", 1);
-            Invoke("ReactivateLeftCheckers", 1);
-            if (xOrient < 0)
-            {
-                rb.AddForce(Vector2.right, ForceMode2D.Impulse);
-            }
-            else
-            {
-                rb.AddForce(Vector2.left, ForceMode2D.Impulse);
-
-            }
 
             Stats.IncrementStat(Stats.STATS.JUMP_COUNT);
         }
@@ -692,12 +680,14 @@ public class PlayerWord : WordBase
     {
         leftCheckers.gameObject.SetActive(true);
         CanMove = true;
+        UpdateOrientBasedOnInput();
     }
 
     private void ReactivateRightCheckers()
     {
         rightCheckers.gameObject.SetActive(true);
         CanMove = true;
+        UpdateOrientBasedOnInput();
     }
 
     private void ReactivateTopCheckers()
