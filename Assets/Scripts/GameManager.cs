@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundMenu);
     }
     public void ManualConnect()
     {
@@ -53,12 +53,16 @@ public class GameManager : MonoBehaviour
             _actualScene = scene.name;
             if (scene.name == "--MENU--")
             {
-                AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundMenu);
                 _canvaReglage.SetActive(true);
             }
         }
     }
 
+    public void ShowAchievement()
+    {
+        AchivementManager.ShowAchievement();
+    }
 
     public void ChangeScene(string sceneName)
     {
@@ -77,6 +81,10 @@ public class GameManager : MonoBehaviour
         else if (sceneName == "nextLevel")
         {
             Level nextLevel = GetNextLevel(currentLevel);
+            if (int.Parse(currentLevel._idLevel.Split(' ')[1]) == 1)
+            {
+                AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+            }
 
             if (nextLevel != null)
             {
@@ -91,14 +99,14 @@ public class GameManager : MonoBehaviour
             if (lastUnlockedLevel != null)
             {
                 SceneManager.LoadScene(lastUnlockedLevel);
-                AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
+                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundGameplay);
                 return;
             }
         }
         else
         {
             SceneManager.LoadScene(sceneName);
-            AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundGameplay);
+            AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundGameplay);
         }
     }
 

@@ -29,21 +29,21 @@ public class WordBase : MonoBehaviour
                     if (target.currentModifiers.Exists(mod => mod is NonScaleModifier))
                     {
                         Debug.LogWarning("Cannot add more NonScaleModifier to this object");
-                        AudioManager.Instance.PlaySFX(AudioManager.Instance._mistakeWord2);
+                        AudioManager.Instance?.PlaySFX(AudioManager.Instance?._mistakeWord2);
                         return;
                     }
                 }
                 
                 target.AddModifier(modifier); // METHOD
-                currentModifiers.Remove(modifier);
+                currentModifiers.Remove(currentModifiers.Find(mod => mod.GetType() == modifier.GetType()));
                 UpdateWords(ref currentModifiers);
                 modifier.Owner = target;
-                AudioManager.Instance.PlaySFX(AudioManager.Instance._takeWord);
+                AudioManager.Instance?.PlaySFX(AudioManager.Instance?._takeWord);
             }
             else
             {
                 Debug.LogWarning("Cannot add more modifier to this object");
-                AudioManager.Instance.PlaySFX(AudioManager.Instance._mistakeWord1);
+                AudioManager.Instance?.PlaySFX(AudioManager.Instance?._mistakeWord1);
             }
         }
     }
@@ -70,19 +70,34 @@ public class WordBase : MonoBehaviour
                 DestroyImmediate(WordWrapper.transform.GetChild(i).gameObject);
             }
         }
-       
-        foreach (WordModifier modifier in newModifiers)
+
+        //foreach (WordModifier modifier in newModifiers)
+        //{
+        //    if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
+        //    {
+        //        wordUI.enabled = true;
+        //        wordUI.Text.text = modifier.GetName();
+        //        if (LinkedWordBase != null)
+        //        {
+        //            wordUI.Link();
+        //        }
+        //        wordUI.SetWordModifier(modifier);
+        //        modifier.WordUI = wordUI;
+        //    }
+        //}
+
+        for (int i = 0; i < newModifiers.Count; i++)
         {
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
             {
                 wordUI.enabled = true;
-                wordUI.Text.text = modifier.GetName();
+                wordUI.Text.text = newModifiers[i].GetName();
                 if (LinkedWordBase != null)
                 {
                     wordUI.Link();
                 }
-                wordUI.SetWordModifier(modifier);
-                modifier.WordUI = wordUI;
+                wordUI.SetWordModifier(newModifiers[i]);
+                newModifiers[i].WordUI = wordUI;
             }
         }
     }

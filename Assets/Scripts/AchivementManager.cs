@@ -79,5 +79,10 @@ public static class AchivementManager
                         );
     }
 
+    public static void ShowAchievement()
+    {
+        PlayGamesPlatform.Instance.ShowAchievementsUI();
+    }
+
 }
 
