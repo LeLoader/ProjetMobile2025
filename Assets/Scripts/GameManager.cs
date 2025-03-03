@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public string _actualScene;
     [SerializeField] int targetFrameRate = 60;
     //[SerializeField] private SceneAsset _scene;
+    private bool setup;
 
     public GameObject _canvaReglage;
 
@@ -24,10 +25,12 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            setup = true;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
+            if(!setup)
             Destroy(gameObject);
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -45,12 +48,14 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        _actualScene = scene.name;
-        if (sceneName == "--MENU--")
+        if(setup)
         {
-            AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
-            _canvaReglage.SetActive(true);
-            VerifyCompleted.Instance.Verify();
+            _actualScene = scene.name;
+            if (scene.name == "--MENU--")
+            {
+                AudioManager.Instance.PlayBackground(AudioManager.Instance._backgroundMenu);
+                _canvaReglage.SetActive(true);
+            }
         }
     }
 
@@ -153,49 +158,4 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-
-    //private System.Collections.IEnumerator DelayedFindAudioManager()
-    //{
-    //    yield return new WaitForSeconds(0.2f);
-
-    //    _audioManager = GameObject.FindGameObjectWithTag("Audio")?.GetComponent<AudioManager>();
-    //    if (_audioManager == null)
-    //    {
-    //        Debug.LogError("AudioManager introuvable !");
-    //        yield break;
-    //    }
-
-    //    volumeSettings = _audioManager.GetComponentInChildren<VolumeSettings>();
-    //    if (volumeSettings == null)
-    //    {
-    //        Debug.LogError("VolumeSettings introuvable sur AudioManager !");
-    //        yield break;
-    //    }
-
-    //    _musicSlider = GameObject.FindGameObjectWithTag("musicSlider")?.GetComponent<Slider>();
-    //    _soundSlider = GameObject.FindGameObjectWithTag("soundSlider")?.GetComponent<Slider>();
-
-    //    volumeSettings.musicSlider = _musicSlider;
-    //    volumeSettings.soundSlider = _soundSlider;
-
-
-    //    if (_musicSlider != null && _soundSlider != null)
-    //    {
-    //        Debug.Log("Sliders trouv�s et assign�s !");
-    //        _musicSlider.onValueChanged.RemoveAllListeners();
-    //        _soundSlider.onValueChanged.RemoveAllListeners();
-
-    //        //_musicSlider.onValueChanged.AddListener(volumeSettings.SetMusicVolume);
-    //        //_soundSlider.onValueChanged.AddListener(volumeSettings.SetSoundVolume);
-    //        Debug.Log("listener ajoutes GM");
-
-
-    //        _musicSlider.value = volumeSettings.musicSlider.value;
-    //        _soundSlider.value = volumeSettings.soundSlider.value;
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Les sliders ne sont pas trouv�s dans la sc�ne !");
-    //    }
-    //}
 }

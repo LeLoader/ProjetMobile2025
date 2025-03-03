@@ -1799,42 +1799,51 @@ MonoBehaviour:
     - _idLevel: Level 6
       _state: 0
     - _idLevel: Level 7
-      _state: 2
+      _state: 0
     - _idLevel: Level 8
-      _state: 2
+      _state: 0
     - _idLevel: Level 9
-      _state: 2
+      _state: 0
     - _idLevel: Level 10
-      _state: 2
+      _state: 0
     - _idLevel: Level 11
-      _state: 2
+      _state: 0
     - _idLevel: Level 12
-      _state: 2
+      _state: 0
     - _idLevel: Level 13
-      _state: 2
+      _state: 0
     - _idLevel: Level 14
-      _state: 2
+      _state: 0
     - _idLevel: Level 15
-      _state: 2
+      _state: 0
     - _idLevel: Level 16
-      _state: 2
+      _state: 0
     - _idLevel: Level 17
-      _state: 2
+      _state: 0
     - _idLevel: Level 18
-      _state: 2
+      _state: 0
     - _idLevel: Level 19
-      _state: 2
+      _state: 0
     - _idLevel: Level 20
-      _state: 2
+      _state: 0
     - _idLevel: Level 21
-      _state: 2
+      _state: 0
     - _idLevel: Level 22
-      _state: 2
+      _state: 0
     - _idLevel: Level 23
-      _state: 2
+      _state: 0
+  _lastLevelUnlocked: 
   _musicValue: 0
   _soundValue: 0
-  _lastLevelUnlocked: 
+  _playerStats:
+    application_started_count: 0
+    in_game_time: 0
+    restart_count: 0
+    seringue_count: 0
+    jump_count: 0
+    bounce_count: 0
+    stick_count: 0
+  levelsFolderPath: Assets/Scenes/Levels
 --- !u!4 &1085693722
 Transform:
   m_ObjectHideFlags: 0
@@ -1862,7 +1871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dff70d76e24e704aa3ccc924a0281a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actualScene: 
+  _actualScene: --MENU--
+  targetFrameRate: 60
   _canvaReglage: {fileID: 164031380540855013}
 --- !u!1 &1221393659
 GameObject:
@@ -2798,6 +2808,7 @@ MonoBehaviour:
   _prefabLevel: {fileID: 9207155651966931359, guid: f605d96dbf1521f4bb1a014db1102e64, type: 3}
   _prefabPage: {fileID: 3771927809118886327, guid: 1f236b69162c6ef4d84bacfeca37f261, type: 3}
   _levelBoutton: []
+  _pageBoutton: []
 --- !u!1 &2119224421
 GameObject:
   m_ObjectHideFlags: 0

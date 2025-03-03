@@ -4,15 +4,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class VerifyCompleted : MonoBehaviour
 {
 
+    [Header("prefabs")]
     [SerializeField] private GameObject _complete;
     [SerializeField] private GameObject _blocked;
     [SerializeField] private GameObject _prefabLevel;
     [SerializeField] private GameObject _prefabPage;
+
+    [Header("useful")]
     [SerializeField] private List<GameObject> _levelBoutton;
+    [SerializeField] private List<GameObject> _pageBoutton;
+    [SerializeField] private Button _next;
+    [SerializeField] private Button _prev;
 
     public static VerifyCompleted Instance;
 
@@ -38,6 +45,7 @@ public class VerifyCompleted : MonoBehaviour
     {
         GameObject levelPanel = Instantiate(_prefabPage, this.transform);
         GameObject levelObject;
+        _pageBoutton.Add(levelPanel);
         for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i ++)
         {
             if(i % 10 != 0 || i == 0)
@@ -48,6 +56,7 @@ public class VerifyCompleted : MonoBehaviour
             {
                 levelPanel = Instantiate(_prefabPage, this.transform);
                 levelObject = Instantiate(_prefabLevel, levelPanel.transform);
+                
             }
             else if(i % 20 != 0)
             {
@@ -62,6 +71,8 @@ public class VerifyCompleted : MonoBehaviour
             {
                 levelObject = Instantiate(_prefabLevel, levelPanel.transform);
             }
+            _pageBoutton.Add(levelPanel);
+            levelPanel.SetActive(false);
             ButtonManager boutton = levelObject?.GetComponent<ButtonManager>();
             Text nombreLevel = levelObject.GetComponentInChildren<Text>();
             boutton._nameNextScene = "Level " + (i + 1); ;
@@ -76,7 +87,7 @@ public class VerifyCompleted : MonoBehaviour
         {
             GameObject Etoile;
             GameObject Cadena;
-
+            _pageBoutton[0].SetActive(true);
             if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
             {
                 Cadena = Instantiate(_blocked, _levelBoutton[i].transform); 
@@ -86,32 +97,21 @@ public class VerifyCompleted : MonoBehaviour
                 Etoile = Instantiate(_complete, _levelBoutton[i].transform);
             }
         }
+    }
 
+    public void NextPage()
+    {
+        for (int i = 0; i < _pageBoutton.Count; i++)
+        {
+            if (_pageBoutton[i].activeInHierarchy)
+            {
+                _next.onClick.AddListener(NextPage);
+            }
+        }
+    }
 
-        //for(int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
-        //{
-        //    UnityEngine.UI.Button bouton = _goLevel[i]?.GetComponentInChildren<UnityEngine.UI.Button>();
+    public void PreviousPage()
+    {
 
-            //    if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
-            //    {
-            //        if(!_goBlocked[i].activeInHierarchy)
-            //        {
-            //            _goBlocked[i].SetActive(true);
-            //            bouton.gameObject.SetActive(false);
-            //        }
-            //    }
-            //    else if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Completed)
-            //    {
-            //        if (!_goCompleted[i].activeInHierarchy)
-            //        {
-            //            _goCompleted[i].SetActive(true);
-            //            bouton.gameObject.SetActive(true);
-            //        }
-            //    }
-            //    else if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Unlock)
-            //    {
-            //        bouton.gameObject.SetActive(true);
-            //    }
-            //}
     }
 }
