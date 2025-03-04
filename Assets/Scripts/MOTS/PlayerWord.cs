@@ -136,7 +136,7 @@ public class PlayerWord : WordBase
         CanMove = true;
 
         WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
-        UpdateWords(ref currentModifiers);
+        UpdateUI(ref currentModifiers);
 
         jumpAction.action.started += Jump;
         moveAction.action.performed += GetInput;

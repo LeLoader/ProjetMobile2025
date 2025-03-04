@@ -55,11 +55,12 @@ public class WordObject : WordBase
         if (currentModifiers.Count == 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
-            UpdateWords(ref currentModifiers);
             UpdateModifiers();
-            ApplySkin();
-            CreateObjectUI();
         }
+
+        CreateObjectUI(); // Can work even if already setup
+        ApplySkin();
+        SetShape();
         DuringSetup = false;
     }
 
@@ -86,7 +87,7 @@ public class WordObject : WordBase
             return defaultCollider;
     }
 
-    public void SetShape(WORDTYPE type)
+    private void SetShape()
     {
         if (!Application.IsPlaying(this))
         {
@@ -95,41 +96,51 @@ public class WordObject : WordBase
 
         coll.enabled = false;
         //transform.rotation = Quaternion.identity;
-
-        if (type.HasFlag(WORDTYPE.STAIRS))
-        {
-            coll = stairsCollider;
-            rb.freezeRotation = true;
-            rb.mass = 10000f;
-            if (!DuringSetup)
-            {
-                if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
-                {
-                    transform.rotation = Quaternion.Euler(0, 180, 0);
-                }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(0, 0, 0);
-                }
-            }
-        }
-        else if (type.HasFlag(WORDTYPE.BALL))
-        {
-            coll = ballCollider;
-            rb.freezeRotation = false;
-            rb.mass = 1f; // PARAM
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (type == WORDTYPE.NONE)
+        if (currentModifiers.Count == 0)
         {
             coll = defaultCollider;
             rb.freezeRotation = true;
             rb.mass = 10000f;
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            objectUI.rotationConstraint.constraintActive = false;
         }
-        else
+
+        foreach (WordModifier modifier in currentModifiers)
         {
-            Debug.LogWarning("Wrong shape type passed");
+            if (modifier is StairsModifier)
+            {
+                coll = stairsCollider;
+                rb.freezeRotation = true;
+                rb.mass = 10000f;
+                if (!DuringSetup)
+                {
+                    if (FindAnyObjectByType<PlayerWord>().xOrient < 0)
+                    {
+                        transform.rotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                    }
+                }
+                objectUI.rotationConstraint.constraintActive = false;
+            }
+            else if (modifier is BallModifier)
+            {
+                coll = ballCollider;
+                rb.freezeRotation = false;
+                rb.mass = 1f; // PARAM
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                objectUI.rotationConstraint.constraintActive = true;
+            }
+            else
+            {
+                coll = defaultCollider;
+                rb.freezeRotation = true;
+                rb.mass = 10000f;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                objectUI.rotationConstraint.constraintActive = false;
+            }
         }
 
         coll.enabled = true;
@@ -254,10 +265,9 @@ public class WordObject : WordBase
         BlockIsSticky = false;
     }
 
-    protected override void UpdateWords(ref List<WordModifier> newModifiers)
+    protected override void UpdateUI(ref List<WordModifier> newModifiers)
     {
-        CreateObjectUI();
-        base.UpdateWords(ref newModifiers);
+        base.UpdateUI(ref newModifiers);
     }
 
     private void CreateObjectUI()
@@ -273,9 +283,13 @@ public class WordObject : WordBase
             };
             objectUI.positionConstraint.AddSource(constraintSource);
             objectUI.transform.position = transform.position;
-            objectUI.positionConstraint.enabled = true;
+            objectUI.positionConstraint.constraintActive = true;
+            objectUI.rotationConstraint.AddSource(constraintSource);
+            objectUI.rotationConstraint.constraintActive = false;
             WordWrapper = objectUI.wrapper;
         }
+
+        UpdateUI(ref currentModifiers);
     }
 
     private void UpdateModifiers()
@@ -289,10 +303,7 @@ public class WordObject : WordBase
                 scaleModifier.appliedTimer = 0;
             }
         }
-        if (!currentModifiers.Exists(mod => mod is ShapeModifier)) // If no shape modifier is found, then set shape to default using NONE
-        {
-            SetShape(WORDTYPE.NONE);
-        }
+        SetShape();
         ApplySkin();
     }
 
@@ -300,14 +311,13 @@ public class WordObject : WordBase
     void DeleteAllChildOfWordObject()
     {
         WordObject[] wordObjects = FindObjectsByType<WordObject>(FindObjectsSortMode.None);
-
-        foreach (WordObject wordObject in wordObjects)
+        if (!Application.IsPlaying(this))
         {
-            if (!Application.IsPlaying(this))
+            foreach (WordObject wordObject in wordObjects)
             {
                 for (int i = wordObject.transform.childCount - 1; i >= 0; i--)
                 {
-                    DestroyImmediate(transform.GetChild(i).gameObject);
+                    DestroyImmediate(wordObject.transform.GetChild(i).gameObject);
                 }
             }
         }
@@ -337,7 +347,7 @@ public class WordObject : WordBase
     private void ForceUpdateWord()
     {
         UpdateModifiers();
-        UpdateWords(ref currentModifiers);
+        UpdateUI(ref currentModifiers);
         ApplySkin();
     }
 

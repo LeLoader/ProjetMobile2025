@@ -267,7 +267,7 @@ public class StairsModifier : ShapeModifier
 
     public override void Apply(WordObject wordObject)
     {
-        wordObject.SetShape(WORDTYPE.STAIRS);
+        
     }
 
     public override void DebugName()
@@ -286,7 +286,7 @@ public class BallModifier : ShapeModifier
 
     public override void Apply(WordObject wordObject)
     {
-        wordObject.SetShape(WORDTYPE.BALL);
+        
     }
 
     public override void DebugName()

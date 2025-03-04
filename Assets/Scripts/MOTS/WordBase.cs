@@ -35,7 +35,7 @@ public class WordBase : MonoBehaviour
                 
                 target.AddModifier(modifier); // METHOD
                 currentModifiers.Remove(currentModifiers.Find(mod => mod.GetType() == modifier.GetType()));
-                UpdateWords(ref currentModifiers);
+                UpdateUI(ref currentModifiers);
                 modifier.Owner = target;
                 AudioManager.Instance?.PlaySFX(AudioManager.Instance?._takeWord);
             }
@@ -50,10 +50,10 @@ public class WordBase : MonoBehaviour
     virtual public void AddModifier(WordModifier wordModifier)
     {
         currentModifiers.Add(wordModifier);
-        UpdateWords(ref currentModifiers);
+        UpdateUI(ref currentModifiers);
     }
 
-    protected virtual void UpdateWords(ref List<WordModifier> newModifiers)
+    protected virtual void UpdateUI(ref List<WordModifier> newModifiers)
     {
         if (Application.IsPlaying(this))
         {
