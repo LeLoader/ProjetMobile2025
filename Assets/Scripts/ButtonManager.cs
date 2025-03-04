@@ -4,9 +4,13 @@ using UnityEngine;
 public class ButtonManager : MonoBehaviour
 {
 
-    public string _nameNextScene;
+    public GameManager.SCENEPARAMETERS _nameNextScene;
+    [Scene]
+    public string scene;
+
     public void OnButtonClicked()
     {
-        GameManager.Instance.ChangeScene(_nameNextScene);
+        GameManager.Instance.ChangeScene(_nameNextScene, scene);
     }
 }
+

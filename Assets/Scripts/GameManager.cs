@@ -11,10 +11,19 @@ public class GameManager : MonoBehaviour
 
     [Scene]
     public string _actualScene;
+    public Level _actualLevel;
+    public Level _nextScene;
     [SerializeField] int targetFrameRate = 60;
-    //[SerializeField] private SceneAsset _scene;
+
     private bool setup;
 
+    public enum SCENEPARAMETERS
+    {
+        LAST_LEVEL,
+        CURRENT_LEVEL,
+        NEXT_LEVEL,
+        MENU_SCENE,
+    }
     public GameObject _canvaReglage;
 
     private void Awake()
@@ -30,8 +39,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if(!setup)
-            Destroy(gameObject);
+            if (!setup)
+                Destroy(gameObject);
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -43,12 +52,11 @@ public class GameManager : MonoBehaviour
     public void ManualConnect()
     {
         //AchivementManager.ManualConnect();
-
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(setup)
+        if (setup)
         {
             _actualScene = scene.name;
             if (scene.name == "--MENU--")
@@ -64,103 +72,106 @@ public class GameManager : MonoBehaviour
         AchivementManager.ShowAchievement();
     }
 
-    public void ChangeScene(string sceneName)
+    public void ChangeScene(SCENEPARAMETERS scene, string level)
     {
-        Level currentLevel = GetCurrentLevel();
-
-        if (currentLevel == null && _actualScene != "--MENU--")
+        if (scene == SCENEPARAMETERS.LAST_LEVEL)
         {
-            Debug.Log("marche pas");
+            _actualScene = SaveSystem._instance._lastLevelUnlocked;
+            SceneManager.LoadScene(_actualScene);
             return;
         }
-        else if (sceneName == "thisScene")
+        else if (scene == SCENEPARAMETERS.CURRENT_LEVEL)
         {
-            SceneManager.LoadScene(currentLevel._idLevel);
+            SceneManager.LoadScene(level);
             return;
         }
-        else if (sceneName == "nextLevel")
+        else if (scene == SCENEPARAMETERS.NEXT_LEVEL)
         {
-            Level nextLevel = GetNextLevel(currentLevel);
-            if (int.Parse(currentLevel._idLevel.Split(' ')[1]) == 1)
-            {
-                AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
-            }
+            _actualScene = _nextScene._idLevel;
+            GetLevel();
+            SceneManager.LoadScene(_actualScene);
+            return;
+        }
+        else if (scene == SCENEPARAMETERS.MENU_SCENE)
+        {
+            SceneManager.LoadScene("--MENU--");
+            return;
+        }
 
-            if (nextLevel != null)
+        //Level currentLevel = GetCurrentLevel();
+
+        //if (currentLevel == null && _actualScene != "--MENU--")
+        //{
+        //    Debug.Log("marche pas");
+        //    return;
+        //}
+        //else if (sceneName == "thisScene")
+        //{
+        //    SceneManager.LoadScene(currentLevel._idLevel);
+        //    return;
+        //}
+        //else if (sceneName == "nextLevel")
+        //{
+        //    Level nextLevel = GetNextLevel(currentLevel);
+        //    if (int.Parse(currentLevel._idLevel.Split(' ')[1]) == 1)
+        //    {
+        //        AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+        //    }
+
+        //    if (nextLevel != null)
+        //    {
+        //        SceneManager.LoadScene(nextLevel._idLevel);
+        //        return;
+        //    }
+        //}
+        //else if (sceneName == "lastLevel")
+        //{
+        //    string lastUnlockedLevel = GetLastUnlockedLevel();
+
+        //    if (lastUnlockedLevel != null)
+        //    {
+        //        SceneManager.LoadScene(lastUnlockedLevel);
+        //        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundGameplay);
+        //        return;
+        //    }
+        //}
+    }
+
+    private void GetLevel()
+    {
+        for (int i = 0; i < SaveSystem._instance._levelData._level.Count; i++)
+        {
+            if (_actualScene == SaveSystem._instance._levelData._level[i]._idLevel)
             {
-                SceneManager.LoadScene(nextLevel._idLevel);
+                if (i == SaveSystem._instance._levelData._level.Count - 1)
+                {
+                    _nextScene = null;
+
+                }
+                _actualLevel = SaveSystem._instance._levelData._level[i];
                 return;
             }
         }
-        else if (sceneName == "lastLevel")
-        {
-            string lastUnlockedLevel = GetLastUnlockedLevel();
-
-            if (lastUnlockedLevel != null)
-            {
-                SceneManager.LoadScene(lastUnlockedLevel);
-                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundGameplay);
-                return;
-            }
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName);
-            AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundGameplay);
-        }
     }
 
-    private Level GetCurrentLevel()
-    {
-        foreach (var level in SaveSystem._instance._levelData._level)
-        {
-            if (_actualScene == level._idLevel)
-            {
-                return level;
-            }
-        }
-        return null;
-    }
-
-    private Level GetNextLevel(Level currentLevel)
-    {
-        int currentIndex = SaveSystem._instance._levelData._level.IndexOf(currentLevel);
-
-        if (currentIndex >= 0 && currentIndex + 1 < SaveSystem._instance._levelData._level.Count)
-        {
-            return SaveSystem._instance._levelData._level[currentIndex + 1];
-        }
-        return null;
-    }
-
-    private string GetLastUnlockedLevel()
-    {
-        return SaveSystem._instance._lastLevelUnlocked;
-    }
 
 
     public void FinishLevel()
     {
-        Level currentLevel = GetCurrentLevel();
-        Level nextLevel = GetNextLevel(currentLevel);
-
-        if (currentLevel._state == Level.LevelState.Unlock && (nextLevel._state == Level.LevelState.Blocked || nextLevel._state == Level.LevelState.Unlock))
+        GetLevel();
+        if (_nextScene == null)
         {
-            currentLevel._state = Level.LevelState.Completed;
-            nextLevel._state = Level.LevelState.Unlock;
-            SaveSystem._instance._lastLevelUnlocked = nextLevel._idLevel;
+            _actualLevel._state = Level.LevelState.Completed;
+        }
+
+        else if (_actualLevel._state == Level.LevelState.Unlock && _nextScene._state == Level.LevelState.Blocked)
+        {
+
+            _actualLevel._state = Level.LevelState.Completed;
+            _nextScene._state = Level.LevelState.Unlock;
+            SaveSystem._instance._lastLevelUnlocked = _nextScene._idLevel;
         }
     }
-
-    //public void Pause()
-    //{
-    //    Time.timeScale = 0;
-    //}
-
-    //public void Play()
-    //{
-    //    Time.timeScale = 1;
-    //}
 
     private void OnDestroy()
     {

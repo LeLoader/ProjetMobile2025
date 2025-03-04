@@ -22,6 +22,8 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private int _currentPage;
     [SerializeField] private Button _next;
     [SerializeField] private Button _prev;
+    [SerializeField] private Sprite block;
+
 
     public static VerifyCompleted Instance;
 
@@ -74,12 +76,20 @@ public class VerifyCompleted : MonoBehaviour
             {
                 levelObject = Instantiate(_prefabLevel, levelPanel.transform);
             }
+
             levelPanel.SetActive(false);
             ButtonManager boutton = levelObject?.GetComponent<ButtonManager>();
             Text nombreLevel = levelObject.GetComponentInChildren<Text>();
-            boutton._nameNextScene = "Level " + (i + 1); ;
-            nombreLevel.text = "Level\n" + (i + 1); ;
+            boutton._nameNextScene  = GameManager.SCENEPARAMETERS.CURRENT_LEVEL;
+            boutton.scene = SaveSystem._instance._levelData._level[i]._idLevel;
+            nombreLevel.text = "Level\n" + (i + 1);
             _levelBoutton.Add(levelObject);
+
+            if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
+            {
+                Sprite image = levelObject.GetComponent<Sprite>();
+                image = block;
+            }
         }
     }
 
