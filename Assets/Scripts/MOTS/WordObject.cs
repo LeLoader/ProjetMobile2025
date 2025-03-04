@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -10,6 +11,8 @@ public class WordObject : WordBase
     [SerializeField] float applySpeed;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] GameObject prefabUI;
+    [SerializeField, ReadOnly] ObjectUI objectUI;
 
     public bool BlockIsSticky;
     public bool BlockIsBouncy;
@@ -55,6 +58,7 @@ public class WordObject : WordBase
             UpdateWords(ref currentModifiers);
             UpdateModifiers();
             ApplySkin();
+            CreateObjectUI();
         }
         DuringSetup = false;
     }
@@ -250,6 +254,30 @@ public class WordObject : WordBase
         BlockIsSticky = false;
     }
 
+    protected override void UpdateWords(ref List<WordModifier> newModifiers)
+    {
+        CreateObjectUI();
+        base.UpdateWords(ref newModifiers);
+    }
+
+    private void CreateObjectUI()
+    {
+        if (objectUI == null)
+        {
+            objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
+            objectUI.gameObject.name = $"{gameObject.name}_UI";
+            UnityEngine.Animations.ConstraintSource constraintSource = new()
+            {
+                sourceTransform = transform,
+                weight = 1
+            };
+            objectUI.positionConstraint.AddSource(constraintSource);
+            objectUI.transform.position = transform.position;
+            objectUI.positionConstraint.enabled = true;
+            WordWrapper = objectUI.wrapper;
+        }
+    }
+
     private void UpdateModifiers()
     {
         ResetObject();
@@ -269,8 +297,33 @@ public class WordObject : WordBase
     }
 
     [Button]
+    void DeleteAllChildOfWordObject()
+    {
+        WordObject[] wordObjects = FindObjectsByType<WordObject>(FindObjectsSortMode.None);
+
+        foreach (WordObject wordObject in wordObjects)
+        {
+            if (!Application.IsPlaying(this))
+            {
+                for (int i = wordObject.transform.childCount - 1; i >= 0; i--)
+                {
+                    DestroyImmediate(transform.GetChild(i).gameObject);
+                }
+            }
+        }
+    }
+
+    [Button]
     private void SetupObject()
     {
+        if (!Application.IsPlaying(this))
+        {
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                DestroyImmediate(transform.GetChild(i).gameObject);
+            }
+        }
+
         AddBaseModifier();
         ForceUpdateWord();
     }

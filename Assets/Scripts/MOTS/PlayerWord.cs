@@ -8,6 +8,10 @@ using System;
 using UnityEngine.Events;
 using System.ComponentModel;
 using Unity.Collections;
+using NaughtyAttributes;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerWord : WordBase
 {

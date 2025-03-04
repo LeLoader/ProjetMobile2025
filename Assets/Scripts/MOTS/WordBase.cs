@@ -5,10 +5,9 @@ using UnityEngine;
 public class WordBase : MonoBehaviour
 {
     [SerializeField, Label("Mot(s) qu'il possède au Start")] protected WORDTYPE wordType;
-    [SerializeReference] protected List<WordModifier> currentModifiers = new();
+    [SerializeReference] public List<WordModifier> currentModifiers = new();
     [SerializeField] protected GameObject WordWrapper;
     [SerializeField] protected GameObject WordPrefab;
-
 
     public WordBase LinkedWordBase { get; protected set; }
     public bool IsLinked
@@ -19,7 +18,7 @@ public class WordBase : MonoBehaviour
         }
     }
 
-    public void GiveObjectTo(WordBase target, WordModifier modifier)
+    virtual public void GiveObjectTo(WordBase target, WordModifier modifier)
     {
         if (LinkedWordBase != null) {
             if (target.currentModifiers.Count < 2)
@@ -54,7 +53,7 @@ public class WordBase : MonoBehaviour
         UpdateWords(ref currentModifiers);
     }
 
-    protected void UpdateWords(ref List<WordModifier> newModifiers)
+    protected virtual void UpdateWords(ref List<WordModifier> newModifiers)
     {
         if (Application.IsPlaying(this))
         {
