@@ -11,8 +11,6 @@ public class Porte : MonoBehaviour
 
     private void Start()
     {
-        _Leftparticule = GameObject.FindGameObjectWithTag("LeftConfetti")?.GetComponent<ParticleSystem>();
-        _Rightparticule = GameObject.FindGameObjectWithTag("RightConfetti")?.GetComponent<ParticleSystem>();
         _player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerWord>();
     }
 
