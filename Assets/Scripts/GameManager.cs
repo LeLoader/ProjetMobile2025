@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -156,12 +157,14 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void FinishLevel()
+    public void FinishLevel(GameObject nextlevel)
     {
         GetLevel();
         if (_nextScene == null)
         {
             _actualLevel._state = Level.LevelState.Completed;
+            nextlevel.SetActive(false);
+            
         }
 
         else if (_actualLevel._state == Level.LevelState.Unlock && _nextScene._state == Level.LevelState.Blocked)
