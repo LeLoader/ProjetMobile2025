@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 610f50dd01220da4cba1831a4e603456
+guid: 0a7157e80a13b6044a35268f95dbf67c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7189534812635929547
-    second: feuillebae_0
+      213: 2024755985770293865
+    second: feuille 3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: feuillebae_0
+      name: feuille 3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 1920
-        height: 1080
+        height: 1040
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bcb187ff1db56c360800000000000000
-      internalID: 7189534812635929547
+      spriteID: 96a2fa867d0691c10800000000000000
+      internalID: 2024755985770293865
       vertices: []
       indices: 
       edges: []
@@ -134,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      feuille 3_0: 2024755985770293865
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
