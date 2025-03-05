@@ -58117,10 +58117,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1343042605137737762, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.01
-      objectReference: {fileID: 0}
     - target: {fileID: 6505440375804945609, guid: 10d28a06be7edd04da2dbfc578d3a8aa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.2835
@@ -58939,3 +58935,4 @@ SceneRoots:
   - {fileID: 993333589}
   - {fileID: 1484246677}
   - {fileID: 1610640226}
+  - {fileID: 212652537}
