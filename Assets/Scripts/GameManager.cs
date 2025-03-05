@@ -113,7 +113,10 @@ public class GameManager : MonoBehaviour
                 if (i == SaveSystem._instance._levelData._level.Count - 1)
                 {
                     _nextScene = null;
-
+                }
+                else
+                {
+                    _nextScene = SaveSystem._instance._levelData._level[i + 1];
                 }
                 _actualLevel = SaveSystem._instance._levelData._level[i];
                 return;
