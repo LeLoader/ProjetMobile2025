@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._Banger);
+        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerMenu);
     }
     public void ManualConnect()
     {
@@ -62,8 +62,12 @@ public class GameManager : MonoBehaviour
             _actualScene = scene.name;
             if (scene.name == "--MENU--")
             {
-                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._Banger);
+                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerMenu);
                 _canvaReglage.SetActive(true);
+            }
+            else
+            {
+                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerGameplay);
             }
         }
     }
@@ -109,7 +113,10 @@ public class GameManager : MonoBehaviour
                 if (i == SaveSystem._instance._levelData._level.Count - 1)
                 {
                     _nextScene = null;
-
+                }
+                else
+                {
+                    _nextScene = SaveSystem._instance._levelData._level[i + 1];
                 }
                 _actualLevel = SaveSystem._instance._levelData._level[i];
                 return;

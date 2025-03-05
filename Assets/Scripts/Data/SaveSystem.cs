@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SaveSystem : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class SaveSystem : MonoBehaviour
         LoadData();
     }
 
-    
+
 
 #if UNITY_EDITOR
 
@@ -58,7 +59,7 @@ public class SaveSystem : MonoBehaviour
                 {
                     _levelData._level.Add(new Level(scene.name, Level.LevelState.Unlock));
                 }
-            }   
+            }
         }
         _levelData._level = _levelData._level.OrderBy(level => int.Parse(level._idLevel.Split(' ')[1])).ToList();
     }
@@ -80,6 +81,15 @@ public class SaveSystem : MonoBehaviour
             {
                 _levelData._level.Add(new Level(scene.name, Level.LevelState.Unlock));
             }
+        }
+    }
+
+    [Button]
+    public void UnlockAllLevels()
+    {
+        foreach (GameObject gameObject in VerifyCompleted.Instance._levelBoutton)
+        {
+            gameObject.GetComponentInChildren<Button>().interactable = true;
         }
     }
 #endif

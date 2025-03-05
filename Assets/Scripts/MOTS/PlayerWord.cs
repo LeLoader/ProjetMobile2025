@@ -673,7 +673,7 @@ public class PlayerWord : WordBase
         {
             elapsedTime += Time.deltaTime;
             _currentCamera = Mathf.Lerp(startValue, endValue, elapsedTime / duration);
-            _camera.Lens.OrthographicSize = _currentCamera;
+            _camera.Lens.FieldOfView = _currentCamera;
             yield return null;
         }
 
