@@ -32,9 +32,10 @@ public class WordBase : MonoBehaviour
                         return;
                     }
                 }
-                
-                target.AddModifier(modifier); // METHOD
-                currentModifiers.Remove(currentModifiers.Find(mod => mod.GetType() == modifier.GetType()));
+
+                WordModifier toRemove = currentModifiers.Find(mod => mod.GetType() == modifier.GetType());
+                target.AddModifier(toRemove);
+                currentModifiers.Remove(toRemove);
                 UpdateUI(ref currentModifiers);
                 modifier.Owner = target;
                 AudioManager.Instance?.PlaySFX(AudioManager.Instance?._takeWord);
