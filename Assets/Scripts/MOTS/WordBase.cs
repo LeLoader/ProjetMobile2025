@@ -23,7 +23,7 @@ public class WordBase : MonoBehaviour
         if (LinkedWordBase != null) {
             if (target.currentModifiers.Count < 2)
             {
-                if (target is WordObject && modifier is NonScaleModifier) // Player can hold every time of mod
+                if (target is WordObject && modifier is NonScaleModifier) // Player can hold every type of mod
                 {
                     if (target.currentModifiers.Exists(mod => mod is NonScaleModifier))
                     {
@@ -36,8 +36,8 @@ public class WordBase : MonoBehaviour
                 WordModifier toRemove = currentModifiers.Find(mod => mod.GetType() == modifier.GetType());
                 target.AddModifier(toRemove);
                 currentModifiers.Remove(toRemove);
+                toRemove.Owner = target;
                 UpdateUI(ref currentModifiers);
-                modifier.Owner = target;
                 AudioManager.Instance?.PlaySFX(AudioManager.Instance?._takeWord);
             }
             else
