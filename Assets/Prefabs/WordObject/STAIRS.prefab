@@ -221,9 +221,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.5, y: -0.5}
-      - {x: 0.5, y: -0.5}
-      - {x: 0.5, y: 0.5}
+    - - {x: -0.45654297, y: -0.45364594}
+      - {x: 0.4710288, y: -0.4507488}
+      - {x: 0.4710288, y: 0.4710287}
   m_UseDelaunayMesh: 0
 --- !u!70 &4180964458863058459
 CapsuleCollider2D:
