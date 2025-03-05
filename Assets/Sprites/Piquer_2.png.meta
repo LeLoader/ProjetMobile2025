@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0910cca6f44825b459bfb2632ad54f50
+guid: 32fb33c553006aa428f8753e14cccb89
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3453501501974366908
-    second: Calque 29_0
+      213: 3260733254070309163
+    second: Piquer_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  alignment: 9
+  spritePivot: {x: 0.53131473, y: 0.50589}
+  spritePixelsToUnits: 345
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Calque 29_0
+      name: Piquer_2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 544
-        height: 333
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 280
+        y: 609
+        width: 682
+        height: 816
+      alignment: 9
+      pivot: {x: 0.638982, y: 0.5992189}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cbac570915d4def20800000000000000
-      internalID: 3453501501974366908
+      spriteID: b211a245e93704d20800000000000000
+      internalID: 3260733254070309163
       vertices: []
       indices: 
       edges: []
@@ -151,8 +151,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
-    internalID: 0
+    spriteID: 5d90b5bd1399aa248bbe221e4f458064
+    internalID: -958035572
     vertices: []
     indices: 
     edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Calque 29_0: 3453501501974366908
+      Piquer_2_0: 3260733254070309163
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
