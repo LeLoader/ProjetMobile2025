@@ -123,6 +123,7 @@ public class WordObject : WordBase
                     }
                 }
                 objectUI.rotationConstraint.constraintActive = false;
+                break;
             }
             else if (modifier is BallModifier)
             {
@@ -131,6 +132,7 @@ public class WordObject : WordBase
                 rb.mass = 1f; // PARAM
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 objectUI.rotationConstraint.constraintActive = true;
+                break;
             }
             else
             {
@@ -139,6 +141,7 @@ public class WordObject : WordBase
                 rb.mass = 10000f;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 objectUI.rotationConstraint.constraintActive = false;
+
             }
         }
 
