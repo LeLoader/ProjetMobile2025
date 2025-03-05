@@ -308,6 +308,8 @@ public class WordObject : WordBase
     [Button]
     private void SetupObject()
     {
+        CreateObjectUI();
+
         if (!Application.IsPlaying(this))
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
