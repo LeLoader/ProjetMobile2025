@@ -52,15 +52,14 @@ public class WordObject : WordBase
         coll = FindActiveCollider();
         ApplyAllModifiers();
 
+        CreateObjectUI(); // Can work even if already setup
+  
         if (currentModifiers.Count == 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
             UpdateModifiers();
         }
 
-        CreateObjectUI(); // Can work even if already setup
-        ApplySkin();
-        SetShape();
         DuringSetup = false;
     }
 
@@ -288,8 +287,6 @@ public class WordObject : WordBase
             objectUI.rotationConstraint.constraintActive = false;
             WordWrapper = objectUI.wrapper;
         }
-
-        UpdateUI(ref currentModifiers);
     }
 
     private void UpdateModifiers()
@@ -303,6 +300,7 @@ public class WordObject : WordBase
                 scaleModifier.appliedTimer = 0;
             }
         }
+        UpdateUI(ref currentModifiers);
         SetShape();
         ApplySkin();
     }
