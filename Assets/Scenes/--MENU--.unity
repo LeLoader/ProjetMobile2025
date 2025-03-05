@@ -153,11 +153,11 @@ RectTransform:
   - {fileID: 784370539}
   m_Father: {fileID: 958767514}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -20}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -130}
   m_SizeDelta: {x: 300, y: 200}
-  m_Pivot: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &14379808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,6 +1747,7 @@ MonoBehaviour:
   _backgroundMenu: {fileID: 8300000, guid: 02438cc97b2e0f6458801dbdff2cf35f, type: 3}
   _backgroundGameplay: {fileID: 8300000, guid: cb1b1eccd8647774e91f1e45ac5b5a47, type: 3}
   _pauseSFX: {fileID: 8300000, guid: ba613635c43be9b43ad6f5145cd592e0, type: 3}
+  _Banger: {fileID: 8300000, guid: 3d5e0ce8211bf3545a8312d10a3438eb, type: 3}
   _JumpSFX: {fileID: 8300000, guid: 69edb88c45afc8f45b00e5d95ba15a4c, type: 3}
   _BouncySFX1: {fileID: 8300000, guid: 1dac3f91e5cf86648ae7da70ba5244bd, type: 3}
   _BouncySFX2: {fileID: 8300000, guid: 519eee4e22996ad4bbba8b14cf913320, type: 3}
@@ -2952,7 +2953,8 @@ MonoBehaviour:
   _currentPage: 0
   _next: {fileID: 252738632}
   _prev: {fileID: 1770573923}
-  block: {fileID: 21300000, guid: 56db83c8d58843e4fa49fa4aac769f94, type: 3}
+  block: {fileID: 6400308719491259234, guid: 619a74f4defa84a4faddf233db479635, type: 3}
+  unlock: {fileID: 8348454624749568619, guid: 2f5e4efba5d1ccc44b6bda2d46ef0c88, type: 3}
 --- !u!1 &2119224421
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,10 +3496,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1575644273309032312}
   m_HandleRect: {fileID: 7032005840916924685}
   m_Direction: 0
-  m_MinValue: 0.0001
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0.294
+  m_MinValue: 0
+  m_MaxValue: 10
+  m_WholeNumbers: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3701,10 +3703,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 7107914955782719717}
   m_HandleRect: {fileID: 4590879854459932309}
   m_Direction: 0
-  m_MinValue: 0.0001
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 0.381
+  m_MinValue: 0
+  m_MaxValue: 10
+  m_WholeNumbers: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

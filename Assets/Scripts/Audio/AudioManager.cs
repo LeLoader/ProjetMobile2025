@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip _backgroundMenu;
     public AudioClip _backgroundGameplay;
     public AudioClip _pauseSFX;
+    public AudioClip _Banger;
 
     
     [Header("-----PLAYER SFX -----")]

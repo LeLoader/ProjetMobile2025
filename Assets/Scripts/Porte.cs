@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Porte : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Porte : MonoBehaviour
     [SerializeField] private PlayerWord _player;
     [SerializeField] private ParticleSystem _Leftparticule;
     [SerializeField] private ParticleSystem _Rightparticule;
+    public GameObject _nextLevel;
 
     private void Start()
     {
@@ -34,7 +36,7 @@ public class Porte : MonoBehaviour
         _Rightparticule.Stop();
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.FinishLevel();
+            GameManager.Instance.FinishLevel(_nextLevel);
         }
         _canva.SetActive(true);
     }

@@ -25,6 +25,7 @@ public class PlayerWord : WordBase
     [SerializeField] Transform topCheckers;
     [SerializeField] Transform interactionCheckers;
     [SerializeField] SpriteRenderer orientSign;
+    [SerializeField] SpriteRenderer _spritePlayer;
     [SerializeField] float distanceCheck = 0.01f;
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
     [SerializeField] float slopeVerticalDistanceCheck = 1f;
@@ -287,9 +288,11 @@ public class PlayerWord : WordBase
         if (xOrient > 0)
         {
             orientSign.flipY = false;
+            _spritePlayer.flipX = true;
         }
         if (xOrient < 0)
         {
+            _spritePlayer.flipX = false;
             orientSign.flipY = true;
         }
     }

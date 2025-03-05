@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
 
 public class VerifyCompleted : MonoBehaviour
 {
@@ -22,7 +20,11 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private int _currentPage;
     [SerializeField] private Button _next;
     [SerializeField] private Button _prev;
+
+    [Header("Image")]
     [SerializeField] private Sprite block;
+    [SerializeField] private Sprite unlock;
+    private Image target;
 
 
     public static VerifyCompleted Instance;
@@ -85,10 +87,16 @@ public class VerifyCompleted : MonoBehaviour
             nombreLevel.text = "Level\n" + (i + 1);
             _levelBoutton.Add(levelObject);
 
+            Image image = levelObject.GetComponent<Image>();
+            target = image;
+
             if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
             {
-                Sprite image = levelObject.GetComponent<Sprite>();
-                image = block;
+                target.sprite = block;
+            }
+            else
+            {
+                target.sprite = unlock;
             }
         }
     }
