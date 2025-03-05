@@ -108,6 +108,21 @@ MonoBehaviour:
   currentModifiers: []
   WordWrapper: {fileID: 0}
   WordPrefab: {fileID: 6299438735749934004, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
+  spriteSettings:
+    emptySprite: {fileID: 3286163911610860551, guid: dfc64eae0abad4d4e9bab37189bc22d3, type: 3}
+    scaleSprite: {fileID: 3286163911610860551, guid: fea07571ecc4ea24b9810c9bc207e30c, type: 3}
+    bouncySprite: {fileID: 3286163911610860551, guid: 9e7d9e96d516b7f4ba764c334886355d, type: 3}
+    stickySprite: {fileID: 3286163911610860551, guid: 73336bc0b64e6e64e8a6fe1719e98d65, type: 3}
+    stairsSprite: {fileID: 3286163911610860551, guid: 8133f2cc281c6704089597095cb14962, type: 3}
+    ballSprite: {fileID: 3286163911610860551, guid: 17df6ad8eab56664a98cf42353462e8b, type: 3}
+    bigWordSprite: {fileID: 21300000, guid: 00be86a89b2fcef4b8d5143861d238bc, type: 3}
+    smallWordSprite: {fileID: 21300000, guid: ee70d71b75466db488280203c7561e12, type: 3}
+    tallWordSprite: {fileID: 21300000, guid: 156927391d0efbb4c99babd58cbf9995, type: 3}
+    longWordSprite: {fileID: 21300000, guid: a5f26ab128936484ba4704d775ff5837, type: 3}
+    bouncyWordSprite: {fileID: 21300000, guid: 0924a933522327b43a9dc73887db44bd, type: 3}
+    stickyWordSprite: {fileID: 21300000, guid: 8213556dba9bb3a4eaaa4235751b6217, type: 3}
+    stairsWordSprite: {fileID: 21300000, guid: f26910e92a4142541915bb84e553a1ed, type: 3}
+    ballWordSprite: {fileID: 21300000, guid: f3531fdeb2192674ebb9d5f1c0916e97, type: 3}
   ShouldWaitUntilGroundToApply: 0
   distanceCheck: 0.1
   applySpeed: 2
@@ -117,14 +132,8 @@ MonoBehaviour:
   objectUI: {fileID: 0}
   BlockIsSticky: 0
   BlockIsBouncy: 0
-  emptySprite: {fileID: 3286163911610860551, guid: dfc64eae0abad4d4e9bab37189bc22d3, type: 3}
   defaultCollider: {fileID: 1302911581383112435}
-  scaleSprite: {fileID: 3286163911610860551, guid: fea07571ecc4ea24b9810c9bc207e30c, type: 3}
-  stickySprite: {fileID: 3286163911610860551, guid: 73336bc0b64e6e64e8a6fe1719e98d65, type: 3}
-  bouncySprite: {fileID: 3286163911610860551, guid: 9e7d9e96d516b7f4ba764c334886355d, type: 3}
-  stairsSprite: {fileID: 3286163911610860551, guid: 8133f2cc281c6704089597095cb14962, type: 3}
   stairsCollider: {fileID: 7443647957407925836}
-  ballSprite: {fileID: 3286163911610860551, guid: 17df6ad8eab56664a98cf42353462e8b, type: 3}
   ballCollider: {fileID: 4180964458863058459}
   references:
     version: 2

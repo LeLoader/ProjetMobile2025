@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 4c3292831aeaded42a0a8fb409da49ef
+guid: 743b1ec0f2ac4ae4d926c54386945bbb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4792425216084296393
-    second: wall_alt_0
+      213: -1064431317788528979
+    second: nuage_0
+  - first:
+      213: 6517415734787248660
+    second: nuage_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -109,61 +112,74 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wall_alt_0
+      name: nuage_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 300
-        width: 100
-        height: 100
+        x: 698
+        y: 682
+        width: 526
+        height: 200
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: bca8ac2fb94e71447aa3091002b608e1
-      internalID: -604648665
+      spriteID: daee9672b516a31f0800000000000000
+      internalID: -1064431317788528979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall_alt_1
+      name: nuage_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 200
-        width: 100
-        height: 100
+        x: 809
+        y: 371
+        width: 280
+        height: 165
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 22f4040d91a25da41aa69fc319b7d73f
-      internalID: -1271149889
+      spriteID: 412198d7413827a50800000000000000
+      internalID: 6517415734787248660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wall_alt_2
+      name: nuage_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 100
-        width: 100
-        height: 100
+        x: 746
+        y: 70
+        width: 426
+        height: 168
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,30 +188,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef8b43e6e80eb1b4da37cdd8cc8324b3
-      internalID: -1577933587
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wall_alt_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 79d11024892c51b4f8a56ac9f08c28a5
-      internalID: 1772131639
+      spriteID: d3922627a427579459e6e177597f016e
+      internalID: -1438049617
       vertices: []
       indices: 
       edges: []
@@ -204,7 +198,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a1aa8ad7ce84eb449a8612e682b4aa6e
+    spriteID: 44317a753c1d5234095798ebe51f3968
     internalID: 0
     vertices: []
     indices: 
@@ -214,10 +208,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      wall_alt_0: -604648665
-      wall_alt_1: -1271149889
-      wall_alt_2: -1577933587
-      wall_alt_3: 1772131639
+      nuage_0: -1064431317788528979
+      nuage_1: 6517415734787248660
+      nuage_2: -1438049617
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
