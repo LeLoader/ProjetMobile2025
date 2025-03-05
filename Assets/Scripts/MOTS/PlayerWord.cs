@@ -30,7 +30,7 @@ public class PlayerWord : WordBase
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
     [SerializeField] float slopeVerticalDistanceCheck = 1f;
     [SerializeField] float sideSlopeOffset = 0.01f;
-
+    [SerializeField] public Animator animator;
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
 
@@ -166,7 +166,7 @@ public class PlayerWord : WordBase
 
         UpdateGravity();
         UpdateOrientation();
-
+        UpdateAnimatorValues();
     }
 
     private void Update()
@@ -377,6 +377,13 @@ public class PlayerWord : WordBase
         {
             rb.gravityScale = 1;
         }
+    }
+
+    private void UpdateAnimatorValues()
+    {
+        animator.SetBool("Jump", IsJumping);
+        animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
+        animator.SetBool("Inject", LinkedWordBase);
     }
 
     private void CheckIsFalling()
