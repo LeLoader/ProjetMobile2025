@@ -69,6 +69,11 @@ public class GameManager : MonoBehaviour
             {
                 AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerGameplay);
             }
+
+            if(scene.name == "Level 1" && !SaveSystem._instance._sawIntro)
+            {
+                SaveSystem._instance._sawIntro = true;
+            }
         }
     }
 
