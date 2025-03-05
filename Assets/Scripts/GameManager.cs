@@ -87,7 +87,14 @@ public class GameManager : MonoBehaviour
         }
         else if (scene == SCENEPARAMETERS.CURRENT_LEVEL)
         {
-            SceneManager.LoadScene(level);
+            if (level == "--MENU--")
+            {
+                SceneManager.LoadScene(_actualScene);
+            }
+            else
+            {
+                SceneManager.LoadScene(level);
+            }
             return;
         }
         else if (scene == SCENEPARAMETERS.NEXT_LEVEL)
