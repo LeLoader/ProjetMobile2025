@@ -2,6 +2,8 @@ using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,6 +17,7 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private GameObject _prefabPage;
 
     [Header("useful")]
+    private LocalizedString localizedString;
     [SerializeField] public List<GameObject> _levelBoutton;
     [SerializeField] private List<GameObject> _pageBoutton;
     [SerializeField] private int _currentPage;
@@ -85,6 +88,9 @@ public class VerifyCompleted : MonoBehaviour
             ButtonManager boutton = levelObject?.GetComponent<ButtonManager>();
             Text nombreLevel = levelObject.GetComponentInChildren<Text>();
             Button button = levelObject.GetComponentInChildren<Button>();
+            LocalizeStringEvent locastring = levelObject.GetComponentInChildren<LocalizeStringEvent>();
+
+            localizedString = locastring.StringReference;
 
             boutton._nameNextScene  = GameManager.SCENEPARAMETERS.CURRENT_LEVEL;
             boutton.scene = SaveSystem._instance._levelData._level[i]._idLevel;
