@@ -9,7 +9,6 @@ using UnityEngine.Events;
 using System.ComponentModel;
 using Unity.Collections;
 using NaughtyAttributes;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +23,6 @@ public class PlayerWord : WordBase
     [SerializeField] Transform rightCheckers;
     [SerializeField] Transform topCheckers;
     [SerializeField] Transform interactionCheckers;
-    [SerializeField] SpriteRenderer orientSign;
     [SerializeField] SpriteRenderer _spritePlayer;
     [SerializeField] float distanceCheck = 0.01f;
     [SerializeField] float slopeHorizontalDistanceCheck = 1f;
@@ -287,13 +285,11 @@ public class PlayerWord : WordBase
     {
         if (xOrient > 0)
         {
-            orientSign.flipY = false;
             _spritePlayer.flipX = true;
         }
         if (xOrient < 0)
         {
             _spritePlayer.flipX = false;
-            orientSign.flipY = true;
         }
     }
 

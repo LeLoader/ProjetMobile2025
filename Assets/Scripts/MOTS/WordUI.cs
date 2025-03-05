@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class WordUI : MonoBehaviour, IPointerDownHandler
 {
-    [field: SerializeField] public Text Text { get; set; }
-    [field: SerializeReference] public WordModifier WordModifier { get; set; }
+    [field: SerializeField] public Image Image { get; set; }
+    [field: SerializeReference] public WordModifier WordModifier { get; private set; }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -22,11 +22,11 @@ public class WordUI : MonoBehaviour, IPointerDownHandler
 
     public void Link()
     {
-        Text.color = Color.red;
+        Image.color = new(150, 150, 150, 1);
     }
 
     public void Unlink()
     {
-        Text.color = Color.black;
+        Image.color = Color.white;
     }
 }

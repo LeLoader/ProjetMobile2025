@@ -1,6 +1,8 @@
 using NaughtyAttributes;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class WordBase : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class WordBase : MonoBehaviour
     [SerializeReference] public List<WordModifier> currentModifiers = new();
     [SerializeField] protected GameObject WordWrapper;
     [SerializeField] protected GameObject WordPrefab;
+
+    [SerializeField] protected WordObjectSettings spriteSettings;
 
     public WordBase LinkedWordBase { get; protected set; }
     public bool IsLinked
@@ -91,7 +95,25 @@ public class WordBase : MonoBehaviour
             if (Instantiate(WordPrefab, WordWrapper.transform).TryGetComponent<WordUI>(out WordUI wordUI))
             {
                 wordUI.enabled = true;
-                wordUI.Text.text = newModifiers[i].GetName();
+
+                //pas bô
+                if (newModifiers[i] is BigModifier)
+                    wordUI.Image.sprite = spriteSettings.bigWordSprite;
+                else if (newModifiers[i] is SmallModifier)
+                    wordUI.Image.sprite = spriteSettings.smallWordSprite;
+                else if (newModifiers[i] is TallModifier)
+                    wordUI.Image.sprite = spriteSettings.tallWordSprite;
+                else if (newModifiers[i] is LongModifier)
+                    wordUI.Image.sprite = spriteSettings.longWordSprite;
+                else if (newModifiers[i] is BouncyModifier)
+                    wordUI.Image.sprite = spriteSettings.bouncyWordSprite;
+                else if (newModifiers[i] is StickyModifier)
+                    wordUI.Image.sprite = spriteSettings.stickyWordSprite;
+                else if (newModifiers[i] is StairsModifier)
+                    wordUI.Image.sprite = spriteSettings.stairsWordSprite;
+                else if (newModifiers[i] is BallModifier)
+                    wordUI.Image.sprite = spriteSettings.ballWordSprite;
+
                 if (LinkedWordBase != null)
                 {
                     wordUI.Link();

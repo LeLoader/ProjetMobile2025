@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -26,25 +27,13 @@ public class WordObject : WordBase
 
     Collider2D coll;
 
-    [Header("Empty")]
-    [SerializeField] Sprite emptySprite;
+    [Header("Default")]
     [SerializeField] BoxCollider2D defaultCollider;
 
-    [Header("Scale")]
-    [SerializeField] Sprite scaleSprite;
-
-    [Header("Sticky")]
-    [SerializeField] Sprite stickySprite;
-
-    [Header("Bouncy")]
-    [SerializeField] Sprite bouncySprite;
-
     [Header("Stairs")]
-    [SerializeField] Sprite stairsSprite;
     [SerializeField] PolygonCollider2D stairsCollider;
 
     [Header("Ball")]
-    [SerializeField] Sprite ballSprite;
     [SerializeField] CapsuleCollider2D ballCollider;
 
     private void Start()
@@ -152,7 +141,7 @@ public class WordObject : WordBase
     {
         if (currentModifiers.Count == 0)
         {
-            spriteRenderer.sprite = emptySprite;
+            spriteRenderer.sprite = spriteSettings.emptySprite;
             return;
         }
 
@@ -161,19 +150,19 @@ public class WordObject : WordBase
             if (modifier is NonScaleModifier)
             {
                 if (modifier is BouncyModifier)
-                    spriteRenderer.sprite = bouncySprite;
+                    spriteRenderer.sprite = spriteSettings.bouncySprite;
                 else if (modifier is StickyModifier)
-                    spriteRenderer.sprite = stickySprite;
+                    spriteRenderer.sprite = spriteSettings.stickySprite;
                 else if (modifier is StairsModifier)
-                    spriteRenderer.sprite = stairsSprite;
+                    spriteRenderer.sprite = spriteSettings.stairsSprite;
                 else if (modifier is BallModifier)
-                    spriteRenderer.sprite = ballSprite;
+                    spriteRenderer.sprite = spriteSettings.ballSprite;
 
                 break;
             }
             else
             {
-                spriteRenderer.sprite = scaleSprite;
+                spriteRenderer.sprite = spriteSettings.scaleSprite;
             }
         }
     }
