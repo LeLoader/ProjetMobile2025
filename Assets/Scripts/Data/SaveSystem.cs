@@ -82,6 +82,25 @@ public class SaveSystem : MonoBehaviour
             }
         }
     }
+
+    [Button]
+    public void UnlockAllLevels()
+    {
+        foreach (Level level in _levelData._level)
+        {
+            level._state = Level.LevelState.Unlock;
+        }
+        for (int i = VerifyCompleted.Instance.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform page = VerifyCompleted.Instance.transform.GetChild(i);
+            for (int j = page.childCount - 1; j >= 0; j--)
+            {
+                Destroy(page.GetChild(j).gameObject);
+            }
+        }
+        VerifyCompleted.Instance?.ButtonCreate();
+        VerifyCompleted.Instance?.Verify();
+    }
 #endif
 
     public void SaveData()
