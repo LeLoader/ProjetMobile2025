@@ -89,8 +89,9 @@ public class WordObject : WordBase
             coll = defaultCollider;
             rb.freezeRotation = true;
             rb.mass = 10000f;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.identity;
             objectUI.rotationConstraint.constraintActive = false;
+            objectUI.transform.rotation = Quaternion.identity;
         }
 
         foreach (WordModifier modifier in currentModifiers)
@@ -108,10 +109,11 @@ public class WordObject : WordBase
                     }
                     else
                     {
-                        transform.rotation = Quaternion.Euler(0, 0, 0);
+                        transform.rotation = Quaternion.identity;
                     }
                 }
                 objectUI.rotationConstraint.constraintActive = false;
+                objectUI.transform.rotation = Quaternion.identity;
                 break;
             }
             else if (modifier is BallModifier)
@@ -119,7 +121,7 @@ public class WordObject : WordBase
                 coll = ballCollider;
                 rb.freezeRotation = false;
                 rb.mass = 1f; // PARAM
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                transform.rotation = Quaternion.identity;
                 objectUI.rotationConstraint.constraintActive = true;
                 break;
             }
@@ -130,6 +132,7 @@ public class WordObject : WordBase
                 rb.mass = 10000f;
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 objectUI.rotationConstraint.constraintActive = false;
+                objectUI.transform.rotation = Quaternion.identity;
 
             }
         }
