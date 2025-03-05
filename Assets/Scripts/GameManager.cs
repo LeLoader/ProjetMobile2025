@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
         if (scene == SCENEPARAMETERS.LAST_LEVEL)
         {
             _actualScene = SaveSystem._instance._lastLevelUnlocked;
+            _canvaReglage.SetActive(false);
             SceneManager.LoadScene(_actualScene);
             return;
         }
@@ -89,10 +90,12 @@ public class GameManager : MonoBehaviour
         {
             if (level == "--MENU--")
             {
+                _canvaReglage.SetActive(true);
                 SceneManager.LoadScene(_actualScene);
             }
             else
             {
+                _canvaReglage.SetActive(false);
                 SceneManager.LoadScene(level);
             }
             return;
@@ -101,6 +104,7 @@ public class GameManager : MonoBehaviour
         {
             _actualScene = _nextScene._idLevel;
             GetLevel();
+            _canvaReglage.SetActive(false);
             SceneManager.LoadScene(_actualScene);
             return;
         }
