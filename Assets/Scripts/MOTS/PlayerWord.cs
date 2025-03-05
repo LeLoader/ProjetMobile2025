@@ -589,12 +589,12 @@ public class PlayerWord : WordBase
         if (xOrient > 0)
         {
             rightCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateRightCheckers", 0.5f);
+            Invoke("ReactivateRightCheckers", 0.25f);
         }
         else
         {
             leftCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateLeftCheckers", 0.5f);
+            Invoke("ReactivateLeftCheckers", 0.25f);
         }
         xOrient *= -1;
         Debug.Log("JumpOnSticky");
