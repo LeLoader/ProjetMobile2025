@@ -15,7 +15,7 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private GameObject _prefabPage;
 
     [Header("useful")]
-    [SerializeField] private List<GameObject> _levelBoutton;
+    [SerializeField] public List<GameObject> _levelBoutton;
     [SerializeField] private List<GameObject> _pageBoutton;
     [SerializeField] private int _currentPage;
     [SerializeField] private GameObject _objectNext;
