@@ -382,6 +382,7 @@ public class PlayerWord : WordBase
     private void UpdateAnimatorValues()
     {
         animator.SetBool("Jump", IsJumping);
+        animator.SetBool("Ground", OnGround);
         animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocityX));
         animator.SetBool("Inject", LinkedWordBase);
     }
