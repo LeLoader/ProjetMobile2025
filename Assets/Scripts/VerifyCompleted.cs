@@ -82,6 +82,8 @@ public class VerifyCompleted : MonoBehaviour
             levelPanel.SetActive(false);
             ButtonManager boutton = levelObject?.GetComponent<ButtonManager>();
             Text nombreLevel = levelObject.GetComponentInChildren<Text>();
+            Button button = levelObject.GetComponentInChildren<Button>();
+
             boutton._nameNextScene  = GameManager.SCENEPARAMETERS.CURRENT_LEVEL;
             boutton.scene = SaveSystem._instance._levelData._level[i]._idLevel;
             nombreLevel.text = "Level\n" + (i + 1);
@@ -93,6 +95,7 @@ public class VerifyCompleted : MonoBehaviour
             if (SaveSystem._instance._levelData._level[i]._state == Level.LevelState.Blocked)
             {
                 target.sprite = block;
+                button.interactable = false;
             }
             else
             {
