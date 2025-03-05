@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundMenu);
+        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._Banger);
     }
     public void ManualConnect()
     {
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             _actualScene = scene.name;
             if (scene.name == "--MENU--")
             {
-                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundMenu);
+                AudioManager.Instance?.PlayBackground(AudioManager.Instance?._Banger);
                 _canvaReglage.SetActive(true);
             }
         }
@@ -98,44 +98,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("--MENU--");
             return;
         }
-
-        //Level currentLevel = GetCurrentLevel();
-
-        //if (currentLevel == null && _actualScene != "--MENU--")
-        //{
-        //    Debug.Log("marche pas");
-        //    return;
-        //}
-        //else if (sceneName == "thisScene")
-        //{
-        //    SceneManager.LoadScene(currentLevel._idLevel);
-        //    return;
-        //}
-        //else if (sceneName == "nextLevel")
-        //{
-        //    Level nextLevel = GetNextLevel(currentLevel);
-        //    if (int.Parse(currentLevel._idLevel.Split(' ')[1]) == 1)
-        //    {
-        //        AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
-        //    }
-
-        //    if (nextLevel != null)
-        //    {
-        //        SceneManager.LoadScene(nextLevel._idLevel);
-        //        return;
-        //    }
-        //}
-        //else if (sceneName == "lastLevel")
-        //{
-        //    string lastUnlockedLevel = GetLastUnlockedLevel();
-
-        //    if (lastUnlockedLevel != null)
-        //    {
-        //        SceneManager.LoadScene(lastUnlockedLevel);
-        //        AudioManager.Instance?.PlayBackground(AudioManager.Instance?._backgroundGameplay);
-        //        return;
-        //    }
-        //}
     }
 
     private void GetLevel()
