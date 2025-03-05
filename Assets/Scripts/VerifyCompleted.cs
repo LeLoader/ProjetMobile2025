@@ -18,8 +18,10 @@ public class VerifyCompleted : MonoBehaviour
     [SerializeField] private List<GameObject> _levelBoutton;
     [SerializeField] private List<GameObject> _pageBoutton;
     [SerializeField] private int _currentPage;
-    [SerializeField] private Button _next;
-    [SerializeField] private Button _prev;
+    [SerializeField] private GameObject _objectNext;
+    [SerializeField] private GameObject _objectPrev;
+    [SerializeField] private GameObject _objectNextBlock;
+    [SerializeField] private GameObject _objectPrevBlock;
 
     [Header("Image")]
     [SerializeField] private Sprite block;
@@ -128,23 +130,36 @@ public class VerifyCompleted : MonoBehaviour
 
     public void Boutton()
     {
+
+        Button _next = _objectNext.GetComponent<Button>();
+        Button _prev = _objectPrev.GetComponent<Button>();
+        _objectNext.SetActive(false);
+        _objectPrev.SetActive(false);
+        _objectNextBlock.SetActive(false);
+        _objectPrevBlock.SetActive(false);
         _next.onClick.RemoveAllListeners();
         _prev.onClick.RemoveAllListeners();
         for (int i = 0; i < _pageBoutton.Count; i++)
         {
             if (_pageBoutton[i].activeInHierarchy && i == 0)
             {
+                _objectPrevBlock.SetActive(true);
+                _objectNext.SetActive(true);
                 _next.onClick.AddListener(NextPage);
                 break;
             }
             else if (_pageBoutton[i].activeInHierarchy && i < _pageBoutton.Count -1 )
             {
+                _objectNext.SetActive(true);
+                _objectPrev.SetActive(true);
                 _next.onClick.AddListener(NextPage);
                 _prev.onClick.AddListener(PreviousPage);
                 break;
             }
             else if (_pageBoutton[i].activeInHierarchy && i == _pageBoutton.Count -1)
             {
+                _objectNextBlock.SetActive(true);
+                _objectPrev.SetActive(true);
                 _prev.onClick.AddListener(PreviousPage);
                 break;
             }
