@@ -308,22 +308,6 @@ public class WordObject : WordBase
     }
 
     [Button]
-    void DeleteAllChildOfWordObject()
-    {
-        WordObject[] wordObjects = FindObjectsByType<WordObject>(FindObjectsSortMode.None);
-        if (!Application.IsPlaying(this))
-        {
-            foreach (WordObject wordObject in wordObjects)
-            {
-                for (int i = wordObject.transform.childCount - 1; i >= 0; i--)
-                {
-                    DestroyImmediate(wordObject.transform.GetChild(i).gameObject);
-                }
-            }
-        }
-    }
-
-    [Button]
     private void SetupObject()
     {
         if (!Application.IsPlaying(this))
