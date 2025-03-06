@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 1050167406764428899}
   - component: {fileID: 809299235191372806}
   - component: {fileID: 2003668132428750435}
+  - component: {fileID: 8915024847150027080}
   m_Layer: 5
   m_Name: Seringue
   m_TagString: Untagged
@@ -615,7 +616,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5479811346397638724}
   m_Father: {fileID: 8762477722814642421}
@@ -676,6 +677,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Keyboard>/e
+--- !u!95 &8915024847150027080
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958874195843041102}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14c6d2b5a47d17d4ca845f21a36258cb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7198464070098313149
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_AnchorMin.x
@@ -974,15 +997,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 496.66656
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 113.50001
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1014,11 +1037,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 248.33328
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -56.750004
       objectReference: {fileID: 0}
     - target: {fileID: 3124495637882626241, guid: 77108a92ad770ad49adbf9f2bbc4d4ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
