@@ -27,8 +27,12 @@ public class histoire : MonoBehaviour
             animator3 = Image3.GetComponent<Animator>();
             animator4 = Image4.GetComponent<Animator>();
             Debug.Log($"Animator1: {animator1}, Animator2: {animator2}, Animator3: {animator3}, Animator4: {animator4}");
-            StartCoroutine(PlaySequence());
         }
+    }
+
+    public void LaunchHistory()
+    {
+        StartCoroutine(PlaySequence());
     }
 
     public IEnumerator PlaySequence()

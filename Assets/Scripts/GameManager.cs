@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public Level _nextScene;
     [SerializeField] int targetFrameRate = 60;
 
+    [SerializeField] histoire history;
+    private bool alreadyHistory;
+
     private bool setup;
 
     public enum SCENEPARAMETERS
@@ -48,11 +51,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        history.LaunchHistory();
         AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerMenu);
     }
     public void ManualConnect()
     {
-        //AchivementManager.ManualConnect();
+        AchivementManager.ManualConnect();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
