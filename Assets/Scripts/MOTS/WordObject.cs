@@ -13,7 +13,7 @@ public class WordObject : WordBase
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] GameObject prefabUI;
-    [SerializeField, ReadOnly] ObjectUI objectUI;
+    [SerializeField, ReadOnly, OnValueChanged("ObjectUIChanged")] ObjectUI objectUI;
 
     public bool BlockIsSticky;
     public bool BlockIsBouncy;
@@ -36,14 +36,19 @@ public class WordObject : WordBase
     [Header("Ball")]
     [SerializeField] CapsuleCollider2D ballCollider;
 
+    private void Awake()
+    {
+        Debug.Log(objectUI);
+    }
+
     private void Start()
     {
         coll = FindActiveCollider();
         ApplyAllModifiers();
 
-        CreateObjectUI(); // Can work even if already setup
+        CreateObjectUI(false); // Can work even if already setup
 
-        if (currentModifiers.Count == 0) // Only do setup if not already setup
+        if (currentModifiers.Count == 0 && wordType != 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
             UpdateModifiers();
@@ -279,9 +284,9 @@ public class WordObject : WordBase
         //}
     }
 
-    private void CreateObjectUI()
+    private void CreateObjectUI(bool destructive)
     {
-        if (objectUI != null)
+        if (objectUI != null && destructive)
         {
             if (!Application.IsPlaying(this))
             {
@@ -293,19 +298,27 @@ public class WordObject : WordBase
             }
         }
 
-        objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
-        objectUI.gameObject.name = $"{gameObject.name}_UI";
-        UnityEngine.Animations.ConstraintSource constraintSource = new()
+        if (objectUI == null) 
         {
-            sourceTransform = transform,
-            weight = 1
-        };
-        objectUI.positionConstraint.AddSource(constraintSource);
-        objectUI.transform.position = transform.position;
-        objectUI.positionConstraint.constraintActive = true;
-        objectUI.rotationConstraint.AddSource(constraintSource);
-        objectUI.rotationConstraint.constraintActive = false;
-        WordWrapper = objectUI.wrapper;
+            objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
+            objectUI.gameObject.name = $"{gameObject.name}_UI";
+            UnityEngine.Animations.ConstraintSource constraintSource = new()
+            {
+                sourceTransform = transform,
+                weight = 1
+            };
+            objectUI.positionConstraint.AddSource(constraintSource);
+            objectUI.transform.position = transform.position;
+            objectUI.positionConstraint.constraintActive = true;
+            objectUI.rotationConstraint.AddSource(constraintSource);
+            objectUI.rotationConstraint.constraintActive = false;
+            WordWrapper = objectUI.wrapper;
+        }
+
+        if (destructive)
+        {
+            UpdateModifiers();
+        }
     }
 
     private void UpdateModifiers()
@@ -327,7 +340,8 @@ public class WordObject : WordBase
     [Button]
     private void SetupEveryObjectsOfTheLevel()
     {
-        foreach (WordObject obj in FindObjectsByType<WordObject>(FindObjectsSortMode.None))
+        WordObject[] objs = FindObjectsByType<WordObject>(FindObjectsSortMode.None);
+        foreach (WordObject obj in objs)
         {
             obj.SetupObject();
         }
@@ -336,9 +350,9 @@ public class WordObject : WordBase
     [Button]
     private void SetupObject()
     {
-        CreateObjectUI();
+        CreateObjectUI(true);
 
-        if (!Application.IsPlaying(this))
+        if (!Application.IsPlaying(this)) // Clear old wrong children just in case
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
             {
