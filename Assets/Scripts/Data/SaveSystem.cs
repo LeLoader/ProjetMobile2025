@@ -16,6 +16,7 @@ public class SaveSystem : MonoBehaviour
     public float _musicValue = 0.5f;
     public float _soundValue = 0.5f;
     public PlayerStats _playerStats;
+    public bool _sawIntro;
 
 
     private string _savePath;
@@ -102,6 +103,7 @@ public class SaveSystem : MonoBehaviour
         data.musicValue = _musicValue;
         data.soundValue = _soundValue;
         data.lastLevelUnlock = _lastLevelUnlocked;
+        data.sawIntro = _sawIntro;
         data.stats = _playerStats;
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(_savePath, json);
@@ -121,6 +123,7 @@ public class SaveSystem : MonoBehaviour
                 _musicValue = data.musicValue;
                 _soundValue = data.soundValue;
                 _playerStats = data.stats;
+                _sawIntro = data.sawIntro;
                 _lastLevelUnlocked = data.lastLevelUnlock;
                 Debug.Log("Success!");
             }
@@ -145,6 +148,7 @@ public class SaveSystem : MonoBehaviour
         _musicValue = 0.5f;
         _soundValue = 0.5f;
         _lastLevelUnlocked = "Level 1";
+        _sawIntro = false;
         SaveData();
     }
 
@@ -163,5 +167,6 @@ public class SaveDataWrapper
     public float soundValue;
     public string lastLevelUnlock;
     public PlayerStats stats;
+    public bool sawIntro;
 
 }
