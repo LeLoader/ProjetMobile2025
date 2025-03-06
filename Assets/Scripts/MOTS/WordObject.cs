@@ -42,7 +42,7 @@ public class WordObject : WordBase
         ApplyAllModifiers();
 
         CreateObjectUI(); // Can work even if already setup
-  
+
         if (currentModifiers.Count == 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
@@ -266,26 +266,46 @@ public class WordObject : WordBase
     protected override void UpdateUI(ref List<WordModifier> newModifiers)
     {
         base.UpdateUI(ref newModifiers);
+
+        objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
+          
+        //if (TargetScale.y >= TargetScale.x)
+        //{
+        //    objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
+        //}
+        //else
+        //{
+        //    objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Horizontal;
+        //}
     }
 
     private void CreateObjectUI()
     {
-        if (objectUI == null)
+        if (objectUI != null)
         {
-            objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
-            objectUI.gameObject.name = $"{gameObject.name}_UI";
-            UnityEngine.Animations.ConstraintSource constraintSource = new()
+            if (!Application.IsPlaying(this))
             {
-                sourceTransform = transform,
-                weight = 1
-            };
-            objectUI.positionConstraint.AddSource(constraintSource);
-            objectUI.transform.position = transform.position;
-            objectUI.positionConstraint.constraintActive = true;
-            objectUI.rotationConstraint.AddSource(constraintSource);
-            objectUI.rotationConstraint.constraintActive = false;
-            WordWrapper = objectUI.wrapper;
+                DestroyImmediate(objectUI.gameObject);
+            }
+            else
+            {
+                Destroy(objectUI.gameObject);
+            }
         }
+
+        objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
+        objectUI.gameObject.name = $"{gameObject.name}_UI";
+        UnityEngine.Animations.ConstraintSource constraintSource = new()
+        {
+            sourceTransform = transform,
+            weight = 1
+        };
+        objectUI.positionConstraint.AddSource(constraintSource);
+        objectUI.transform.position = transform.position;
+        objectUI.positionConstraint.constraintActive = true;
+        objectUI.rotationConstraint.AddSource(constraintSource);
+        objectUI.rotationConstraint.constraintActive = false;
+        WordWrapper = objectUI.wrapper;
     }
 
     private void UpdateModifiers()
@@ -302,6 +322,15 @@ public class WordObject : WordBase
         UpdateUI(ref currentModifiers);
         SetShape();
         ApplySkin();
+    }
+
+    [Button]
+    private void SetupEveryObjectsOfTheLevel()
+    {
+        foreach (WordObject obj in FindObjectsByType<WordObject>(FindObjectsSortMode.None))
+        {
+            obj.SetupObject();
+        }
     }
 
     [Button]
