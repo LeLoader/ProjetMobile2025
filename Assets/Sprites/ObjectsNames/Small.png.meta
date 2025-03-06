@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: 7615236536164250460
     second: Small_0
-  - first:
-      213: 2272798449101806640
-    second: Small_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,9 +51,9 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -119,10 +116,10 @@ TextureImporter:
       name: Small_0
       rect:
         serializedVersion: 2
-        x: 43
+        x: 36
         y: 84
-        width: 64
-        height: 41
+        width: 120
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,28 +130,6 @@ TextureImporter:
       bones: []
       spriteID: c5375aa4841cea960800000000000000
       internalID: 7615236536164250460
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Small_1
-      rect:
-        serializedVersion: 2
-        x: 105
-        y: 85
-        width: 49
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 03c95ccc52a9a8f10800000000000000
-      internalID: 2272798449101806640
       vertices: []
       indices: 
       edges: []
@@ -174,7 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Small_0: 7615236536164250460
-      Small_1: 2272798449101806640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
