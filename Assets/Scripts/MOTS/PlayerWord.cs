@@ -721,7 +721,7 @@ public class PlayerWord : WordBase
         {
             Transform t = checkers.GetChild(i).transform;
             RaycastHit2D hit = Physics2D.Raycast(t.position, dir * xOrient, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
-            if (hit.collider != null && !IsLink && OnGround && !IsStick)
+            if (hit.collider != null && !IsLink && OnGround)
             {
                 foundBlock = true;
                 break;
