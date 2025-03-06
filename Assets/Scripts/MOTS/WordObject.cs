@@ -228,8 +228,8 @@ public class WordObject : WordBase
         Debug.DrawLine(transform.position + new Vector3(-0.5f, 0, 0),  transform.position + Vector3.up + new Vector3(-0.5f, 0, 0) * ((coll.bounds.size.y / 2) + distanceCheck), Color.magenta);
         Debug.DrawLine(transform.position + new Vector3(0.5f, 0, 0), transform.position + Vector3.up + new Vector3(0.5f, 0, 0) * ((coll.bounds.size.y / 2) + distanceCheck), Color.blue);
         RaycastHit2D hit1 = Physics2D.Raycast(transform.position, Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0, 0)  , Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
-        RaycastHit2D hit3 = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + new Vector3(-0.2f, 0, 0)  , Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position + new Vector3(0.2f, 0, 0), Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
         return (hit1.collider != null || hit2.collider != null || hit3.collider != null);
     }
 
