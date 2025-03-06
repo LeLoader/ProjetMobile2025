@@ -2107,7 +2107,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:f94d09ee56bdea6448e368c6a4217764
     m_TableEntryReference:
-      m_KeyId: 2247931259576320
+      m_KeyId: 2532063420145664
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -2857,7 +2857,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SHOW ACHIEVEMENTS
+  m_Text: CONNECT
 --- !u!222 &1179521954
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5094,7 +5094,7 @@ RectTransform:
   m_GameObject: {fileID: 5968472800325936891}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7914252681318562071}
