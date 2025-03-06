@@ -12,6 +12,7 @@ public class Porte : MonoBehaviour
     [SerializeField] private ParticleSystem _Rightparticule;
     public GameObject _nextLevel;
     public AsyncOperation asyncOperation;
+    public Animator Paper;
 
     private void Start()
     {
