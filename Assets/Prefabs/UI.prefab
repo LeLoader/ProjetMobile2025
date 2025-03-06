@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 1577072760535391681}
   - component: {fileID: 9156101822726132190}
   - component: {fileID: 4359904713281581649}
+  - component: {fileID: 3460252205005108163}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -191,6 +192,22 @@ MonoBehaviour:
   _actualLevel: {fileID: 0}
   _numberLevel: {fileID: 2122406512803061778}
   _completedLevel: {fileID: 0}
+--- !u!114 &3460252205005108163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2416235281610053314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f05767163f4b74083e2c44b0ecbd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Left: {fileID: 0}
+  Right: {fileID: 0}
+  Seringue: {fileID: 0}
+  Jump: {fileID: 0}
 --- !u!1 &3533262914315008705
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +221,7 @@ GameObject:
   - component: {fileID: 3921160907909931064}
   - component: {fileID: 6666351973610518025}
   - component: {fileID: 4550920208906251425}
+  - component: {fileID: 3668511171779725965}
   m_Layer: 5
   m_Name: ButtonLeft
   m_TagString: Untagged
@@ -258,7 +276,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 13554d959fe46544586694f66ea79291, type: 3}
+  m_Sprite: {fileID: -1557266321, guid: 925e7f280adefa648b9b210b6c3ca750, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -325,6 +343,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Keyboard>/a
+--- !u!95 &3668511171779725965
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533262914315008705}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: afdf882b39728bb4c895b370be2f788e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4451986355240902612
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,14 +687,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7607843}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.85882354}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2215078269043942470, guid: 5566b24b8131887479ef3ca569e0b66f, type: 3}
+  m_Sprite: {fileID: -3392439408625787650, guid: c975d2a778dbe4d49a7bf01a22eeaea0, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -712,6 +752,7 @@ GameObject:
   - component: {fileID: 8289794481232176017}
   - component: {fileID: 3591532098671469952}
   - component: {fileID: 8848576472594246519}
+  - component: {fileID: 438609485566786822}
   m_Layer: 5
   m_Name: ButtonJump
   m_TagString: Untagged
@@ -766,7 +807,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea30985f085cd084ba16fcbe72a96f74, type: 3}
+  m_Sprite: {fileID: 1403203068, guid: d297c4614c98816419b457500add6493, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -833,6 +874,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Keyboard>/space
+--- !u!95 &438609485566786822
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7198464070098313149}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f9f0de1e10591b478f774bccaa9b115, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8406676678368011399
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +909,7 @@ GameObject:
   - component: {fileID: 262813160792242872}
   - component: {fileID: 842704025686230502}
   - component: {fileID: 3852666242493392529}
+  - component: {fileID: 4601372171153342005}
   m_Layer: 5
   m_Name: ButtonRight
   m_TagString: Untagged
@@ -900,7 +964,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 056d390346e963e4a80b5bcb2f8bcf21, type: 3}
+  m_Sprite: {fileID: 1331720768, guid: 20dd849b7fdab104481402d8619188ba, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -967,6 +1031,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ControlPath: <Keyboard>/d
+--- !u!95 &4601372171153342005
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406676678368011399}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5e1fae24fabc28441aa96101ceb517e0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2489193485402625181
 PrefabInstance:
   m_ObjectHideFlags: 0

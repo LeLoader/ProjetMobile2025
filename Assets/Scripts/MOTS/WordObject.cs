@@ -42,7 +42,7 @@ public class WordObject : WordBase
         ApplyAllModifiers();
 
         CreateObjectUI(); // Can work even if already setup
-  
+
         if (currentModifiers.Count == 0) // Only do setup if not already setup
         {
             WordModifier.AddBaseModifiers(wordType, ref currentModifiers, this);
@@ -220,8 +220,12 @@ public class WordObject : WordBase
     private bool IsTouchingTop()
     {
         Debug.DrawLine(transform.position, transform.position + Vector3.up * ((coll.bounds.size.y / 2) + distanceCheck), Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
-        return (hit.collider != null);
+        Debug.DrawLine(transform.position + new Vector3(-0.5f, 0, 0),  transform.position + Vector3.up + new Vector3(-0.5f, 0, 0) * ((coll.bounds.size.y / 2) + distanceCheck), Color.magenta);
+        Debug.DrawLine(transform.position + new Vector3(0.5f, 0, 0), transform.position + Vector3.up + new Vector3(0.5f, 0, 0) * ((coll.bounds.size.y / 2) + distanceCheck), Color.blue);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position, Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0, 0)  , Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
+        RaycastHit2D hit3 = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0, 0), Vector2.up, (coll.bounds.size.y / 2) + distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK));
+        return (hit1.collider != null || hit2.collider != null || hit3.collider != null);
     }
 
     private bool IsTouchingGround()
@@ -262,26 +266,46 @@ public class WordObject : WordBase
     protected override void UpdateUI(ref List<WordModifier> newModifiers)
     {
         base.UpdateUI(ref newModifiers);
+
+        objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
+          
+        //if (TargetScale.y >= TargetScale.x)
+        //{
+        //    objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
+        //}
+        //else
+        //{
+        //    objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Horizontal;
+        //}
     }
 
     private void CreateObjectUI()
     {
-        if (objectUI == null)
+        if (objectUI != null)
         {
-            objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
-            objectUI.gameObject.name = $"{gameObject.name}_UI";
-            UnityEngine.Animations.ConstraintSource constraintSource = new()
+            if (!Application.IsPlaying(this))
             {
-                sourceTransform = transform,
-                weight = 1
-            };
-            objectUI.positionConstraint.AddSource(constraintSource);
-            objectUI.transform.position = transform.position;
-            objectUI.positionConstraint.constraintActive = true;
-            objectUI.rotationConstraint.AddSource(constraintSource);
-            objectUI.rotationConstraint.constraintActive = false;
-            WordWrapper = objectUI.wrapper;
+                DestroyImmediate(objectUI.gameObject);
+            }
+            else
+            {
+                Destroy(objectUI.gameObject);
+            }
         }
+
+        objectUI = Instantiate(prefabUI).GetComponent<ObjectUI>();
+        objectUI.gameObject.name = $"{gameObject.name}_UI";
+        UnityEngine.Animations.ConstraintSource constraintSource = new()
+        {
+            sourceTransform = transform,
+            weight = 1
+        };
+        objectUI.positionConstraint.AddSource(constraintSource);
+        objectUI.transform.position = transform.position;
+        objectUI.positionConstraint.constraintActive = true;
+        objectUI.rotationConstraint.AddSource(constraintSource);
+        objectUI.rotationConstraint.constraintActive = false;
+        WordWrapper = objectUI.wrapper;
     }
 
     private void UpdateModifiers()
@@ -298,6 +322,15 @@ public class WordObject : WordBase
         UpdateUI(ref currentModifiers);
         SetShape();
         ApplySkin();
+    }
+
+    [Button]
+    private void SetupEveryObjectsOfTheLevel()
+    {
+        foreach (WordObject obj in FindObjectsByType<WordObject>(FindObjectsSortMode.None))
+        {
+            obj.SetupObject();
+        }
     }
 
     [Button]
