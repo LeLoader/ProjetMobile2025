@@ -144,6 +144,7 @@ public class PlayerWord : WordBase
         moveAction.action.canceled += GetInput;
         useAction.action.started += Use;
 
+        seringue = GameObject.FindGameObjectWithTag("Seringue")?.GetComponent<Animator>();
     }
 
     void FixedUpdate()
