@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public Level _nextScene;
     [SerializeField] int targetFrameRate = 60;
 
+    [SerializeField] histoire history;
+    public bool alreadyHistory = false;
+
     private bool setup;
 
     public enum SCENEPARAMETERS
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
     }
     public void ManualConnect()
     {
-        //AchivementManager.ManualConnect();
+        AchivementManager.ManualConnect();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -88,7 +91,15 @@ public class GameManager : MonoBehaviour
         {
             _actualScene = SaveSystem._instance._lastLevelUnlocked;
             _canvaReglage.SetActive(false);
-            SceneManager.LoadScene(_actualScene);
+            if (_actualScene == "Level 1" && !alreadyHistory)
+            {
+                history.Image.SetActive(true);
+                history.LaunchHistory();
+            }
+            else
+            {
+                SceneManager.LoadScene(_actualScene);
+            }
             return;
         }
         else if (scene == SCENEPARAMETERS.CURRENT_LEVEL)
@@ -101,7 +112,15 @@ public class GameManager : MonoBehaviour
             else
             {
                 _canvaReglage.SetActive(false);
-                SceneManager.LoadScene(level);
+                if(level == "Level 1" && !alreadyHistory)
+                {
+                    history.Image.SetActive(true);
+                    history.LaunchHistory();
+                }
+                else
+                {
+                    SceneManager.LoadScene(level);
+                }
             }
             return;
         }
