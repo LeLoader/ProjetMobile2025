@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Porte : MonoBehaviour
@@ -10,6 +11,7 @@ public class Porte : MonoBehaviour
     [SerializeField] private ParticleSystem _Leftparticule;
     [SerializeField] private ParticleSystem _Rightparticule;
     public GameObject _nextLevel;
+    public AsyncOperation asyncOperation;
 
     private void Start()
     {
@@ -30,6 +32,14 @@ public class Porte : MonoBehaviour
 
     private IEnumerator DelayBeforeEndCanva()
     {
+        int id = SceneManager.GetActiveScene().buildIndex;
+        if (id + 1 < SceneManager.sceneCountInBuildSettings)
+        {
+            //SceneManager.LoadSceneAsync(id + 1, LoadSceneMode.Additive);
+            asyncOperation = SceneManager.LoadSceneAsync(id+1, LoadSceneMode.Additive);
+            asyncOperation.allowSceneActivation = false;
+        }
+
         yield return new WaitForSeconds(3f);
         _player.CanMove = false;
         _Leftparticule.Stop();

@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     private bool setup;
 
+    public Porte porte;
+
     public enum SCENEPARAMETERS
     {
         LAST_LEVEL,
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         if (setup)
         {
             _actualScene = scene.name;
+            porte = GameObject.FindGameObjectWithTag("Porte")?.GetComponent<Porte>();
             if (scene.name == "--MENU--")
             {
                 AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerMenu);
@@ -134,7 +137,7 @@ public class GameManager : MonoBehaviour
             _actualScene = _nextScene._idLevel;
             GetLevel();
             _canvaReglage.SetActive(false);
-            SceneManager.LoadScene(_actualScene);
+            porte.asyncOperation.allowSceneActivation = true;
             return;
         }
         else if (scene == SCENEPARAMETERS.MENU_SCENE)
