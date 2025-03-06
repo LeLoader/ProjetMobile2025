@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class histoire : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class histoire : MonoBehaviour
     [SerializeField] private GameObject Image2;
     [SerializeField] private GameObject Image3;
     [SerializeField] private GameObject Image4;
+
+    [SerializeField] public GameObject Image;
 
     [SerializeField] Animator animator1;
     [SerializeField] Animator animator2;
@@ -32,6 +35,7 @@ public class histoire : MonoBehaviour
 
     public void LaunchHistory()
     {
+        Debug.Log("lancement de la coroutine");
         StartCoroutine(PlaySequence());
     }
 
@@ -48,7 +52,7 @@ public class histoire : MonoBehaviour
 
         animator4.SetTrigger("Start");
         yield return new WaitForSeconds(7f);
-
-        Destroy(gameObject);
+        GameManager.Instance.alreadyHistory = true;
+        SceneManager.LoadScene("Level 1");
     }
 }
