@@ -147,7 +147,7 @@ public class SaveSystem : MonoBehaviour
     {
         _musicValue = 0.5f;
         _soundValue = 0.5f;
-        _lastLevelUnlocked = "Level 1";
+        _lastLevelUnlocked = _levelData._level[0]._idLevel;
         _sawIntro = false;
         SaveData();
     }
