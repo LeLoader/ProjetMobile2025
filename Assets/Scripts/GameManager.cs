@@ -58,6 +58,11 @@ public class GameManager : MonoBehaviour
         AchivementManager.ManualConnect();
     }
 
+    public void UnlockFirstTry()
+    {
+        AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (setup)
