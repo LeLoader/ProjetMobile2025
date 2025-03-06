@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: 96e46c01139d7b6488bcff66e7cae7e1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6316325160463640513
+    second: musicload_0
+  - first:
+      213: -635830006459100700
+    second: musicload_1
+  - first:
+      213: 3963542099698496447
+    second: musicload_2
+  - first:
+      213: -8888323233002600455
+    second: musicload_3
+  - first:
+      213: 4096783030111362184
+    second: musicload_4
+  - first:
+      213: -5298436529437385719
+    second: musicload_5
+  - first:
+      213: 7407767229605644827
+    second: musicload_6
+  - first:
+      213: -4609950479092696365
+    second: musicload_7
+  - first:
+      213: -648276796407084151
+    second: musicload_8
+  - first:
+      213: -7089423895499790537
+    second: musicload_9
+  - first:
+      213: 8512902160774132654
+    second: musicload_10
+  - first:
+      213: 2754239042691173892
+    second: musicload_11
+  - first:
+      213: 7059598524923205167
+    second: musicload_12
+  - first:
+      213: -449629871586675322
+    second: musicload_13
+  - first:
+      213: 2578515490844953345
+    second: musicload_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: musicload_2
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 396
+        width: 465
+        height: 62
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3b5d83a84510730800000000000000
+      internalID: 3963542099698496447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_4
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 272
+        width: 173
+        height: 208
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88cd2afc572bad830800000000000000
+      internalID: 4096783030111362184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_5
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 191
+        width: 51
+        height: 161
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c5eed7c0c2876b0800000000000000
+      internalID: -5298436529437385719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_7
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 207
+        width: 215
+        height: 107
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dab98db67a2600c0800000000000000
+      internalID: -4609950479092696365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_10
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 71
+        width: 60
+        height: 68
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea3f8947967e32670800000000000000
+      internalID: 8512902160774132654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_11
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 18
+        width: 18
+        height: 64
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40e8e1611d5093620800000000000000
+      internalID: 2754239042691173892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_12
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 19
+        width: 37
+        height: 64
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f265bee747bb8f160800000000000000
+      internalID: 7059598524923205167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_13
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 18
+        width: 52
+        height: 62
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 685fba7930892c9f0800000000000000
+      internalID: -449629871586675322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_14
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 52
+        width: 270
+        height: 162
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10bc7a76d2ab8c320800000000000000
+      internalID: 2578515490844953345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_0
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 427
+        width: 465
+        height: 61
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0df892494522fc41aace3cc74b7a514
+      internalID: -108911872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 412
+        width: 465
+        height: 61
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b12a23d24d3989488e2fa69c2632034
+      internalID: -879279755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 383
+        width: 465
+        height: 60
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a145b67e0d8bff42a0490c18aa7fb13
+      internalID: -1885089527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_6
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 220
+        width: 220
+        height: 108
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 105ec44171b42754997fbf99243a206c
+      internalID: -1671513331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_8
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 192
+        width: 211
+        height: 107
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f298f13d2346ce2449bcde6b754bed95
+      internalID: 41048610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: musicload_9
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 176
+        width: 209
+        height: 107
+      alignment: 9
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c19c54b8bd20bb46b11fcda426ff9b8
+      internalID: 1870710967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 38ff43764c0c3414795fb4f47d26f6fe
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      musicload_0: -108911872
+      musicload_1: -879279755
+      musicload_10: 8512902160774132654
+      musicload_11: 2754239042691173892
+      musicload_12: 7059598524923205167
+      musicload_13: -449629871586675322
+      musicload_14: 2578515490844953345
+      musicload_2: 3963542099698496447
+      musicload_3: -1885089527
+      musicload_4: 4096783030111362184
+      musicload_5: -5298436529437385719
+      musicload_6: -1671513331
+      musicload_7: -4609950479092696365
+      musicload_8: 41048610
+      musicload_9: 1870710967
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
