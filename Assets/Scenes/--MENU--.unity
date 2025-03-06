@@ -2625,6 +2625,8 @@ MonoBehaviour:
     _idLevel: --MENU--
     _state: 0
   targetFrameRate: 60
+  history: {fileID: 1540321947}
+  alreadyHistory: 0
   _canvaReglage: {fileID: 164031380540855013}
 --- !u!1 &1100954165
 GameObject:
@@ -3463,7 +3465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1540321947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3480,6 +3482,7 @@ MonoBehaviour:
   Image2: {fileID: 721911339}
   Image3: {fileID: 192714364}
   Image4: {fileID: 1931929485}
+  Image: {fileID: 1540605406}
   animator1: {fileID: 0}
   animator2: {fileID: 0}
   animator3: {fileID: 0}
@@ -3584,7 +3587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1540605407
 RectTransform:
   m_ObjectHideFlags: 0
