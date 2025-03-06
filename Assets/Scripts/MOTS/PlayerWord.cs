@@ -31,6 +31,8 @@ public class PlayerWord : WordBase
     [SerializeField] public Animator animator;
     [SerializeField] public CinemachineCamera _camera;
     [SerializeField] float duration = 2f;
+    [SerializeField] Animator seringue;
+    [SerializeField] bool IsLink;
 
     [Header("Action")]
     [SerializeField] InputActionReference jumpAction;
@@ -142,6 +144,7 @@ public class PlayerWord : WordBase
         moveAction.action.canceled += GetInput;
         useAction.action.started += Use;
 
+        seringue = GameObject.FindGameObjectWithTag("Seringue")?.GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -165,6 +168,8 @@ public class PlayerWord : WordBase
         UpdateGravity();
         UpdateOrientation();
         UpdateAnimatorValues();
+        LookForBlock(leftCheckers, Vector2.left);
+        LookForBlock(rightCheckers, Vector2.right);
     }
 
     private void Update()
@@ -622,6 +627,7 @@ public class PlayerWord : WordBase
             {
                 if (hit.transform.TryGetComponent<WordObject>(out WordObject wordObject))
                 {
+                    IsLink = true;
                     Link(wordObject);
                     return;
                 };
@@ -654,6 +660,7 @@ public class PlayerWord : WordBase
             }
             Stats.IncrementStat(Stats.STATS.SERINGUE_COUNT, currentModifiers.Count); // Spamming will increment a lot
             ((WordObject)LinkedWordBase).Unlink();
+            IsLink = false;
             LinkedWordBase = null;
             if (transform != null)
             {
@@ -704,6 +711,23 @@ public class PlayerWord : WordBase
     private void ReactivateTopCheckers()
     {
         topCheckers.gameObject.SetActive(true);
+    }
+
+    private void LookForBlock(Transform checkers, Vector2 dir)
+    {
+        bool foundBlock = false;
+
+        for (int i = 0; i < checkers.childCount; i++)
+        {
+            Transform t = checkers.GetChild(i).transform;
+            RaycastHit2D hit = Physics2D.Raycast(t.position, dir * xOrient, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
+            if (hit.collider != null && !IsLink)
+            {
+                foundBlock = true;
+                break;
+            }
+        }
+        seringue.SetBool("NearABlock", foundBlock);
     }
 
     private void OnDestroy()

@@ -39,5 +39,6 @@ public class Porte : MonoBehaviour
             GameManager.Instance.FinishLevel(_nextLevel);
         }
         _canva.SetActive(true);
+        SaveSystem._instance.SaveData();
     }
 }
