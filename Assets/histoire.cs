@@ -52,7 +52,7 @@ public class histoire : MonoBehaviour
 
         animator4.SetTrigger("Start");
         yield return new WaitForSeconds(7f);
-        GameManager.Instance.alreadyHistory = true;
+        SaveSystem._instance._sawIntro = true;
         SceneManager.LoadScene("Level 1");
     }
 }

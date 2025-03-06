@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] int targetFrameRate = 60;
 
     [SerializeField] histoire history;
-    public bool alreadyHistory = false;
 
     private bool setup;
 
@@ -80,11 +79,6 @@ public class GameManager : MonoBehaviour
             {
                 AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerGameplay);
             }
-
-            if(scene.name == "Level 1" && !SaveSystem._instance._sawIntro)
-            {
-                SaveSystem._instance._sawIntro = true;
-            }
         }
     }
 
@@ -99,7 +93,7 @@ public class GameManager : MonoBehaviour
         {
             _actualScene = SaveSystem._instance._lastLevelUnlocked;
             _canvaReglage.SetActive(false);
-            if (_actualScene == "Level 1" && !alreadyHistory)
+            if (_actualScene == "Level 1" && !SaveSystem._instance._sawIntro)
             {
                 history.Image.SetActive(true);
                 history.LaunchHistory();
@@ -120,7 +114,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 _canvaReglage.SetActive(false);
-                if(level == "Level 1" && !alreadyHistory)
+                if(level == "Level 1" && !SaveSystem._instance._sawIntro)
                 {
                     history.Image.SetActive(true);
                     history.LaunchHistory();
@@ -138,6 +132,7 @@ public class GameManager : MonoBehaviour
             GetLevel();
             _canvaReglage.SetActive(false);
             porte.asyncOperation.allowSceneActivation = true;
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             return;
         }
         else if (scene == SCENEPARAMETERS.MENU_SCENE)

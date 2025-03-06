@@ -92,6 +92,11 @@ public class SaveSystem : MonoBehaviour
         {
             gameObject.GetComponentInChildren<Button>().interactable = true;
         }
+
+        //foreach (Level level in _levelData._level)
+        //{
+        //    level._state = Level.LevelState.Unlock;
+        //}
     }
 #endif
 

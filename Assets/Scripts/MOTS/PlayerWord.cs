@@ -149,6 +149,10 @@ public class PlayerWord : WordBase
 
     void FixedUpdate()
     {
+        if(!seringue)
+        {
+            seringue = GameObject.FindGameObjectWithTag("Seringue")?.GetComponent<Animator>();
+        }
         CheckIsFalling();
 
         UpdateStates();
