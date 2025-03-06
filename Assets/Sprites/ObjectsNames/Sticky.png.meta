@@ -5,15 +5,6 @@ TextureImporter:
   - first:
       213: -3232172611236887411
     second: Sticky_0
-  - first:
-      213: -6316378845452622341
-    second: Sticky_1
-  - first:
-      213: -2693934524357654412
-    second: Sticky_2
-  - first:
-      213: -3440755140697415234
-    second: Sticky_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,9 +51,9 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -125,10 +116,10 @@ TextureImporter:
       name: Sticky_0
       rect:
         serializedVersion: 2
-        x: 26
-        y: 83
-        width: 34
-        height: 46
+        x: 20
+        y: 71
+        width: 155
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -139,72 +130,6 @@ TextureImporter:
       bones: []
       spriteID: d848a7682240523d0800000000000000
       internalID: -3232172611236887411
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sticky_1
-      rect:
-        serializedVersion: 2
-        x: 58
-        y: 81
-        width: 29
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bf5210ad7e6b758a0800000000000000
-      internalID: -6316378845452622341
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sticky_2
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 81
-        width: 16
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 478408bb2d83d9ad0800000000000000
-      internalID: -2693934524357654412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sticky_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 72
-        width: 77
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eb1a1afed6bff30d0800000000000000
-      internalID: -3440755140697415234
       vertices: []
       indices: 
       edges: []
@@ -224,9 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Sticky_0: -3232172611236887411
-      Sticky_1: -6316378845452622341
-      Sticky_2: -2693934524357654412
-      Sticky_3: -3440755140697415234
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: -3919779002189068522
     second: Ball_0
-  - first:
-      213: -7165607403067095034
-    second: Ball_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,9 +51,9 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -119,10 +116,10 @@ TextureImporter:
       name: Ball_0
       rect:
         serializedVersion: 2
-        x: 54
+        x: 49
         y: 82
-        width: 36
-        height: 50
+        width: 97
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,28 +130,6 @@ TextureImporter:
       bones: []
       spriteID: 6174c70f3c52a99c0800000000000000
       internalID: -3919779002189068522
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ball_1
-      rect:
-        serializedVersion: 2
-        x: 89
-        y: 82
-        width: 56
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 608c64c2806ae8c90800000000000000
-      internalID: -7165607403067095034
       vertices: []
       indices: 
       edges: []
@@ -174,7 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Ball_0: -3919779002189068522
-      Ball_1: -7165607403067095034
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

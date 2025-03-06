@@ -69,17 +69,26 @@ public static class AchivementManager
             });
     }
 
-    public static void UnlockAchivement(string code, int progress = 100)
+    public static void UnlockAchivement(string code)
     {
-        PlayGamesPlatform.Instance.IncrementAchievement(
-                        code, progress, (bool result) =>
+        PlayGamesPlatform.Instance.UnlockAchievement(
+                        code, (bool result) =>
                         {
-                            Debug.Log($"Tried to unlock achievement {code} with progress {progress}: {result}");
+                            Debug.Log($"Tried to unlock achievement {code}: {result}");
                         }
                         );
     }
 
-    public static void ShowAchievement()
+    public static void IncrementAchivement(string code, int progress = 100)
+    {
+        PlayGamesPlatform.Instance.IncrementAchievement(
+               code, progress, (bool result) =>
+               {
+                   Debug.Log($"Tried to increment achievement {code} with progress {progress}: {result}");
+               }
+                       );
+    }
+public static void ShowAchievement()
     {
         PlayGamesPlatform.Instance.ShowAchievementsUI();
     }
