@@ -14,37 +14,36 @@ public class histoire : MonoBehaviour
     [SerializeField] Animator animator3;
     [SerializeField] Animator animator4;
 
-    private void Awake()
+    private void Start()
     {
         if (SaveSystem._instance._sawIntro)
         {
             Destroy(gameObject);
         }
+        else
+        {
+            animator1 = Image1.GetComponent<Animator>();
+            animator2 = Image2.GetComponent<Animator>();
+            animator3 = Image3.GetComponent<Animator>();
+            animator4 = Image4.GetComponent<Animator>();
+            Debug.Log($"Animator1: {animator1}, Animator2: {animator2}, Animator3: {animator3}, Animator4: {animator4}");
+            StartCoroutine(PlaySequence());
+        }
     }
 
-    private void Start()
-    {
-        animator1 = Image1.GetComponent<Animator>();
-        animator2 = Image2.GetComponent<Animator>();
-        animator3 = Image3.GetComponent<Animator>();
-        animator4 = Image4.GetComponent<Animator>();
-
-        StartCoroutine(PlaySequence());
-    }
-
-    IEnumerator PlaySequence()
-    {
+    public IEnumerator PlaySequence()
+    { 
         animator1.SetTrigger("Start");
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(5f);
 
         animator2.SetTrigger("Start");
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(5f);
 
         animator3.SetTrigger("Start");
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(5f);
 
         animator4.SetTrigger("Start");
-        yield return new WaitForSeconds(8.5f);
+        yield return new WaitForSeconds(7f);
 
         Destroy(gameObject);
     }
