@@ -1,52 +1,58 @@
 fileFormatVersion: 2
-guid: 20dd849b7fdab104481402d8619188ba
+guid: 925e7f280adefa648b9b210b6c3ca750
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6626366632023376792
-    second: RightFinal_0
+      213: -1478041425745475645
+    second: LeftFinal_0
   - first:
-      213: -523241302449894645
-    second: RightFinal_1
+      213: -1051187290449577372
+    second: LeftFinal_1
   - first:
-      213: 3747621158670585528
-    second: RightFinal_2
+      213: -5517578507995571727
+    second: LeftFinal_2
   - first:
-      213: 8285396616474385080
-    second: RightFinal_3
+      213: 6292550188120377733
+    second: LeftFinal_3
   - first:
-      213: 1843549527285941288
-    second: RightFinal_4
+      213: -6089023098580907112
+    second: LeftFinal_4
   - first:
-      213: 4110132932952173484
-    second: RightFinal_5
+      213: -3112056484723389543
+    second: LeftFinal_5
   - first:
-      213: 5672924112647454236
-    second: RightFinal_6
+      213: -5156683471736071895
+    second: LeftFinal_6
   - first:
-      213: 5548405464283584917
-    second: RightFinal_7
+      213: 6720030279694069747
+    second: LeftFinal_7
   - first:
-      213: 1009988052967374845
-    second: RightFinal_8
+      213: -3149205418163686041
+    second: LeftFinal_8
   - first:
-      213: -1960069394796545673
-    second: RightFinal_9
+      213: 4055001279407976486
+    second: LeftFinal_9
   - first:
-      213: 7451373526466202645
-    second: RightFinal_10
+      213: 5777246502877318080
+    second: LeftFinal_10
   - first:
-      213: -1856523361112684197
-    second: RightFinal_11
+      213: 5434845964920213492
+    second: LeftFinal_11
   - first:
-      213: 6550188564159355257
-    second: RightFinal_12
+      213: -7640385049036572229
+    second: LeftFinal_12
   - first:
-      213: -3744889160453214827
-    second: RightFinal_13
+      213: 8062855697827226414
+    second: LeftFinal_13
   - first:
-      213: -5235192664925939853
-    second: RightFinal_14
+      213: -4043532044298975437
+    second: LeftFinal_14
+  - first:
+      213: 2351265741330828248
+    second: LeftFinal_15
+  - first:
+      213: -6740678538827252692
+    second: LeftFinal_16
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -171,8 +177,8 @@ TextureImporter:
       name: RightFinal_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 513
+        x: 474
+        y: 474
         width: 237
         height: 237
       alignment: 0
@@ -183,8 +189,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd393cff4ab3eb54fbd1061dec5c2afd
-      internalID: 1331720768
+      spriteID: a4653bbe209cb424b861f56e42b19622
+      internalID: 1317214059
       vertices: []
       indices: 
       edges: []
@@ -193,8 +199,8 @@ TextureImporter:
       name: RightFinal_1
       rect:
         serializedVersion: 2
-        x: 237
-        y: 513
+        x: 711
+        y: 474
         width: 237
         height: 237
       alignment: 0
@@ -205,8 +211,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71298637bc321d041a1bc067e35363c9
-      internalID: -1021888781
+      spriteID: e3e4eced8623c7b498021836d9663583
+      internalID: -1143871890
       vertices: []
       indices: 
       edges: []
@@ -215,8 +221,8 @@ TextureImporter:
       name: RightFinal_2
       rect:
         serializedVersion: 2
-        x: 474
-        y: 513
+        x: 0
+        y: 237
         width: 237
         height: 237
       alignment: 0
@@ -227,8 +233,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1eb89170b7be6f04e9fd1f18ac381ffd
-      internalID: 1261095114
+      spriteID: 64342865767ea834b988377269afd26b
+      internalID: -263324960
       vertices: []
       indices: 
       edges: []
@@ -237,8 +243,8 @@ TextureImporter:
       name: RightFinal_3
       rect:
         serializedVersion: 2
-        x: 711
-        y: 513
+        x: 237
+        y: 237
         width: 237
         height: 237
       alignment: 0
@@ -249,8 +255,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 243b395d44a619b4088f6e10eb01b63f
-      internalID: -665737488
+      spriteID: bea2b89e93905ab4daa432c73d955af8
+      internalID: -285064444
       vertices: []
       indices: 
       edges: []
@@ -259,8 +265,8 @@ TextureImporter:
       name: RightFinal_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 276
+        x: 474
+        y: 237
         width: 237
         height: 237
       alignment: 0
@@ -271,8 +277,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92f03bdbe6a7b3743abdf7e2df8f23e0
-      internalID: 1746732817
+      spriteID: 5b4f038774871294faa6000e783161dc
+      internalID: -1130368870
       vertices: []
       indices: 
       edges: []
@@ -281,8 +287,8 @@ TextureImporter:
       name: RightFinal_5
       rect:
         serializedVersion: 2
-        x: 237
-        y: 276
+        x: 711
+        y: 237
         width: 237
         height: 237
       alignment: 0
@@ -293,8 +299,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cf5616bae5968148916e69f6b24b592
-      internalID: 1304334974
+      spriteID: 8c4b78df5ce542c4bab9a6e3de3b8ead
+      internalID: 99073879
       vertices: []
       indices: 
       edges: []
@@ -303,8 +309,8 @@ TextureImporter:
       name: RightFinal_6
       rect:
         serializedVersion: 2
-        x: 474
-        y: 276
+        x: 0
+        y: 0
         width: 237
         height: 237
       alignment: 0
@@ -315,8 +321,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c226b1f8c8a3e74aaf5056da50b5ec7
-      internalID: -2029369587
+      spriteID: 14100ebd99666e24e9927dd791144c21
+      internalID: -587446517
       vertices: []
       indices: 
       edges: []
@@ -325,8 +331,8 @@ TextureImporter:
       name: RightFinal_7
       rect:
         serializedVersion: 2
-        x: 711
-        y: 276
+        x: 237
+        y: 0
         width: 237
         height: 237
       alignment: 0
@@ -337,8 +343,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 186ff2496353ea944bc369268277d190
-      internalID: 339281895
+      spriteID: db4e61b4746ac7249bcb447f3b5e6347
+      internalID: -565503680
       vertices: []
       indices: 
       edges: []
@@ -347,8 +353,8 @@ TextureImporter:
       name: RightFinal_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 39
+        x: 474
+        y: 0
         width: 237
         height: 237
       alignment: 0
@@ -359,8 +365,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f836b97568fc544992f8bec7d4cd901
-      internalID: 563506917
+      spriteID: e9b445478d9ff0e43bf9d7eb92afd234
+      internalID: -501584936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightFinal_9
+      rect:
+        serializedVersion: 2
+        x: 711
+        y: 0
+        width: 237
+        height: 237
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 247f2de1265f5fd44ad26e5fe38d4f1b
+      internalID: 1638196082
       vertices: []
       indices: 
       edges: []
@@ -369,7 +397,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 585964a49a597054381cf7405aec9fd2
+    spriteID: 63600222b2a24df449d0f109af49db4d
     internalID: 0
     vertices: []
     indices: 
@@ -379,15 +407,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RightFinal_0: 1331720768
-      RightFinal_1: -1021888781
-      RightFinal_2: 1261095114
-      RightFinal_3: -665737488
-      RightFinal_4: 1746732817
-      RightFinal_5: 1304334974
-      RightFinal_6: -2029369587
-      RightFinal_7: 339281895
-      RightFinal_8: 563506917
+      RightFinal_0: 1317214059
+      RightFinal_1: -1143871890
+      RightFinal_2: -263324960
+      RightFinal_3: -285064444
+      RightFinal_4: -1130368870
+      RightFinal_5: 99073879
+      RightFinal_6: -587446517
+      RightFinal_7: -565503680
+      RightFinal_8: -501584936
+      RightFinal_9: 1638196082
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

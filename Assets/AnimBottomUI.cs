@@ -10,24 +10,22 @@ public class AnimBottomUI : MonoBehaviour
     [SerializeField] Animator Seringue;
     [SerializeField] Animator Jump;
 
-
-    void Start()
+    private void Start()
     {
-
+        StartCoroutine(PlaySequence());
     }
 
     public IEnumerator PlaySequence()
     {
-        Left.SetTrigger("Start");
-        yield return new WaitForSeconds(0.1f);
-
-        Right.SetTrigger("Start");
-        yield return new WaitForSeconds(0.2f);
-
-        Seringue.SetTrigger("Start");
-        yield return new WaitForSeconds(0.2f);
-
-        Jump.SetTrigger("Start");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
+        Left.SetBool("Start", true);
+        Right.SetBool("Start", true);
+        Seringue.SetBool("Start", true);
+        Jump.SetBool("Start", true);
+        yield return new WaitForSeconds(1f);
+        Left.SetBool("Start", false);
+        Right.SetBool("Start", false);
+        Seringue.SetBool("Start", false);
+        Jump.SetBool("Start", false);
     }
 }

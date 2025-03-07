@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,19 +12,22 @@ public class DisplayData : MonoBehaviour
     [SerializeField] private Text _completedLevel;
     List<Level> _levelUnlock = new List<Level>();
 
-    private void OnEnable()
+    
+
+   
+
+    
+
+    IEnumerator WaitForNextLevel()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        yield return new WaitForSeconds(3f);
+        CompleteLevel();
     }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void Start()
     {
         ChangeDisplay();
+        StartCoroutine(WaitForNextLevel());
     }
 
     public void ChangeDisplay()
@@ -47,6 +52,11 @@ public class DisplayData : MonoBehaviour
         {
             _numberLevel.text = GameManager.Instance._actualScene;
         }
+        
+    }
+
+    public void CompleteLevel()
+    {
         if (_completedLevel != null)
         {
             _completedLevel.text = GameManager.Instance._actualScene + " Completed";

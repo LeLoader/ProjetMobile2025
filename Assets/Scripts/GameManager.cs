@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         AudioManager.Instance?.PlayBackground(AudioManager.Instance?._BangerMenu);
+        porte = GameObject.FindGameObjectWithTag("Porte")?.GetComponent<Porte>();
+
     }
     public void ManualConnect()
     {
@@ -128,12 +130,17 @@ public class GameManager : MonoBehaviour
         }
         else if (scene == SCENEPARAMETERS.NEXT_LEVEL)
         {
+            porte = GameObject.FindGameObjectWithTag("Porte")?.GetComponent<Porte>();
             _actualScene = _nextScene._idLevel;
             GetLevel();
             _canvaReglage.SetActive(false);
+            Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("WordObject"));
+            Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
+            GameObject.FindGameObjectWithTag("Player")?.SetActive(false);
+            GameObject.FindGameObjectWithTag("Grids")?.SetActive(false);
+            GameObject.FindGameObjectWithTag("UIzinzin")?.SetActive(false);
             porte.asyncOperation.allowSceneActivation = true;
             porte.Paper.SetTrigger("Start");
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             return;
         }
         else if (scene == SCENEPARAMETERS.MENU_SCENE)
