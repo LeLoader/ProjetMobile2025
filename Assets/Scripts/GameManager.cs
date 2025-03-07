@@ -110,14 +110,19 @@ public class GameManager : MonoBehaviour
             {
                 _canvaReglage.SetActive(true);
                 SceneManager.LoadScene(_actualScene);
+                Stats.IncrementStat(Stats.STATS.RESTART_COUNT);
             }
             else
             {
                 _canvaReglage.SetActive(false);
-                if(level == "Level 1" && !SaveSystem._instance._sawIntro)
+                if (level == "Level 1" && !SaveSystem._instance._sawIntro)
                 {
                     history.Image.SetActive(true);
                     history.LaunchHistory();
+                }
+                else if (level == SaveSystem._instance._levelData._level[2 - 1]._idLevel)
+                {
+                    AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
                 }
                 else
                 {
