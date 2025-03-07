@@ -10,6 +10,11 @@ public class AnimBottomUI : MonoBehaviour
     [SerializeField] Animator Seringue;
     [SerializeField] Animator Jump;
 
+    [SerializeField] GameObject right;
+    [SerializeField] GameObject left;
+    [SerializeField] GameObject seringue;
+    [SerializeField] GameObject jump;
+
     private void Start()
     {
         StartCoroutine(PlaySequence());
@@ -17,7 +22,11 @@ public class AnimBottomUI : MonoBehaviour
 
     public IEnumerator PlaySequence()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1.5f);
+        right.SetActive(true);
+        left.SetActive(true);
+        seringue.SetActive(true);   
+        jump.SetActive(true);
         Left.SetBool("Start", true);
         Right.SetBool("Start", true);
         Seringue.SetBool("Start", true);

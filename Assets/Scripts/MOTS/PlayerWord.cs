@@ -172,8 +172,11 @@ public class PlayerWord : WordBase
         UpdateGravity();
         UpdateOrientation();
         UpdateAnimatorValues();
-        LookForBlock(leftCheckers, Vector2.left);
-        LookForBlock(rightCheckers, Vector2.right);
+        if (seringue)
+        {
+            LookForBlock(leftCheckers, Vector2.left);
+            LookForBlock(rightCheckers, Vector2.right);
+        }
     }
 
     private void Update()
