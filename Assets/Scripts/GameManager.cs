@@ -59,11 +59,6 @@ public class GameManager : MonoBehaviour
         AchivementManager.ManualConnect();
     }
 
-    public void UnlockFirstTry()
-    {
-        AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (setup)
@@ -122,7 +117,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (level == SaveSystem._instance._levelData._level[2 - 1]._idLevel)
                 {
-                    AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
+                    AchivementManager.UnlockAchievement(AchivementManager.FirstTry);
                 }
                 else
                 {
