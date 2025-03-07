@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: -10, y: -50}
   m_Constraint: 0
@@ -179,7 +179,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionConstraint: {fileID: -2478744714250353993}
   rotationConstraint: {fileID: 2891496159177247667}
-  gridLayout: {fileID: 8659899509145920173}
   wrapper: {fileID: 347195332300290008}
 --- !u!1818360608 &-2478744714250353993
 PositionConstraint:

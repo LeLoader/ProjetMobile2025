@@ -84,20 +84,6 @@ public class SaveSystem : MonoBehaviour
             }
         }
     }
-
-    [Button]
-    public void UnlockAllLevels()
-    {
-        foreach (GameObject gameObject in VerifyCompleted.Instance._levelBoutton)
-        {
-            gameObject.GetComponentInChildren<Button>().interactable = true;
-        }
-
-        //foreach (Level level in _levelData._level)
-        //{
-        //    level._state = Level.LevelState.Unlock;
-        //}
-    }
 #endif
 
     public void SaveData()

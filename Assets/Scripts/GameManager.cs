@@ -61,11 +61,6 @@ public class GameManager : MonoBehaviour
         AchivementManager.ManualConnect();
     }
 
-    public void UnlockFirstTry()
-    {
-        AchivementManager.UnlockAchivement(AchivementManager.FirstTry);
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (setup)
@@ -112,14 +107,19 @@ public class GameManager : MonoBehaviour
             {
                 _canvaReglage.SetActive(true);
                 SceneManager.LoadScene(_actualScene);
+                Stats.IncrementStat(Stats.STATS.RESTART_COUNT);
             }
             else
             {
                 _canvaReglage.SetActive(false);
-                if(level == "Level 1" && !SaveSystem._instance._sawIntro)
+                if (level == "Level 1" && !SaveSystem._instance._sawIntro)
                 {
                     history.Image.SetActive(true);
                     history.LaunchHistory();
+                }
+                else if (level == SaveSystem._instance._levelData._level[2 - 1]._idLevel)
+                {
+                    AchivementManager.UnlockAchievement(AchivementManager.FirstTry);
                 }
                 else
                 {

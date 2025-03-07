@@ -69,7 +69,7 @@ public static class AchivementManager
             });
     }
 
-    public static void UnlockAchivement(string code)
+    public static void UnlockAchievement(string code)
     {
         PlayGamesPlatform.Instance.UnlockAchievement(
                         code, (bool result) =>
@@ -79,7 +79,7 @@ public static class AchivementManager
                         );
     }
 
-    public static void IncrementAchivement(string code, int progress = 100)
+    public static void IncrementAchievement(string code, int progress = 100)
     {
         PlayGamesPlatform.Instance.IncrementAchievement(
                code, progress, (bool result) =>

@@ -29,6 +29,18 @@ public static class Stats
                 break;
             case STATS.SERINGUE_COUNT:
                 stats.seringue_count += value;
+                if (stats.seringue_count >= 1000)
+                {
+                    AchivementManager.UnlockAchievement(AchivementManager.Dramaturge);
+                }
+                else if (stats.seringue_count >= 100)
+                {
+                    AchivementManager.UnlockAchievement(AchivementManager.Ecrivain);
+                }
+                else if (stats.seringue_count >= 50)
+                {
+                    AchivementManager.UnlockAchievement(AchivementManager.LePoidsDesMots);
+                }
                 break;
             case STATS.JUMP_COUNT:
                 stats.jump_count += value;
@@ -38,9 +50,14 @@ public static class Stats
                 break;
             case STATS.STICK_COUNT:
                 stats.stick_count += value;
+                if (stats.stick_count >= 10)
+                {
+                    AchivementManager.UnlockAchievement(AchivementManager.StickyStick);
+                }
                 break;
             case STATS.RESTART_COUNT:
                 stats.restart_count += value;
+                AchivementManager.UnlockAchievement(AchivementManager.BetterLuckNextTime);
                 break;
             default:
                 break;

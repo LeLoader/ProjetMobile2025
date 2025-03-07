@@ -36,11 +36,6 @@ public class WordObject : WordBase
     [Header("Ball")]
     [SerializeField] CapsuleCollider2D ballCollider;
 
-    private void Awake()
-    {
-        Debug.Log(objectUI);
-    }
-
     private void Start()
     {
         coll = FindActiveCollider();
@@ -271,17 +266,6 @@ public class WordObject : WordBase
     protected override void UpdateUI(ref List<WordModifier> newModifiers)
     {
         base.UpdateUI(ref newModifiers);
-
-        objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
-          
-        //if (TargetScale.y >= TargetScale.x)
-        //{
-        //    objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Vertical;
-        //}
-        //else
-        //{
-        //    objectUI.gridLayout.startAxis = GridLayoutGroup.Axis.Horizontal;
-        //}
     }
 
     private void CreateObjectUI(bool destructive)
