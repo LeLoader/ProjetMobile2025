@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
             GetLevel();
             _canvaReglage.SetActive(false);
             porte.asyncOperation.allowSceneActivation = true;
+            porte.Paper.SetTrigger("Start");
             SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             return;
         }
