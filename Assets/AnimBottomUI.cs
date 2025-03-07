@@ -17,7 +17,7 @@ public class AnimBottomUI : MonoBehaviour
 
     public IEnumerator PlaySequence()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         Left.SetBool("Start", true);
         Right.SetBool("Start", true);
         Seringue.SetBool("Start", true);
