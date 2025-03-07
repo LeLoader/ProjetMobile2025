@@ -751,6 +751,8 @@ public class PlayerWord : WordBase
         //Handles.DrawLine(transform.position, transform.position + interactionDistance * xOrient * Vector3.right);
     }
 
+#if UNITY_EDITOR
+
     private void OnGUI()
     {
         GUILayout.BeginVertical();
@@ -760,4 +762,5 @@ public class PlayerWord : WordBase
         GUILayout.TextField("SideSlope:" + OnSideSlope.ToString());
         GUILayout.EndVertical();
     }
+#endif 
 }
