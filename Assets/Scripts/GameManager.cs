@@ -117,10 +117,6 @@ public class GameManager : MonoBehaviour
                     history.Image.SetActive(true);
                     history.LaunchHistory();
                 }
-                else if (level == SaveSystem._instance._levelData._level[2 - 1]._idLevel)
-                {
-                    AchivementManager.UnlockAchievement(AchivementManager.FirstTry);
-                }
                 else
                 {
                     SceneManager.LoadScene(level);
@@ -184,7 +180,10 @@ public class GameManager : MonoBehaviour
 
         else if (_actualLevel._state == Level.LevelState.Unlock && _nextScene._state == Level.LevelState.Blocked)
         {
-
+            if (_actualLevel._idLevel == "Level 1" && _nextScene._state == Level.LevelState.Blocked)
+            {
+                AchivementManager.UnlockAchievement(AchivementManager.FirstTry);
+            }
             _actualLevel._state = Level.LevelState.Completed;
             _nextScene._state = Level.LevelState.Unlock;
             SaveSystem._instance._lastLevelUnlocked = _nextScene._idLevel;
