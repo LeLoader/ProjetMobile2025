@@ -44,6 +44,10 @@ public static class Stats
                 break;
             case STATS.JUMP_COUNT:
                 stats.jump_count += value;
+                if (stats.jump_count >= 1E6)
+                {
+                    AchivementManager.UnlockAchievement(AchivementManager.ForAnAchivement);
+                }
                 break;
             case STATS.BOUNCE_COUNT:
                 stats.bounce_count += value;
