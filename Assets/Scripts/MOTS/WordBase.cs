@@ -60,6 +60,12 @@ public class WordBase : MonoBehaviour
 
     protected virtual void UpdateUI(ref List<WordModifier> newModifiers)
     {
+        if (WordWrapper == null)
+        {
+            Debug.LogWarning("WordWrapper est null, UpdateUI annulé.");
+            return;
+        }
+
         if (Application.IsPlaying(this))
         {
             for (int i = WordWrapper.transform.childCount - 1; i >= 0; i--)

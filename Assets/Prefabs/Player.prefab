@@ -280,14 +280,14 @@ MonoBehaviour:
     stickySprite: {fileID: 3286163911610860551, guid: 73336bc0b64e6e64e8a6fe1719e98d65, type: 3}
     stairsSprite: {fileID: 3286163911610860551, guid: 8133f2cc281c6704089597095cb14962, type: 3}
     ballSprite: {fileID: 3286163911610860551, guid: 17df6ad8eab56664a98cf42353462e8b, type: 3}
-    bigWordSprite: {fileID: 21300000, guid: 00be86a89b2fcef4b8d5143861d238bc, type: 3}
-    smallWordSprite: {fileID: 21300000, guid: ee70d71b75466db488280203c7561e12, type: 3}
-    tallWordSprite: {fileID: 21300000, guid: 156927391d0efbb4c99babd58cbf9995, type: 3}
-    longWordSprite: {fileID: 21300000, guid: a5f26ab128936484ba4704d775ff5837, type: 3}
-    bouncyWordSprite: {fileID: 21300000, guid: 0924a933522327b43a9dc73887db44bd, type: 3}
-    stickyWordSprite: {fileID: 21300000, guid: 8213556dba9bb3a4eaaa4235751b6217, type: 3}
-    stairsWordSprite: {fileID: 21300000, guid: f26910e92a4142541915bb84e553a1ed, type: 3}
-    ballWordSprite: {fileID: 21300000, guid: f3531fdeb2192674ebb9d5f1c0916e97, type: 3}
+    bigWordSprite: {fileID: 8764500939085050721, guid: 00be86a89b2fcef4b8d5143861d238bc, type: 3}
+    smallWordSprite: {fileID: 7615236536164250460, guid: ee70d71b75466db488280203c7561e12, type: 3}
+    tallWordSprite: {fileID: 8344046817400445591, guid: 156927391d0efbb4c99babd58cbf9995, type: 3}
+    longWordSprite: {fileID: 2455314883574228467, guid: a5f26ab128936484ba4704d775ff5837, type: 3}
+    bouncyWordSprite: {fileID: -8137641571164087428, guid: 0924a933522327b43a9dc73887db44bd, type: 3}
+    stickyWordSprite: {fileID: -3232172611236887411, guid: 8213556dba9bb3a4eaaa4235751b6217, type: 3}
+    stairsWordSprite: {fileID: -2660968328804394481, guid: f26910e92a4142541915bb84e553a1ed, type: 3}
+    ballWordSprite: {fileID: -3919779002189068522, guid: f3531fdeb2192674ebb9d5f1c0916e97, type: 3}
   interactionDistance: 0.8
   rb: {fileID: 71137860090918779}
   playerCollider: {fileID: 1343042605137737762}
