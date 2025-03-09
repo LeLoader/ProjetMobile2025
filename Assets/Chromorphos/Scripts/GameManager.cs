@@ -1,5 +1,6 @@
 using GooglePlayGames;
 using NaughtyAttributes;
+using NUnit.Framework;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int targetFrameRate = 60;
 
     [SerializeField] histoire history;
+
+    [SerializeField, Tag, Tooltip("All objects with one of those tags will be disable during scene transition")] string[] tagToDisable;
 
     private bool setup;
 
@@ -135,9 +138,13 @@ public class GameManager : MonoBehaviour
             _canvaReglage.SetActive(false);
             Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("WordObject"));
             Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer("UI"));
-            GameObject.FindGameObjectWithTag("Player")?.SetActive(false);
-            GameObject.FindGameObjectWithTag("Grids")?.SetActive(false);
-            GameObject.FindGameObjectWithTag("UIzinzin")?.SetActive(false);
+            foreach (string tag in tagToDisable)
+            {
+                foreach (GameObject go in GameObject.FindGameObjectsWithTag(tag))
+                {
+                    go.SetActive(false);
+                }
+            }
             porte.asyncOperation.allowSceneActivation = true;
             porte.Paper.SetTrigger("Start");
             return;

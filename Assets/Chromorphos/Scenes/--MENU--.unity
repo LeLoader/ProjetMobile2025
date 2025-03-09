@@ -2641,6 +2641,11 @@ MonoBehaviour:
     _state: 0
   targetFrameRate: 60
   history: {fileID: 1540321952}
+  tagToDisable:
+  - WordObject
+  - UIzinzin
+  - Grids
+  - Player
   porte: {fileID: 0}
   _canvaReglage: {fileID: 164031380540855013}
 --- !u!114 &1085693728
