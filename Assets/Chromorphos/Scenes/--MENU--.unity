@@ -2392,6 +2392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57ee3678fd24dc43a9cacd34019a43e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockedImage: {fileID: 8348454624749568619, guid: 2f5e4efba5d1ccc44b6bda2d46ef0c88, type: 3}
 --- !u!1 &1019656576
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,7 +2639,7 @@ MonoBehaviour:
     _idLevel: --MENU--
     _state: 0
   targetFrameRate: 60
-  history: {fileID: 1540321947}
+  history: {fileID: 1540321952}
   porte: {fileID: 0}
   _canvaReglage: {fileID: 164031380540855013}
 --- !u!1 &1100954165
@@ -3471,7 +3472,7 @@ GameObject:
   - component: {fileID: 1540321950}
   - component: {fileID: 1540321949}
   - component: {fileID: 1540321948}
-  - component: {fileID: 1540321947}
+  - component: {fileID: 1540321952}
   m_Layer: 5
   m_Name: CanvasHistoire
   m_TagString: Untagged
@@ -3479,27 +3480,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1540321947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540321946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ba5418b0854a6b449fa02b71282bbad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Image1: {fileID: 1876557385}
-  Image2: {fileID: 721911339}
-  Image3: {fileID: 192714364}
-  Image4: {fileID: 1931929485}
-  Image: {fileID: 1540605406}
-  animator1: {fileID: 0}
-  animator2: {fileID: 0}
-  animator3: {fileID: 0}
-  animator4: {fileID: 0}
 --- !u!114 &1540321948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3583,6 +3563,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1540321952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540321946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2163e6c04f01ae74e898236783f76e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Image1: {fileID: 1876557385}
+  Image2: {fileID: 721911339}
+  Image3: {fileID: 192714364}
+  Image4: {fileID: 1931929485}
+  Image: {fileID: 1540605406}
+  animator1: {fileID: 1876557387}
+  animator2: {fileID: 721911341}
+  animator3: {fileID: 192714366}
+  animator4: {fileID: 1931929486}
 --- !u!1 &1540605406
 GameObject:
   m_ObjectHideFlags: 0

@@ -85,9 +85,9 @@ GameObject:
   - component: {fileID: 1577072760535391681}
   - component: {fileID: 9156101822726132190}
   - component: {fileID: 4359904713281581649}
-  - component: {fileID: 3460252205005108163}
   - component: {fileID: 9199085276840051694}
   - component: {fileID: 312352609953970852}
+  - component: {fileID: 3678735261458794462}
   m_Layer: 5
   m_Name: UI
   m_TagString: UIzinzin
@@ -194,26 +194,6 @@ MonoBehaviour:
   _actualLevel: {fileID: 0}
   _numberLevel: {fileID: 2122406512803061778}
   _completedLevel: {fileID: 0}
---- !u!114 &3460252205005108163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2416235281610053314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71f05767163f4b74083e2c44b0ecbd94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Left: {fileID: 3668511171779725965}
-  Right: {fileID: 4601372171153342005}
-  Seringue: {fileID: 8915024847150027080}
-  Jump: {fileID: 438609485566786822}
-  right: {fileID: 3533262914315008705}
-  left: {fileID: 8406676678368011399}
-  seringue: {fileID: 6958874195843041102}
-  jump: {fileID: 7198464070098313149}
 --- !u!222 &9199085276840051694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -252,6 +232,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3678735261458794462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2416235281610053314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8105130f5ab1848867e8561e802ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Left: {fileID: 3668511171779725965}
+  Right: {fileID: 4601372171153342005}
+  Seringue: {fileID: 8915024847150027080}
+  Jump: {fileID: 438609485566786822}
+  right: {fileID: 8406676678368011399}
+  left: {fileID: 3533262914315008705}
+  seringue: {fileID: 6958874195843041102}
+  jump: {fileID: 7198464070098313149}
 --- !u!1 &3533262914315008705
 GameObject:
   m_ObjectHideFlags: 0
