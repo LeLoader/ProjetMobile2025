@@ -36,17 +36,20 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = targetFrameRate;
         Stats.IncrementStat(Stats.STATS.APPLICATION_STARTED_COUNT);
         AchivementManager.AutomaticConnect();
+        Debug.Log("new instance of GM");
         if (Instance == null)
         {
+            Debug.Log("no existing instance");
             Instance = this;
             setup = true;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
+            Debug.Log("already existing instance");
             if (!setup)
                 Destroy(gameObject);
         }
+        Debug.Log("end of new instance of GM");
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
