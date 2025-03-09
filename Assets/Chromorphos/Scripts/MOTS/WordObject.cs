@@ -133,7 +133,6 @@ public class WordObject : WordBase
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 objectUI.rotationConstraint.constraintActive = false;
                 objectUI.transform.rotation = Quaternion.identity;
-
             }
         }
 
@@ -397,6 +396,7 @@ public class WordObject : WordBase
     private void ForceStuck()
     {
         rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         rb.gravityScale = 0;
     }
 }
