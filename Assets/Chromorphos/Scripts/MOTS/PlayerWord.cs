@@ -174,8 +174,7 @@ public class PlayerWord : WordBase
         UpdateAnimatorValues();
         if (seringue)
         {
-            LookForBlock(leftCheckers, Vector2.left);
-            LookForBlock(rightCheckers, Vector2.right);
+            LookForBlock(interactionCheckers);
         }
     }
 
@@ -720,14 +719,14 @@ public class PlayerWord : WordBase
         topCheckers.gameObject.SetActive(true);
     }
 
-    private void LookForBlock(Transform checkers, Vector2 dir)
+    private void LookForBlock(Transform checkers)
     {
         bool foundBlock = false;
 
         for (int i = 0; i < checkers.childCount; i++)
         {
             Transform t = checkers.GetChild(i).transform;
-            RaycastHit2D hit = Physics2D.Raycast(t.position, dir * xOrient, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
+            RaycastHit2D hit = Physics2D.Raycast(t.position, Vector2.right * xOrient, interactionDistance, (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK));
             if (hit.collider != null && !IsLink && OnGround)
             {
                 foundBlock = true;
