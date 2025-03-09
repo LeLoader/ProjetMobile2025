@@ -2593,8 +2593,8 @@ MonoBehaviour:
     - _idLevel: Level 23
       _state: 0
   _lastLevelUnlocked: 
-  _musicValue: 0
-  _soundValue: 0
+  _musicValue: 0.5
+  _soundValue: 0.5
   _playerStats:
     application_started_count: 0
     in_game_time: 0
@@ -5274,7 +5274,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5481,7 +5481,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 10
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
