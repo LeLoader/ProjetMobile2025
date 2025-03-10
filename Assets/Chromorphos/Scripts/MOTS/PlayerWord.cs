@@ -30,7 +30,6 @@ public class PlayerWord : WordBase
     [SerializeField] float sideSlopeOffset = 0.01f;
     [SerializeField] public Animator animator;
     [SerializeField] public CinemachineCamera _camera;
-    [SerializeField] float duration = 2f;
     [SerializeField] Animator seringue;
     [SerializeField] bool IsLink;
 
@@ -126,12 +125,15 @@ public class PlayerWord : WordBase
     ContactFilter2D contactFilter = new();
 
     [Header("Camera")]
-    [SerializeField] float _cameraUnlink = 7f;
+    [SerializeField] float _cameraUnlinkFOV = 60f;
+    [SerializeField] float _cameraLinkFOV = 30f;
+    [SerializeField, Tooltip("In FOV/s")] float _cameraSpeed = 30f;
     float _currentCamera;
-    [SerializeField] float _cameraLink = 3f;
+    float _targetFOV;
 
     private void Start()
     {
+        _targetFOV = _cameraUnlinkFOV;
         contactFilter.layerMask = (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK);
         contactFilter.useLayerMask = true;
         CanMove = true;
@@ -172,6 +174,7 @@ public class PlayerWord : WordBase
         UpdateGravity();
         UpdateOrientation();
         UpdateAnimatorValues();
+
         if (seringue)
         {
             LookForBlock(interactionCheckers);
@@ -181,6 +184,7 @@ public class PlayerWord : WordBase
     private void Update()
     {
         GetMaxLastJump();
+        UpdateCameraPosition();
     }
 
     private void UpdateStates()
@@ -641,6 +645,11 @@ public class PlayerWord : WordBase
         }
     }
 
+    private void UpdateCameraPosition()
+    {
+        _camera.Lens.FieldOfView = Mathf.MoveTowards(_camera.Lens.FieldOfView, _targetFOV, Time.deltaTime * _cameraSpeed);
+    }
+
     private void Link(WordObject wordObject)
     {
         wordObject.Link(this);
@@ -652,7 +661,8 @@ public class PlayerWord : WordBase
         }
         AudioManager.Instance?.PlaySFX(AudioManager.Instance?._SeringuePlantée);
         _camera.Target.TrackingTarget = wordObject?.transform;
-        StartZoom(_cameraUnlink, _cameraLink, duration);
+        _targetFOV = _cameraLinkFOV;
+        // StartZoom(_cameraUnlink, _cameraLinkFOV, duration);
     }
 
     private void Unlink()
@@ -672,7 +682,8 @@ public class PlayerWord : WordBase
             {
                 _camera.Target.TrackingTarget = transform;
             }
-            StartZoom(_cameraLink, _cameraUnlink, duration);
+            _targetFOV = _cameraUnlinkFOV;
+            // StartZoom(_cameraLink, _cameraUnlinkFOV, duration);
         }
     }
 

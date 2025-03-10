@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static Unity.Cinemachine.CinemachineFreeLookModifier;
 
 public class WordObject : WordBase
 {
     [SerializeField] bool ShouldWaitUntilGroundToApply;
     [SerializeField] float distanceCheck;
-    [SerializeField] float applySpeed;
+    [SerializeField] float applyTime;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] GameObject prefabUI;
@@ -179,26 +180,31 @@ public class WordObject : WordBase
             {
                 if (wordModifier is ScaleModifier modifier)
                 {
-                    if (IsTouchingTop() && (modifier.IsGreatScaleY() /*|| TargetScale.y > 1*/))
-                    {
+                    // if (IsTouchingTop() && (modifier.IsGreatScaleY() /*|| TargetScale.y > 1*/))
+                    // {
+                    // 
+                    // }
+                    // else if (IsStuckOnSide() && (modifier.IsGreatScaleX() /*|| TargetScale.x > 1*/))
+                    // {
+                    // 
+                    // }
+                    // else
+                    // {
+                    //     modifier.appliedTimer += Time.fixedDeltaTime;
+                    // }
 
-                    }
-                    else if (IsStuckOnSide() && (modifier.IsGreatScaleX() /*|| TargetScale.x > 1*/))
-                    {
-
-                    }
-                    else
+                    if (!((IsTouchingTop() && modifier.IsGreatScaleY()) || (IsStuckOnSide() && modifier.IsGreatScaleX())) /*|| TargetScale.y > 1*/)
                     {
                         modifier.appliedTimer += Time.fixedDeltaTime;
                     }
 
-                    realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer));
+                    realTargetScale.Scale(Vector3.Lerp(Vector3.one, modifier.GetScale(), modifier.appliedTimer / applyTime));
                 }
             }
 
-            if (TargetScale.x <= transform.localScale.x && TargetScale.y <= transform.localScale.y)
+            if (TargetScale.x <= transform.localScale.x && TargetScale.y <= transform.localScale.y) // Find a way to make every thing uniform, like deapplying back modifier appliedTimer
             {
-                transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, Time.fixedDeltaTime);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, TargetScale, Time.fixedDeltaTime / applyTime);
             }
             else
             {
