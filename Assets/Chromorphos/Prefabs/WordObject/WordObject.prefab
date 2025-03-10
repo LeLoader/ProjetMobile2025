@@ -125,7 +125,7 @@ MonoBehaviour:
     ballWordSprite: {fileID: -3919779002189068522, guid: f3531fdeb2192674ebb9d5f1c0916e97, type: 3}
   ShouldWaitUntilGroundToApply: 0
   distanceCheck: 0.1
-  applySpeed: 2
+  applyTime: 0.5
   spriteRenderer: {fileID: 6105696309164971014}
   rb: {fileID: 5495438319057385585}
   prefabUI: {fileID: 953314218143153249, guid: 9d4042fc7a5134b4c82634c44d29e0b6, type: 3}
