@@ -303,7 +303,6 @@ MonoBehaviour:
   sideSlopeOffset: -0.01
   animator: {fileID: 76918466167322067}
   _camera: {fileID: 0}
-  duration: 0.5
   seringue: {fileID: 0}
   IsLink: 0
   jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -318,6 +317,8 @@ MonoBehaviour:
   CanMove: 0
   OnSlope: 0
   OnSideSlope: 0
+  _moveStaggerReactivationTime: 0.4
+  _stickyCheckersReactivationTime: 0.1
   maxPositionYValue: 0
   defaultAccelerationForce: 150
   defaultDecelerationForce: 75
@@ -333,8 +334,9 @@ MonoBehaviour:
   defaultBouncyJumpHeight: 2.5
   xOrient: 1
   xInput: 0
-  _cameraUnlink: 60
-  _cameraLink: 30
+  _cameraUnlinkFOV: 60
+  _cameraLinkFOV: 30
+  _cameraSpeed: 30
   references:
     version: 2
     RefIds: []

@@ -49,6 +49,10 @@ public class PlayerWord : WordBase
     [SerializeField, ReadOnly] bool OnSlope;
     [SerializeField, ReadOnly] bool OnSideSlope;
 
+    [SerializeField, InspectorName("Reactivation time for movement after sticky jump")] float _moveStaggerReactivationTime = 0.4f;
+    [SerializeField, InspectorName("Reactivation time for sticky checkers")] float _stickyCheckersReactivationTime = 0.1f;
+    Coroutine moveStaggerCoroutine;
+
     Vector2 downSlopeNormalPerp;
     Vector2 sideSlopeNormalPerp;
     float lastSlopeAngle;
@@ -151,7 +155,7 @@ public class PlayerWord : WordBase
 
     void FixedUpdate()
     {
-        if(!seringue)
+        if (!seringue)
         {
             seringue = GameObject.FindGameObjectWithTag("Seringue")?.GetComponent<Animator>();
         }
@@ -224,11 +228,11 @@ public class PlayerWord : WordBase
     {
         if (OnGround && !IsOnBouncy)
         {
-            maxPositionYValue = transform.position.y;
+            // maxPositionYValue = transform.position.y;
         }
         if (transform.position.y > maxPositionYValue)
         {
-            maxPositionYValue = transform.position.y;
+            // maxPositionYValue = transform.position.y;
         }
     }
 
@@ -352,7 +356,7 @@ public class PlayerWord : WordBase
                 RaycastHit2D hit = Physics2D.Raycast(t.position, dir, distanceCheck, (int)Mathf.Pow(2, MAP_LAYERMASK) + (int)Mathf.Pow(2, WORDOBJECT_LAYERMASK) + (int)Mathf.Pow(2, GROUND_LAYERMASK));
                 if (hit.collider != null)
                 {
-                    WordObject _block = hit.collider?.GetComponent<WordObject>();
+                    WordObject _block = hit.collider.GetComponent<WordObject>();
                     if (_block != null && _block.BlockIsSticky)
                     {
                         //appeler la fonction qui colle le joueur
@@ -360,8 +364,12 @@ public class PlayerWord : WordBase
                         {
                             CanMove = false;
                             rb.linearVelocity = new Vector2(0, 0);
+                            if (moveStaggerCoroutine != null)
+                            {
+                                StopCoroutine(moveStaggerCoroutine);
+                            }
+                            return true;
                         }
-                        return true;
                     }
                 }
             }
@@ -403,6 +411,7 @@ public class PlayerWord : WordBase
         if (lastVelY >= 0 && 0 >= rb.linearVelocityY)
         {
             IsJumping = false;
+            maxPositionYValue = transform.position.y;
         }
 
         lastVelY = rb.linearVelocityY;
@@ -498,6 +507,11 @@ public class PlayerWord : WordBase
             {
                 xOrient *= -1;
             }
+
+            // if (Mathf.Sign(xInput) == Mathf.Sign(xOrient)) // xInput can be 0
+            // {
+            //     xOrient *= -1;
+            // }
         }
     }
 
@@ -601,12 +615,12 @@ public class PlayerWord : WordBase
         if (xOrient > 0)
         {
             rightCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateRightCheckers", 0.25f);
+            StartCoroutine(ReactivateCheckersCoroutine());
         }
         else
         {
             leftCheckers.gameObject.SetActive(false);
-            Invoke("ReactivateLeftCheckers", 0.25f);
+            StartCoroutine(ReactivateCheckersCoroutine());
         }
         xOrient *= -1;
         Debug.Log("JumpOnSticky");
@@ -621,7 +635,7 @@ public class PlayerWord : WordBase
         topCheckers.gameObject.SetActive(false);
         HeadIsStick = false;
         CanMove = true;
-        Invoke("ReactivateTopCheckers", 0.5f);
+        StartCoroutine(ReactivateCheckersCoroutine());
         rb.AddForce(new Vector2(0, -5) * 12);
     }
 
@@ -711,23 +725,21 @@ public class PlayerWord : WordBase
         _zoomCoroutine = null;
     }
 
-    private void ReactivateLeftCheckers()
+    private IEnumerator ReactivateCheckersCoroutine()
     {
+        moveStaggerCoroutine = StartCoroutine(MoveStaggerCoroutine());
+        yield return new WaitForSeconds(_stickyCheckersReactivationTime);
+
         leftCheckers.gameObject.SetActive(true);
-        CanMove = true;
-        UpdateOrientBasedOnInput();
-    }
-
-    private void ReactivateRightCheckers()
-    {
         rightCheckers.gameObject.SetActive(true);
-        CanMove = true;
-        UpdateOrientBasedOnInput();
+        topCheckers.gameObject.SetActive(true);
     }
 
-    private void ReactivateTopCheckers()
+    private IEnumerator MoveStaggerCoroutine()
     {
-        topCheckers.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_moveStaggerReactivationTime);
+        CanMove = true;
+        UpdateOrientBasedOnInput();
     }
 
     private void LookForBlock(Transform checkers)
@@ -770,6 +782,7 @@ public class PlayerWord : WordBase
         GUILayout.TextField("Ground:" + OnGround.ToString());
         GUILayout.TextField("Slope:" + OnSlope.ToString());
         GUILayout.TextField("SideSlope:" + OnSideSlope.ToString());
+        GUILayout.TextField("CanMove:" + CanMove.ToString());
         GUILayout.EndVertical();
     }
 #endif 
