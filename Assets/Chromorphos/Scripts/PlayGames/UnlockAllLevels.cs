@@ -30,6 +30,23 @@ public class UnlockAllLevels : MonoBehaviour
             }
         }
 
+        int currentPage = VerifyCompleted.Instance._currentPage;
         VerifyCompleted.Instance.Verify();
+
+        for (int i = 0; i < VerifyCompleted.Instance._pageBoutton.Count; i++)
+        {
+            GameObject page = VerifyCompleted.Instance._pageBoutton[i];
+            if (i == currentPage)
+            {
+                page.SetActive(true);
+            }
+            else
+            {
+                page.SetActive(false);
+            }
+        }
+
+        VerifyCompleted.Instance._currentPage = currentPage;
+        VerifyCompleted.Instance.Boutton();
     }
 }
