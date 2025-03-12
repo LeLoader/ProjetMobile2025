@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class VerifyCompleted : MonoBehaviour
 {
-
     [Header("prefabs")]
     [SerializeField] private GameObject _complete;
     [SerializeField] private GameObject _blocked;
@@ -19,8 +18,8 @@ public class VerifyCompleted : MonoBehaviour
     [Header("useful")]
     private LocalizedString localizedString;
     [SerializeField] public List<GameObject> _levelBoutton;
-    [SerializeField] private List<GameObject> _pageBoutton;
-    [SerializeField] private int _currentPage;
+    [SerializeField] public List<GameObject> _pageBoutton;
+    [SerializeField] public int _currentPage;
     [SerializeField] private GameObject _objectNext;
     [SerializeField] private GameObject _objectPrev;
     [SerializeField] private GameObject _objectNextBlock;
@@ -114,7 +113,18 @@ public class VerifyCompleted : MonoBehaviour
 
     public void Verify()
     {
-        _pageBoutton[0].SetActive(true);
+        for (int i = 0; i < _pageBoutton.Count; i++)
+        {
+            GameObject page = _pageBoutton[i];
+            if (i == 0)
+            {
+                page.SetActive(true);
+            }
+            else
+            {
+                page.SetActive(false);
+            }
+        }
 
         for (int i = 0; i < _levelBoutton.Count; i++)
         {
